@@ -2,20 +2,20 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { BeachCanvas } from '@/components/visuals/BeachCanvas';
 import { TomasitaMonument } from '@/components/visuals/TomasitaMonument';
 import { CaimanMascot } from '@/components/visuals/CaimanMascot';
-import { ArrowRight, Sparkles, Waves, Anchor, Landmark } from 'lucide-react';
+import { ArrowRight, Sparkles, Waves, Anchor, Landmark, Utensils, Star } from 'lucide-react';
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
 
-  // Scroll-based parallax for text
   const heroY = useTransform(scrollYProgress, [0, 0.2], [0, -50]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
 
   return (
     <div className="relative min-h-[400vh]">
@@ -26,22 +26,22 @@ export default function Home() {
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <motion.div 
           style={{ y: heroY, opacity: heroOpacity }}
-          className="relative z-10 text-center px-4 max-w-5xl"
+          className="relative z-10 text-center px-4 max-w-6xl"
         >
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 mb-8 px-6 py-2 rounded-full glass text-primary text-xs font-bold tracking-[0.3em] uppercase"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="inline-flex items-center gap-3 mb-10 px-8 py-3 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-primary text-xs font-black tracking-[0.4em] uppercase"
           >
-            <Sparkles size={14} />
+            <Sparkles size={16} />
             Destino de Lujo • Ciénaga, Magdalena
           </motion.div>
           
           <motion.h1 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-7xl md:text-[12rem] font-bold font-headline mb-4 tracking-tighter leading-none text-foreground"
+            initial={{ opacity: 0, filter: 'blur(20px)' }}
+            animate={{ opacity: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 1 }}
+            className="text-[10vw] md:text-[13rem] font-bold font-headline mb-4 tracking-tighter leading-[0.8] text-foreground"
           >
             Casa Origen
           </motion.h1>
@@ -49,69 +49,67 @@ export default function Home() {
           <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="text-2xl md:text-4xl font-light mb-12 italic text-primary/80 tracking-tight font-headline"
+            transition={{ delay: 0.5 }}
+            className="text-2xl md:text-5xl font-light mb-16 italic text-primary/80 tracking-tight font-headline max-w-4xl mx-auto"
           >
-            "Donde el Mar y la Tradición se Encuentran"
+            "Donde el Mar y la Tradición se encuentran bajo la brisa del Caribe."
           </motion.p>
           
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className="flex flex-col sm:row gap-6 justify-center items-center"
+            transition={{ delay: 0.8 }}
+            className="flex flex-col sm:flex-row gap-8 justify-center items-center"
           >
-            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white px-12 py-8 text-xl rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95">
+            <Button asChild size="lg" className="bg-primary hover:bg-white hover:text-primary text-white px-16 h-20 text-2xl rounded-full shadow-[0_25px_60px_-15px_rgba(183,157,132,0.6)] transition-all hover:scale-110 active:scale-95">
               <Link href="/reservations">Reservar Experiencia</Link>
             </Button>
-            <Button asChild size="lg" variant="ghost" className="text-foreground hover:bg-white/40 backdrop-blur-sm px-10 py-8 text-xl rounded-full border border-primary/20 transition-all">
-              <Link href="/menu" className="flex items-center gap-2">Explorar Menú <ArrowRight size={20} /></Link>
+            <Button asChild size="lg" variant="ghost" className="text-foreground hover:bg-white/40 backdrop-blur-sm px-12 h-20 text-2xl rounded-full border border-primary/20 transition-all">
+              <Link href="/menu" className="flex items-center gap-3">Explorar Menú <ArrowRight size={24} /></Link>
             </Button>
           </motion.div>
         </motion.div>
 
-        {/* Floating Palm Trees (Parallax) */}
+        {/* Abstract Sea Elements */}
         <motion.div 
-          style={{ x: -100, y: useTransform(scrollYProgress, [0, 0.2], [0, -100]) }}
-          className="absolute bottom-0 -left-20 w-80 h-[120%] bg-[url('https://picsum.photos/seed/palm1/400/800')] bg-no-repeat bg-contain opacity-20 pointer-events-none"
-          data-ai-hint="palm tree"
-        />
-        <motion.div 
-          style={{ x: 100, y: useTransform(scrollYProgress, [0, 0.2], [0, -150]) }}
-          className="absolute bottom-0 -right-20 w-80 h-[120%] bg-[url('https://picsum.photos/seed/palm2/400/800')] bg-no-repeat bg-contain opacity-20 pointer-events-none"
-          data-ai-hint="palm tree"
-        />
+          animate={{ y: [0, 20, 0] }}
+          transition={{ repeat: Infinity, duration: 8 }}
+          className="absolute bottom-10 left-10 text-primary/10 opacity-20 hidden lg:block"
+        >
+          <Waves size={200} />
+        </motion.div>
       </section>
 
       {/* CULTURE / TOMASITA SECTION */}
-      <section className="relative min-h-screen py-32 flex flex-col items-center justify-center bg-secondary/10">
-        <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          <div className="order-2 lg:order-1">
+      <section className="relative min-h-screen py-40 flex flex-col items-center justify-center bg-secondary/5">
+        <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
+          <div className="order-2 lg:order-1 relative">
             <TomasitaMonument />
+            <div className="absolute -bottom-10 -right-10 bg-white p-8 rounded-[2rem] shadow-2xl space-y-2 border border-primary/10 hidden md:block">
+               <span className="text-primary font-black uppercase tracking-widest text-xs">Cultura Local</span>
+               <p className="text-xl font-headline font-bold">Leyenda del Caimán</p>
+            </div>
           </div>
-          <div className="space-y-12 order-1 lg:order-2">
-            <div className="space-y-4">
-              <motion.div 
-                whileInView={{ width: [0, 80] }}
-                className="h-1 bg-accent mb-6"
-              />
-              <h2 className="text-6xl md:text-8xl font-bold font-headline leading-none text-foreground">
+          <div className="space-y-16 order-1 lg:order-2">
+            <div className="space-y-6">
+              <Badge className="bg-accent/10 text-accent hover:bg-accent/20 border-none px-6 py-2 text-xs uppercase tracking-[0.3em] font-black">Patrimonio Vivo</Badge>
+              <h2 className="text-7xl md:text-9xl font-bold font-headline leading-[0.9] text-foreground tracking-tighter">
                 El Espíritu <br /> de Ciénaga
               </h2>
             </div>
-            <div className="space-y-8 text-xl text-foreground/70 leading-relaxed font-light italic">
+            <div className="space-y-10 text-2xl text-foreground/70 leading-relaxed font-light italic text-justify max-w-2xl">
               <p>
-                Inspirados por el Festival del Caimán Cienaguero y la leyenda de la pequeña Tomasita, Casa Origen celebra la resiliencia y la alegría de nuestro pueblo.
+                En Casa Origen, honramos el Festival del Caimán Cienaguero y la leyenda de la pequeña Tomasita. Aquí, la resiliencia se convierte en sabor y la alegría en hospitalidad.
               </p>
               <p>
-                Cada detalle de nuestro espacio, desde la arquitectura hasta el sabor de nuestros platos, es un tributo a la brisa que nos arrulla y a la historia que nos define.
+                Cada plato es un homenaje a los pescadores que cada mañana desafían las olas para traer el tesoro del Mar Caribe a nuestra cocina.
               </p>
             </div>
-            <Button asChild variant="link" className="text-primary p-0 text-2xl hover:no-underline flex items-center gap-4 group">
-              <Link href="/our-story" className="flex items-center gap-3">
+            <Button asChild variant="link" className="text-primary p-0 text-3xl hover:no-underline flex items-center gap-6 group">
+              <Link href="/our-story" className="flex items-center gap-4">
                 Nuestra Historia 
-                <span className="bg-primary/10 p-4 rounded-full group-hover:bg-primary group-hover:text-white transition-all">
-                  <Landmark size={24} />
+                <span className="bg-primary/10 p-6 rounded-full group-hover:bg-primary group-hover:text-white transition-all shadow-xl">
+                  <Landmark size={32} />
                 </span>
               </Link>
             </Button>
@@ -120,36 +118,60 @@ export default function Home() {
       </section>
 
       {/* GASTRONOMY / MENU PREVIEW */}
-      <section className="relative min-h-screen py-32 flex flex-col items-center justify-center">
+      <section className="relative min-h-screen py-40 bg-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-24 space-y-4">
-             <Badge className="bg-accent/10 text-accent hover:bg-accent/20 border-none px-6 py-2 text-sm uppercase tracking-widest font-bold">Gastronomía Caribeña</Badge>
-             <h2 className="text-6xl md:text-8xl font-bold font-headline">Sabores del Mar</h2>
+          <div className="text-center mb-32 space-y-6">
+             <Badge className="bg-primary/10 text-primary border-none px-8 py-3 text-xs uppercase tracking-[0.4em] font-black">Alta Gastronomía Caribeña</Badge>
+             <h2 className="text-7xl md:text-[10rem] font-bold font-headline tracking-tighter leading-none">Sabores del Mar</h2>
+             <p className="text-2xl text-foreground/50 italic font-light max-w-3xl mx-auto">
+               Un viaje sensorial a través de los ingredientes más frescos de la costa de Magdalena.
+             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-20">
              {[
-               { title: 'Tradición', icon: Anchor, desc: 'Recetas heredadas de generaciones de pescadores cienagueros.' },
-               { title: 'Frescura', icon: Waves, desc: 'Del mar a su mesa en menos de 24 horas. Calidad incomparable.' },
-               { title: 'Innovación', icon: Sparkles, desc: 'Técnicas modernas aplicadas a los ingredientes más nobles de nuestra costa.' }
+               { 
+                 title: 'Tradición', 
+                 icon: Anchor, 
+                 desc: 'Recetas secretas heredadas de generaciones, reinterpretadas con técnicas modernas.',
+                 color: 'primary' 
+               },
+               { 
+                 title: 'Origen', 
+                 icon: Waves, 
+                 desc: 'Apoyamos la pesca artesanal y sostenible, garantizando frescura y sabor real.',
+                 color: 'accent'
+               },
+               { 
+                 title: 'Innovación', 
+                 icon: Sparkles, 
+                 desc: 'La elegancia del Mediterráneo se fusiona con la explosividad del Caribe.',
+                 color: 'primary'
+               }
              ].map((item, i) => (
                <motion.div 
                  key={i}
-                 whileHover={{ y: -20 }}
-                 className="p-12 glass rounded-[3rem] space-y-8 text-center"
+                 whileHover={{ y: -30, rotate: i === 1 ? -1 : 1 }}
+                 className="p-16 rounded-[4rem] bg-secondary/10 border border-primary/5 space-y-10 text-center relative overflow-hidden group shadow-sm hover:shadow-2xl transition-all duration-500"
                >
-                 <div className="w-20 h-20 bg-primary/10 rounded-3xl flex items-center justify-center text-primary mx-auto">
-                    <item.icon size={40} />
+                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-[4rem]" />
+                 <div className="w-24 h-24 bg-white rounded-3xl flex items-center justify-center text-primary mx-auto shadow-xl group-hover:scale-110 transition-transform">
+                    <item.icon size={48} />
                  </div>
-                 <h3 className="text-3xl font-bold font-headline">{item.title}</h3>
-                 <p className="text-foreground/60 leading-relaxed">{item.desc}</p>
+                 <h3 className="text-4xl font-bold font-headline">{item.title}</h3>
+                 <p className="text-xl text-foreground/60 leading-relaxed italic">{item.desc}</p>
+                 <div className="pt-6">
+                    <div className="flex justify-center gap-1">
+                       {[1,2,3,4,5].map(s => <Star key={s} size={14} className="text-primary fill-primary opacity-20" />)}
+                    </div>
+                 </div>
                </motion.div>
              ))}
           </div>
           
-          <div className="mt-20 text-center">
-             <Button asChild size="lg" className="rounded-full px-12 h-16 text-xl">
-               <Link href="/menu">Ver Menú Completo</Link>
+          <div className="mt-32 text-center">
+             <Button asChild size="lg" className="rounded-full px-20 h-24 text-3xl font-bold shadow-2xl hover:scale-105 transition-all">
+               <Link href="/menu">Explorar el Banquete</Link>
              </Button>
           </div>
         </div>
@@ -158,25 +180,30 @@ export default function Home() {
       {/* FINAL CTA / SUNSET SCENE */}
       <section className="relative h-screen flex items-center justify-center bg-foreground overflow-hidden">
         {/* Abstract Sunset Glow */}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/20 via-transparent to-transparent opacity-50" />
-        <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/30 via-transparent to-transparent opacity-40" />
+        <Image 
+          src="https://picsum.photos/seed/casa-sunset/1920/1080" 
+          alt="Sunset" 
+          fill 
+          className="object-cover brightness-50 opacity-40 scale-110" 
+        />
         
-        <div className="container mx-auto px-4 relative z-10 text-center text-white">
+        <div className="container mx-auto px-4 relative z-10 text-center text-white space-y-16">
           <motion.h2 
-            whileInView={{ opacity: [0, 1], y: [40, 0] }}
-            className="text-7xl md:text-[10rem] font-bold font-headline mb-12 tracking-tight leading-none"
+            whileInView={{ opacity: [0, 1], y: [60, 0] }}
+            className="text-8xl md:text-[14rem] font-bold font-headline mb-12 tracking-tighter leading-[0.8]"
           >
-            Celebra la <br /> Brisa Marina
+            Donde Termina <br /> el Horizonte
           </motion.h2>
-          <p className="text-2xl md:text-3xl mb-16 max-w-3xl mx-auto opacity-70 font-light italic leading-relaxed">
-            "Donde el atardecer no es el final del día, sino el comienzo de una noche inolvidable en Casa Origen."
+          <p className="text-2xl md:text-4xl mb-16 max-w-4xl mx-auto opacity-80 font-light italic leading-relaxed">
+            "En Casa Origen, cada atardecer es una obra maestra y cada cena una celebración de la vida caribeña."
           </p>
-          <div className="flex flex-col sm:row gap-10 justify-center items-center">
-            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white px-20 py-10 text-3xl rounded-full shadow-2xl hover:scale-105 transition-all">
+          <div className="flex flex-col sm:flex-row gap-12 justify-center items-center">
+            <Button asChild size="lg" className="bg-primary hover:bg-white hover:text-primary text-white px-24 h-24 text-4xl rounded-full shadow-[0_30px_70px_-15px_rgba(183,157,132,0.8)] hover:scale-110 transition-all font-bold">
               <Link href="/reservations">Reservar Ahora</Link>
             </Button>
-            <Link href="/contact" className="text-white/60 hover:text-white transition-colors text-xl border-b border-white/20 pb-2">
-              Explorar Ubicación
+            <Link href="/contact" className="text-white/60 hover:text-white transition-all text-2xl border-b-2 border-white/20 pb-2 font-headline italic">
+              Nuestra Ubicación
             </Link>
           </div>
         </div>
