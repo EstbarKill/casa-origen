@@ -40,7 +40,7 @@
     --input: 30 20% 90%;
     --ring: 189 25% 54%;
     
-    --radius: 0.75rem;
+    --radius: 1rem;
   }
 }
 
@@ -49,9 +49,54 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground scroll-smooth;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-headline;
+    @apply font-headline tracking-tight;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/40 backdrop-blur-md border border-white/20;
+  }
+  
+  .section-padding {
+    @apply py-24 md:py-32;
+  }
+}
+
+/* Custom Scrollbar for Elegance */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-background;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/20 rounded-full hover:bg-primary/40 transition-colors;
+}
+
+/* Text Selection */
+::selection {
+  @apply bg-accent/20 text-foreground;
+}
+
+/* Animations refinement */
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
