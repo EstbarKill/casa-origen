@@ -1,0 +1,85 @@
+
+"use client";
+
+import { motion, useScroll, useTransform } from 'framer-motion';
+
+export function TomasitaMonument() {
+  const { scrollYProgress } = useScroll();
+
+  // Parallax effects
+  const yTomasita = useTransform(scrollYProgress, [0, 0.3], [0, -100]);
+  const yCaiman = useTransform(scrollYProgress, [0, 0.3, 0.5], [100, 0, -50]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1.2]);
+  const rotate = useTransform(scrollYProgress, [0, 0.5], [0, 5]);
+
+  return (
+    <motion.div 
+      style={{ scale, rotate }}
+      className="relative w-full max-w-2xl aspect-[3/4] mx-auto flex items-center justify-center pointer-events-none"
+    >
+      {/* Abstract Sun / Aura */}
+      <div className="absolute w-[120%] h-[120%] bg-gradient-to-tr from-primary/5 via-accent/10 to-transparent rounded-full blur-[80px]" />
+
+      {/* Decorative Floral / Seaweed Elements */}
+      <motion.div 
+        animate={{ rotate: 360 }}
+        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+        className="absolute inset-0 border-[1px] border-dashed border-primary/20 rounded-full"
+      />
+
+      {/* Tomasita Layer */}
+      <motion.div 
+        style={{ y: yTomasita }}
+        className="relative z-20 flex flex-col items-center"
+      >
+        <div className="w-48 h-80 bg-gradient-to-b from-secondary to-primary/40 rounded-t-full relative overflow-hidden shadow-2xl border-4 border-white/50">
+          {/* Symbolic representation of the girl */}
+          <div className="absolute top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-white/80 rounded-full" />
+          <div className="absolute top-32 left-1/2 -translate-x-1/2 w-32 h-40 bg-white/60 rounded-b-full" />
+        </div>
+        <div className="mt-4 bg-white/90 px-6 py-2 rounded-full shadow-lg border border-primary/10">
+           <span className="text-primary font-headline italic text-lg">Tomasita</span>
+        </div>
+      </motion.div>
+
+      {/* Caimán Layer */}
+      <motion.div 
+        style={{ y: yCaiman }}
+        className="absolute bottom-0 z-30"
+      >
+        <div className="w-96 h-32 bg-foreground/90 rounded-[3rem] relative overflow-hidden shadow-2xl border-t-4 border-accent/30">
+          {/* Eyes */}
+          <div className="absolute top-4 left-20 w-4 h-4 bg-accent rounded-full animate-pulse" />
+          <div className="absolute top-4 right-20 w-4 h-4 bg-accent rounded-full animate-pulse" />
+          {/* Scales pattern */}
+          <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+        </div>
+        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-accent text-white px-8 py-2 rounded-full font-headline font-bold text-xl tracking-widest shadow-xl">
+           LEYENDA DEL CAIMÁN
+        </div>
+      </motion.div>
+
+      {/* Floating Particles */}
+      {[...Array(8)].map((_, i) => (
+        <motion.div
+          key={i}
+          animate={{
+            y: [-20, 20, -20],
+            x: [-10, 10, -10],
+            opacity: [0.2, 0.5, 0.2]
+          }}
+          transition={{
+            duration: 3 + i,
+            repeat: Infinity,
+            delay: i * 0.5
+          }}
+          className="absolute w-2 h-2 bg-accent rounded-full blur-[1px]"
+          style={{
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+          }}
+        />
+      ))}
+    </motion.div>
+  );
+}
