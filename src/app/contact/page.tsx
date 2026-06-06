@@ -1,4 +1,3 @@
-
 "use client";
 
 import { motion } from 'framer-motion';
@@ -6,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
 import { MapPin, Phone, MessageCircle, Mail, Instagram, Facebook, Clock, Send } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
