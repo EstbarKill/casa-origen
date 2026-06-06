@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 
 export function Footer() {
   return (
-    <footer className="relative bg-[#0F172A] text-white pt-32 pb-12 overflow-hidden">
+    <footer className="relative z-50 bg-[#0F172A] text-white pt-32 pb-12 overflow-hidden border-t border-white/5">
       {/* Decorative Waves Overlay */}
       <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-primary via-accent to-primary opacity-30" />
       

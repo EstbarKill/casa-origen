@@ -7,9 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { Waves, User, Calendar as CalendarIcon, Clock, CheckCircle2, Info, Send, Phone, MessageSquare } from 'lucide-react';
+import { Waves, User, Calendar as CalendarIcon, Clock, CheckCircle2, Send, Phone, MessageSquare } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -108,38 +108,38 @@ export default function ReservationsPage() {
   return (
     <div className="min-h-screen pt-32 pb-32 bg-[#F9F6F2]/50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-24 space-y-6">
+        <div className="text-center mb-20 space-y-6">
           <Badge className="bg-primary/10 text-primary px-8 py-3 uppercase tracking-[0.4em] text-[10px] font-black border-none">Reserva Tu Momento</Badge>
-          <h1 className="text-7xl md:text-9xl font-headline font-bold tracking-tighter">Donde el cielo besa el mar</h1>
-          <p className="text-2xl text-foreground/40 max-w-3xl mx-auto italic font-light">
-            Selecciona tu ubicación privilegiada y permítenos preparar la mesa para tu llegada.
+          <h1 className="text-6xl md:text-8xl font-headline font-bold tracking-tighter">Elige tu ubicación</h1>
+          <p className="text-xl text-foreground/40 max-w-2xl mx-auto italic font-light">
+            Selecciona tu lugar privilegiado y permítenos preparar la mesa para tu llegada.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-12 items-start">
           {/* Calendar & Time Selection */}
-          <div className="lg:col-span-4 space-y-8">
-            <Card className="rounded-[3rem] border-none shadow-[0_30px_60px_-15px_rgba(0,0,0,0.05)] overflow-hidden bg-white">
-              <CardContent className="p-8 space-y-8">
-                <div className="space-y-4">
+          <div className="xl:col-span-4 space-y-8">
+            <Card className="rounded-[3rem] border-none shadow-xl overflow-hidden bg-white">
+              <CardContent className="p-10 space-y-10">
+                <div className="space-y-6">
                   <h3 className="text-2xl font-headline font-bold flex items-center gap-3">
-                    <CalendarIcon className="text-primary" /> 1. Elige la Fecha
+                    <CalendarIcon className="text-primary" /> 1. Fecha
                   </h3>
-                  <div className="border rounded-3xl p-4 bg-secondary/5">
+                  <div className="border rounded-[2rem] p-4 bg-secondary/5 flex justify-center">
                     <Calendar
                       mode="single"
                       selected={date}
                       onSelect={setDate}
-                      className="w-full"
+                      className="w-full max-w-full"
                       locale={es}
-                      disabled={(date) => date < new Date() || date < new Date("1900-01-01")}
+                      disabled={(date) => date < new Date()}
                     />
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-6">
                   <h3 className="text-2xl font-headline font-bold flex items-center gap-3">
-                    <Clock className="text-primary" /> 2. Elige la Hora
+                    <Clock className="text-primary" /> 2. Horario
                   </h3>
                   <div className="grid grid-cols-2 gap-3">
                     {TIME_SLOTS.map(slot => (
@@ -147,7 +147,7 @@ export default function ReservationsPage() {
                         key={slot}
                         variant={selectedTime === slot ? "default" : "outline"}
                         onClick={() => setSelectedTime(slot)}
-                        className={`rounded-2xl h-12 text-xs font-bold transition-all ${selectedTime === slot ? 'bg-primary shadow-lg scale-105' : 'hover:border-primary/40'}`}
+                        className={`rounded-2xl h-14 text-sm font-bold transition-all ${selectedTime === slot ? 'bg-primary shadow-lg' : 'hover:border-primary/40'}`}
                       >
                         {slot}
                       </Button>
@@ -159,10 +159,10 @@ export default function ReservationsPage() {
           </div>
 
           {/* Table Map Selection */}
-          <div className="lg:col-span-8 space-y-12">
+          <div className="xl:col-span-8 space-y-8">
             <div className="relative aspect-[16/10] bg-white rounded-[4rem] shadow-2xl overflow-hidden border-[12px] border-white p-12 group">
                {/* Sea Visual Side */}
-               <div className="absolute top-0 left-0 bottom-0 w-32 bg-accent/5 flex flex-col items-center justify-center gap-6 text-accent/40 overflow-hidden">
+               <div className="absolute top-0 left-0 bottom-0 w-24 md:w-32 bg-accent/5 flex flex-col items-center justify-center gap-6 text-accent/40 overflow-hidden">
                   <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 4 }}>
                     <Waves size={40} className="opacity-20" />
                   </motion.div>
@@ -192,7 +192,7 @@ export default function ReservationsPage() {
                </div>
 
                {/* Map Key */}
-               <div className="absolute bottom-8 right-8 flex gap-6 bg-white/80 backdrop-blur px-6 py-3 rounded-full border shadow-sm">
+               <div className="absolute bottom-8 right-8 flex gap-4 md:gap-6 bg-white/80 backdrop-blur px-6 py-3 rounded-full border shadow-sm">
                   <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest"><div className="w-3 h-3 bg-primary rounded-full" /> Seleccionada</div>
                   <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest"><div className="w-3 h-3 bg-secondary/40 rounded-full" /> Disponible</div>
                </div>
@@ -205,21 +205,21 @@ export default function ReservationsPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 20 }}
-                  className="bg-foreground text-white p-12 rounded-[4rem] shadow-2xl flex flex-col md:row items-center justify-between gap-10 border-t-8 border-primary"
+                  className="bg-foreground text-white p-10 rounded-[3rem] shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8 border-t-8 border-primary"
                 >
-                  <div className="space-y-4 text-center md:text-left">
+                  <div className="space-y-3 text-center md:text-left">
                     <div className="flex gap-2 justify-center md:justify-start">
                        <Badge className="bg-primary/20 text-primary border-none">{selectedTable.type}</Badge>
-                       <Badge className="bg-white/10 text-white border-none">{selectedTime || 'Selecciona hora'}</Badge>
+                       <Badge className="bg-white/10 text-white border-none">{selectedTime || 'Elige hora'}</Badge>
                     </div>
-                    <h3 className="text-4xl font-headline font-bold">Mesa para {selectedTable.capacity} en la Zona {selectedTable.type}</h3>
-                    <p className="text-white/50 italic text-xl">"{selectedTable.desc}"</p>
+                    <h3 className="text-3xl font-headline font-bold">Mesa para {selectedTable.capacity} - Zona {selectedTable.type}</h3>
+                    <p className="text-white/50 italic text-lg">"{selectedTable.desc}"</p>
                   </div>
                   <Button 
                     onClick={handleOpenModal}
-                    className="w-full md:w-auto h-20 px-16 bg-primary hover:bg-white hover:text-primary text-white text-2xl font-bold rounded-3xl shadow-2xl transition-all"
+                    className="w-full md:w-auto h-16 px-12 bg-primary hover:bg-white hover:text-primary text-white text-xl font-bold rounded-2xl shadow-2xl transition-all"
                   >
-                    Confirmar mi Reserva <Send size={24} className="ml-4" />
+                    Confirmar Reserva <Send size={20} className="ml-3" />
                   </Button>
                 </motion.div>
               )}
@@ -230,29 +230,29 @@ export default function ReservationsPage() {
 
       {/* Reservation Details Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="sm:max-w-[600px] p-0 overflow-hidden border-none rounded-[3rem] bg-white">
-          <div className="bg-primary h-32 flex items-center justify-center text-white relative">
-            <DialogHeader className="text-center">
-              <DialogTitle className="text-4xl font-headline font-bold">Check-in Gastronómico</DialogTitle>
-              <DialogDescription className="text-white/70 italic">Casi listo para tu experiencia en Casa Origen</DialogDescription>
-            </DialogHeader>
+        <DialogContent className="sm:max-w-[550px] p-0 overflow-hidden border-none rounded-[3rem] bg-white">
+          <div className="bg-primary h-28 flex items-center justify-center text-white text-center p-6">
+            <div>
+              <DialogTitle className="text-3xl font-headline font-bold">Check-in Gastronómico</DialogTitle>
+              <DialogDescription className="text-white/70 italic text-sm">Casi listo para tu experiencia en Casa Origen</DialogDescription>
+            </div>
           </div>
           
-          <form onSubmit={handleConfirmReservation} className="p-10 space-y-8">
+          <form onSubmit={handleConfirmReservation} className="p-8 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-3">
-                <Label htmlFor="res-name" className="text-xs font-black uppercase tracking-widest text-foreground/40">Nombre Completo</Label>
+              <div className="space-y-2">
+                <Label htmlFor="res-name" className="text-[10px] font-black uppercase tracking-widest text-foreground/40 ml-1">Nombre Completo</Label>
                 <Input 
                   id="res-name" 
-                  placeholder="Ej: Tomasita García" 
+                  placeholder="Tomasita García" 
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
                   required 
-                  className="h-14 rounded-2xl bg-secondary/10 border-none focus-visible:ring-primary"
+                  className="h-12 rounded-xl bg-secondary/10 border-none focus-visible:ring-primary"
                 />
               </div>
-              <div className="space-y-3">
-                <Label htmlFor="res-phone" className="text-xs font-black uppercase tracking-widest text-foreground/40">WhatsApp / Teléfono</Label>
+              <div className="space-y-2">
+                <Label htmlFor="res-phone" className="text-[10px] font-black uppercase tracking-widest text-foreground/40 ml-1">WhatsApp</Label>
                 <Input 
                   id="res-phone" 
                   type="tel" 
@@ -260,17 +260,17 @@ export default function ReservationsPage() {
                   value={formData.phone}
                   onChange={(e) => setFormData({...formData, phone: e.target.value})}
                   required 
-                  className="h-14 rounded-2xl bg-secondary/10 border-none focus-visible:ring-primary"
+                  className="h-12 rounded-xl bg-secondary/10 border-none focus-visible:ring-primary"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-3">
-                <Label className="text-xs font-black uppercase tracking-widest text-foreground/40">N° de Comensales</Label>
+              <div className="space-y-2">
+                <Label className="text-[10px] font-black uppercase tracking-widest text-foreground/40 ml-1">Comensales</Label>
                 <Select onValueChange={(val) => setFormData({...formData, guests: val})}>
-                  <SelectTrigger className="h-14 rounded-2xl bg-secondary/10 border-none">
-                    <SelectValue placeholder={`Capacidad mesa: ${selectedTable?.capacity}`} />
+                  <SelectTrigger className="h-12 rounded-xl bg-secondary/10 border-none">
+                    <SelectValue placeholder={`Capacidad: ${selectedTable?.capacity}`} />
                   </SelectTrigger>
                   <SelectContent>
                     {[1,2,3,4,5,6,7,8].map(n => (
@@ -279,10 +279,10 @@ export default function ReservationsPage() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-3">
-                <Label className="text-xs font-black uppercase tracking-widest text-foreground/40">Ocasión (Opcional)</Label>
+              <div className="space-y-2">
+                <Label className="text-[10px] font-black uppercase tracking-widest text-foreground/40 ml-1">Ocasión</Label>
                 <Select>
-                  <SelectTrigger className="h-14 rounded-2xl bg-secondary/10 border-none">
+                  <SelectTrigger className="h-12 rounded-xl bg-secondary/10 border-none">
                     <SelectValue placeholder="Cena casual" />
                   </SelectTrigger>
                   <SelectContent>
@@ -295,25 +295,25 @@ export default function ReservationsPage() {
               </div>
             </div>
 
-            <div className="space-y-3">
-              <Label htmlFor="res-notes" className="text-xs font-black uppercase tracking-widest text-foreground/40">Notas o Solicitudes Especiales</Label>
+            <div className="space-y-2">
+              <Label htmlFor="res-notes" className="text-[10px] font-black uppercase tracking-widest text-foreground/40 ml-1">Notas Especiales</Label>
               <Textarea 
                 id="res-notes" 
-                placeholder="Alergias, preferencia de ubicación específica..." 
+                placeholder="Alergias o solicitudes específicas..." 
                 value={formData.notes}
                 onChange={(e) => setFormData({...formData, notes: e.target.value})}
-                className="min-h-[120px] rounded-3xl bg-secondary/10 border-none p-6"
+                className="min-h-[100px] rounded-2xl bg-secondary/10 border-none p-4 text-sm"
               />
             </div>
 
-            <div className="pt-4 space-y-4">
-              <div className="flex items-center gap-4 p-4 bg-accent/5 rounded-2xl border border-accent/10">
-                <MessageSquare className="text-accent" />
-                <p className="text-[10px] text-accent font-bold uppercase tracking-widest">Se enviará un resumen automático a nuestro equipo vía WhatsApp</p>
-              </div>
-              <Button type="submit" className="w-full h-20 rounded-3xl bg-primary hover:bg-foreground text-white text-xl font-bold shadow-2xl transition-all">
+            <div className="pt-2">
+              <Button type="submit" className="w-full h-16 rounded-2xl bg-primary hover:bg-foreground text-white text-lg font-bold shadow-xl transition-all">
                  Finalizar y Enviar a WhatsApp
               </Button>
+              <div className="flex items-center justify-center gap-2 mt-4 text-accent">
+                <MessageSquare size={14} />
+                <p className="text-[10px] font-bold uppercase tracking-widest">Resumen automático vía WhatsApp</p>
+              </div>
             </div>
           </form>
         </DialogContent>
