@@ -2,175 +2,142 @@
 "use client";
 
 import { useState } from 'react';
-import { Calendar } from '@/components/ui/calendar';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { CheckCircle2, Waves, Users, Clock, CalendarIcon, Heart } from 'lucide-react';
+import { Waves, User, Calendar as CalendarIcon, Clock, CheckCircle2, Info } from 'lucide-react';
+import { Calendar } from '@/components/ui/calendar';
 
-const TIMES = ["12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM"];
-const OCCASIONS = ["Just Dining", "Birthday", "Anniversary", "Romantic Dinner", "Corporate Event", "Other"];
+const TABLES = [
+  { id: 1, type: 'Beachfront', x: 20, y: 20, capacity: 4, desc: 'Vista directa al Caribe' },
+  { id: 2, type: 'Beachfront', x: 20, y: 50, capacity: 2, desc: 'Perfecta para parejas' },
+  { id: 3, type: 'Sunset', x: 50, y: 20, capacity: 6, desc: 'Mejor vista al atardecer' },
+  { id: 4, type: 'VIP', x: 80, y: 30, capacity: 4, desc: 'Privacidad y lujo' },
+  { id: 5, type: 'Family', x: 50, y: 80, capacity: 8, desc: 'Espacio para grandes momentos' },
+  { id: 6, type: 'Romantic', x: 80, y: 70, capacity: 2, desc: 'Iluminación tenue' },
+];
 
 export default function ReservationsPage() {
+  const [selectedTable, setSelectedTable] = useState<typeof TABLES[0] | null>(null);
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitted(true);
-      toast({
-        title: 'Reservation Confirmed',
-        description: 'Check your email and WhatsApp for details.',
-      });
-    }, 1000);
+  const handleConfirm = () => {
+    if (!selectedTable) return;
+    setIsSubmitted(true);
+    toast({
+      title: 'Reserva Confirmada',
+      description: `Mesa ${selectedTable.type} asegurada para ti.`,
+    });
   };
 
   if (isSubmitted) {
     return (
-      <div className="container mx-auto px-4 py-32 flex flex-col items-center text-center">
-        <div className="bg-primary/20 p-8 rounded-full mb-8 animate-bounce">
+      <div className="container mx-auto px-4 py-32 text-center space-y-8">
+        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="bg-primary/20 w-32 h-32 rounded-full flex items-center justify-center mx-auto">
           <CheckCircle2 size={64} className="text-primary" />
-        </div>
-        <h1 className="text-5xl font-bold font-headline mb-4">Reservation Confirmed!</h1>
-        <p className="text-xl text-foreground/70 max-w-md mx-auto mb-12">
-          Thank you for choosing Casa Origen. We've sent a confirmation to your email and WhatsApp. We look forward to seeing you soon.
-        </p>
-        <Button onClick={() => window.location.href = '/'} variant="outline" className="border-primary text-primary">
-          Return to Home
-        </Button>
+        </motion.div>
+        <h1 className="text-6xl font-headline font-bold">¡Tu lugar te espera!</h1>
+        <p className="text-2xl text-foreground/60 italic">"La brisa de Ciénaga ya está llamándote."</p>
+        <Button onClick={() => window.location.href = '/'}>Volver al inicio</Button>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-muted/30">
-      <div className="container mx-auto px-4 py-24">
-        <div className="text-center mb-16 space-y-4">
-          <h1 className="text-5xl font-bold font-headline">Reserve a Table</h1>
-          <p className="text-foreground/70 text-lg max-w-2xl mx-auto">
-            Experience the coastal elegance of Ciénaga. Secure your spot at Casa Origen for an unforgettable gastronomic journey.
-          </p>
+    <div className="min-h-screen pt-24 pb-32">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-24 space-y-4">
+          <Badge className="bg-primary/10 text-primary px-6 py-2 uppercase tracking-widest">Experiencia VIP</Badge>
+          <h1 className="text-7xl font-headline font-bold">Elige tu lugar en el Paraíso</h1>
+          <p className="text-xl text-foreground/50 max-w-2xl mx-auto italic">Selecciona tu mesa preferida en nuestro plano interactivo.</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
+          {/* Plan Section */}
           <div className="lg:col-span-2 space-y-8">
-            <Card className="border-none shadow-xl overflow-hidden rounded-3xl">
-              <CardContent className="p-8 space-y-6">
-                <div className="flex items-center gap-4">
-                  <div className="bg-primary/10 p-3 rounded-2xl text-primary">
-                    <CalendarIcon size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg">Select Date</h3>
-                    <p className="text-sm text-foreground/50">Pick your preferred dining day</p>
-                  </div>
-                </div>
-                <Calendar
-                  mode="single"
-                  selected={date}
-                  onSelect={setDate}
-                  className="rounded-md border mx-auto bg-white"
-                />
-              </CardContent>
-            </Card>
-
-            <div className="bg-primary text-white p-8 rounded-3xl space-y-4 shadow-lg">
-              <Heart size={32} />
-              <h3 className="text-2xl font-bold font-headline">Special Requests?</h3>
-              <p className="opacity-90 leading-relaxed">
-                Celebrating something special? Let us know! From customized menus to decoration, we make your moments unique.
-              </p>
+            <div className="relative aspect-[16/10] bg-white rounded-[4rem] shadow-2xl overflow-hidden border-8 border-white p-12">
+               {/* Sea Visual Side */}
+               <div className="absolute top-0 left-0 bottom-0 w-24 bg-accent/10 flex flex-col items-center justify-center gap-4 text-accent">
+                  <Waves size={32} className="animate-pulse" />
+                  <span className="[writing-mode:vertical-lr] font-bold tracking-[0.5em] uppercase text-xs">Mar Caribe</span>
+               </div>
+               
+               {/* Tables Layout */}
+               <div className="relative w-full h-full">
+                  {TABLES.map(table => (
+                    <motion.button
+                      key={table.id}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setSelectedTable(table)}
+                      style={{ left: `${table.x}%`, top: `${table.y}%` }}
+                      className={`absolute w-16 h-16 rounded-2xl flex items-center justify-center transition-all shadow-lg border-2 ${
+                        selectedTable?.id === table.id 
+                        ? 'bg-primary text-white border-primary ring-4 ring-primary/20' 
+                        : 'bg-secondary/40 text-foreground/40 border-muted hover:bg-secondary hover:border-primary/20'
+                      }`}
+                    >
+                      <User size={24} />
+                      <span className="absolute -top-2 -right-2 bg-white text-primary text-[10px] font-bold px-1.5 rounded-full border">x{table.capacity}</span>
+                    </motion.button>
+                  ))}
+               </div>
+            </div>
+            
+            <div className="flex gap-4 items-center justify-center text-xs text-foreground/40 font-bold uppercase tracking-widest">
+              <span className="flex items-center gap-2"><div className="w-3 h-3 bg-primary rounded-sm" /> Seleccionada</span>
+              <span className="flex items-center gap-2"><div className="w-3 h-3 bg-secondary rounded-sm" /> Disponible</span>
             </div>
           </div>
 
-          <Card className="lg:col-span-3 border-none shadow-2xl rounded-3xl overflow-hidden bg-white">
-            <CardContent className="p-10">
-              <form onSubmit={handleSubmit} className="space-y-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="space-y-3">
-                    <Label className="text-md font-semibold">Full Name</Label>
-                    <Input placeholder="John Doe" required className="h-12 text-lg border-muted" />
-                  </div>
-                  <div className="space-y-3">
-                    <Label className="text-md font-semibold">Phone Number</Label>
-                    <Input placeholder="+57 ..." required className="h-12 text-lg border-muted" />
-                  </div>
-                </div>
+          {/* Details & Form */}
+          <div className="space-y-8">
+            <Card className="rounded-[3rem] border-none shadow-xl overflow-hidden">
+              <CardContent className="p-10 space-y-8">
+                <AnimatePresence mode="wait">
+                  {selectedTable ? (
+                    <motion.div 
+                      key={selectedTable.id}
+                      initial={{ opacity: 0, x: 20 }} 
+                      animate={{ opacity: 1, x: 0 }}
+                      className="space-y-6"
+                    >
+                      <Badge className="bg-accent/10 text-accent">{selectedTable.type}</Badge>
+                      <h3 className="text-3xl font-headline font-bold">Mesa para {selectedTable.capacity} personas</h3>
+                      <p className="text-foreground/60 italic">"{selectedTable.desc}"</p>
+                      
+                      <div className="pt-6 border-t space-y-6">
+                        <div className="space-y-2">
+                           <label className="text-xs font-bold uppercase tracking-widest text-foreground/40">Fecha y Hora</label>
+                           <div className="flex gap-4">
+                              <Button variant="outline" className="flex-1 rounded-xl h-12"><CalendarIcon size={16} className="mr-2" /> Hoy</Button>
+                              <Button variant="outline" className="flex-1 rounded-xl h-12"><Clock size={16} className="mr-2" /> 7:00 PM</Button>
+                           </div>
+                        </div>
+                        <Button onClick={handleConfirm} className="w-full h-16 text-lg rounded-2xl bg-primary text-white shadow-xl hover:scale-105 transition-transform">
+                          Confirmar mi Lugar
+                        </Button>
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <div className="h-64 flex flex-col items-center justify-center text-center space-y-4 text-foreground/30">
+                      <Info size={48} />
+                      <p className="font-headline italic text-lg">Por favor, selecciona una mesa en el mapa para continuar.</p>
+                    </div>
+                  )}
+                </AnimatePresence>
+              </CardContent>
+            </Card>
 
-                <div className="space-y-3">
-                  <Label className="text-md font-semibold">Email Address</Label>
-                  <Input type="email" placeholder="john@example.com" required className="h-12 text-lg border-muted" />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  <div className="space-y-3">
-                    <Label className="text-md font-semibold flex items-center gap-2">
-                      <Users size={16} /> Guests
-                    </Label>
-                    <Select defaultValue="2">
-                      <SelectTrigger className="h-12 text-lg border-muted">
-                        <SelectValue placeholder="2 People" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {[1,2,3,4,5,6,7,8,10].map(n => (
-                          <SelectItem key={n} value={n.toString()}>{n} People</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-3">
-                    <Label className="text-md font-semibold flex items-center gap-2">
-                      <Clock size={16} /> Time
-                    </Label>
-                    <Select required>
-                      <SelectTrigger className="h-12 text-lg border-muted">
-                        <SelectValue placeholder="Select Time" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {TIMES.map(t => (
-                          <SelectItem key={t} value={t}>{t}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-3">
-                    <Label className="text-md font-semibold flex items-center gap-2">
-                      <Heart size={16} /> Occasion
-                    </Label>
-                    <Select defaultValue="Just Dining">
-                      <SelectTrigger className="h-12 text-lg border-muted">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {OCCASIONS.map(o => (
-                          <SelectItem key={o} value={o}>{o}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div className="space-y-3">
-                  <Label className="text-md font-semibold">Special Instructions</Label>
-                  <Input placeholder="Allergies, high chair, window seat..." className="h-12 text-lg border-muted" />
-                </div>
-
-                <Button type="submit" className="w-full h-16 text-xl bg-primary hover:bg-primary/90 text-white rounded-2xl shadow-lg transition-transform hover:scale-[1.01] active:scale-[0.99]">
-                  Confirm Reservation
-                </Button>
-                
-                <p className="text-center text-sm text-foreground/50">
-                  By booking, you agree to our terms of service and reservation policy.
-                </p>
-              </form>
-            </CardContent>
-          </Card>
+            <div className="bg-accent/10 p-8 rounded-[3rem] border border-accent/20">
+               <h4 className="font-headline font-bold text-xl mb-4 text-accent">Beneficio Exclusivo</h4>
+               <p className="text-sm text-accent/80">Reservar en línea te otorga acceso prioritario y un cóctel de bienvenida artesanal inspirado en Tomasita.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

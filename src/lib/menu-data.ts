@@ -8,6 +8,7 @@ export interface MenuItem {
   rating: number;
   description: string;
   fullDescription: string;
+  culturalStory: string;
   ingredients: string[];
   preparation: string;
   prepTime: string;
@@ -24,12 +25,13 @@ export const MENU_ITEMS: MenuItem[] = [
     image: 'https://picsum.photos/seed/casa-10/800/800',
     rating: 5,
     description: 'Nuestra joya de la corona: una sinfonía de mariscos frescos en base de coco artesanal.',
-    fullDescription: 'Una receta ancestral que combina la frescura del Mar Caribe con la cremosidad del coco de nuestras palmeras. Cocción lenta en vasija de barro para preservar los aromas del océano.',
-    ingredients: ['Langostinos del Pacífico', 'Calamar nacional', 'Caracol pala', 'Leche de coco fresca', 'Ají dulce cienaguero'],
+    fullDescription: 'Una receta ancestral que combina la frescura del Mar Caribe con la cremosidad del coco de nuestras palmeras.',
+    culturalStory: 'Esta cazuela rinde homenaje a los pescadores de la Ciénaga Grande, quienes por generaciones han traído el sustento del mar bajo la primera luz del alba.',
+    ingredients: ['Langostinos del Pacífico', 'Calamar nacional', 'Caracol pala', 'Leche de coco fresca', 'Ají dulce'],
     preparation: 'Gourmet / Tradicional',
     prepTime: '25 min',
-    pairings: [{ name: 'Limonada de Coco', type: 'Drink' }, { name: 'Vino Blanco Chardonay', type: 'Wine' }],
-    tags: ['Popular', 'Signature Dish', 'Local Favorite']
+    pairings: [{ name: 'Limonada de Coco', type: 'Drink' }],
+    tags: ['Popular', 'Signature']
   },
   {
     id: 2,
@@ -39,68 +41,25 @@ export const MENU_ITEMS: MenuItem[] = [
     image: 'https://picsum.photos/seed/casa-11/800/800',
     rating: 5,
     description: 'Mojarra fresca frita en leña, acompañada de arroz de coco y patacón.',
-    fullDescription: 'El plato más honesto de nuestra costa. Mojarra seleccionada del día, frita a fuego alto para lograr una piel crujiente y una carne jugosa.',
-    ingredients: ['Mojarra roja/plateada', 'Sal marina', 'Limón mandarina', 'Arroz de coco titoté'],
+    fullDescription: 'El plato más honesto de nuestra costa. Mojarra seleccionada del día, frita a fuego alto.',
+    culturalStory: 'Inspirada en los almuerzos familiares tras el Festival del Caimán, donde la sencillez del pescado frito celebra la abundancia de nuestra costa.',
+    ingredients: ['Mojarra roja', 'Sal marina', 'Limón mandarina', 'Arroz de coco'],
     preparation: 'Clásica Costeña',
     prepTime: '20 min',
-    pairings: [{ name: 'Cerveza Águila Original', type: 'Beer' }, { name: 'Corozo Frozen', type: 'Drink' }],
+    pairings: [{ name: 'Corozo Frozen', type: 'Drink' }],
     tags: ['Traditional']
   },
   {
     id: 3,
-    name: 'Alitas Caimán en Tamarindo',
-    price: 26000,
-    category: 'Appetizers',
-    image: 'https://picsum.photos/seed/casa-12/800/800',
-    rating: 4,
-    description: 'Alitas crocantes glaseadas en reducción de tamarindo cienaguero.',
-    fullDescription: 'Un balance perfecto entre lo dulce y lo ácido. El tamarindo de nuestras tierras se convierte en un glaseado brillante que envuelve alitas seleccionadas.',
-    ingredients: ['Alitas de pollo', 'Pulpa de tamarindo', 'Panela orgánica', 'Toque de picante local'],
-    preparation: 'Fusión',
-    prepTime: '15 min',
-    pairings: [{ name: 'Brisa del Caribe', type: 'Cocktail' }],
-    tags: ['Spicy', 'Chef Choice']
-  },
-  {
-    id: 4,
-    name: 'Limonada de Coco Imperial',
-    price: 15000,
-    category: 'Drinks',
-    image: 'https://picsum.photos/seed/casa-13/800/800',
-    rating: 5,
-    description: 'Nuestra limonada insignia, ultra cremosa y refrescante.',
-    fullDescription: 'No es solo una bebida, es un postre líquido. Mezcla secreta de tres tipos de coco y limones verdes de la región.',
-    ingredients: ['Crema de coco', 'Leche evaporada', 'Zumo de limón fresco', 'Hielo frappé'],
-    preparation: 'Artesanal',
-    prepTime: '5 min',
-    pairings: [],
-    tags: ['Local Favorite']
-  },
-  {
-    id: 5,
-    name: 'Punta de Anca al Carbón',
-    price: 48000,
-    category: 'Grill',
-    image: 'https://picsum.photos/seed/casa-14/800/800',
-    rating: 5,
-    description: 'Corte premium asado lentamente a la parrilla de leña.',
-    fullDescription: 'Carne madurada por 21 días, sazonada con sal marina y asada con madera de guayacán para un sabor ahumado único.',
-    ingredients: ['Corte Punta de Anca 350g', 'Sal parrillera', 'Chimichurri de la casa'],
-    preparation: 'Grill Master',
-    prepTime: '30 min',
-    pairings: [{ name: 'Vino Tinto Malbec', type: 'Wine' }],
-    tags: ['Meat Lovers']
-  },
-  {
-    id: 6,
-    name: 'Brisa del Caribe (Signature)',
+    name: 'Cóctel Tomasita',
     price: 28000,
     category: 'Cocktails',
     image: 'https://picsum.photos/seed/casa-16/800/800',
     rating: 5,
-    description: 'Gin, maracuyá, menta y un toque secreto de la brisa marina.',
-    fullDescription: 'Inspirado en los atardeceres de Ciénaga. Un cóctel botánico que limpia el paladar y refresca el alma.',
-    ingredients: ['Tanqueray Gin', 'Pulpa de maracuyá', 'Jarabe de menta', 'Agua tónica premium'],
+    description: 'Gin, maracuyá, menta y un toque secreto cítrico.',
+    fullDescription: 'Un cóctel botánico que limpia el paladar y refresca el alma.',
+    culturalStory: 'Creado en honor a la leyenda de Tomasita, este cóctel busca capturar la alegría y el misterio del atardecer cienaguero.',
+    ingredients: ['Tanqueray Gin', 'Maracuyá', 'Menta fresca', 'Agua tónica'],
     preparation: 'Mixología',
     prepTime: '8 min',
     pairings: [],

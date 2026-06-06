@@ -5,71 +5,70 @@
 
 @layer base {
   :root {
-    /* Bone White / Sand Palette */
+    /* Base Bone White */
     --background: 40 40% 97%;
     --foreground: 25 24% 28%;
-    
-    --card: 40 40% 97%;
-    --card-foreground: 25 24% 28%;
-    
-    --popover: 40 40% 97%;
-    --popover-foreground: 25 24% 28%;
-    
-    --primary: 30 25% 62%; /* Sand Brown #B79D84 */
-    --primary-foreground: 40 40% 97%;
-    
-    --secondary: 32 25% 86%; /* Soft Beige #E8DDD1 */
-    --secondary-foreground: 25 24% 28%;
-    
-    --muted: 33 28% 93%;
-    --muted-foreground: 25 15% 45%;
-    
-    --accent: 189 25% 54%; /* Caribbean Sea #6E9FA8 */
-    --accent-foreground: 40 40% 97%;
-    
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    
-    --border: 30 20% 90%;
-    --input: 30 20% 90%;
-    --ring: 189 25% 54%;
-    
+    --primary: 30 25% 62%;
+    --secondary: 32 25% 86%;
+    --accent: 189 25% 54%;
     --radius: 1.5rem;
+    
+    /* Atmosphere Transitions */
+    --atmosphere-blend: 0%;
+  }
+
+  [data-atmosphere='morning'] {
+    --background: 40 40% 97%;
+    --accent: 189 25% 54%; /* Caribbean Blue */
+  }
+
+  [data-atmosphere='sunset'] {
+    --background: 30 30% 92%;
+    --primary: 25 60% 50%; /* Golden Sun */
+    --accent: 15 50% 60%; /* Orange Glow */
+  }
+
+  [data-atmosphere='night'] {
+    --background: 220 20% 15%;
+    --foreground: 40 40% 95%;
+    --card: 220 20% 20%;
+    --primary: 30 20% 40%;
+    --accent: 200 30% 60%; /* Moonlight */
+    --border: 220 20% 25%;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
   body {
-    @apply bg-background text-foreground scroll-smooth overflow-x-hidden;
-    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
-  }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-headline tracking-tight;
+    @apply bg-background text-foreground transition-colors duration-1000 ease-in-out font-body antialiased overflow-x-hidden;
   }
 }
 
-@layer components {
-  .glass {
-    @apply bg-white/40 backdrop-blur-xl border border-white/20 shadow-xl;
-  }
-  
-  .luxury-button-shadow {
-    box-shadow: 0 20px 50px rgba(183, 157, 132, 0.2);
-  }
+.atmosphere-root {
+  @apply min-h-screen relative;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  @apply bg-background;
-}
-::-webkit-scrollbar-thumb {
-  @apply bg-primary/30 rounded-full;
+/* Breeze Animation */
+@keyframes breeze {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(10px, 5px) rotate(1deg); }
 }
 
-/* Custom fonts are loaded in layout.tsx */
+.breeze-element {
+  animation: breeze 8s ease-in-out infinite;
+}
+
+/* Floating Particles */
+.particles-container {
+  @apply fixed inset-0 pointer-events-none z-[1];
+}
+
+@keyframes float {
+  from { transform: translateY(100vh) translateX(-20px); opacity: 0; }
+  to { transform: translateY(-10vh) translateX(20px); opacity: 0.5; }
+}
+
+.particle {
+  @apply absolute bg-primary/20 rounded-full blur-[1px];
+  animation: float linear infinite;
+}
