@@ -11,7 +11,7 @@ import { TomasitaMonument } from '@/components/visuals/TomasitaMonument';
 import { CaimanMascot } from '@/components/visuals/CaimanMascot';
 import { DiscoverySystem } from '@/components/visuals/DiscoverySystem';
 import { useAtmosphere } from '@/components/visuals/AtmosphereProvider';
-import { ArrowRight, Sparkles, Waves, Anchor, Landmark, Utensils, Star } from 'lucide-react';
+import { ArrowRight, Sparkles, Waves, Anchor, Landmark, Utensils, Star, MapPin } from 'lucide-react';
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
@@ -19,6 +19,11 @@ export default function Home() {
 
   const heroY = useTransform(scrollYProgress, [0, 0.2], [0, -50]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
+
+  const triggerDiscovery = (id: string) => {
+    const el = document.getElementById(`trigger-${id}`);
+    if (el) el.click();
+  };
 
   return (
     <div className="relative min-h-[400vh]">
@@ -82,6 +87,15 @@ export default function Home() {
         <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
           <div className="order-2 lg:order-1 relative">
             <TomasitaMonument />
+            {/* Secret Discovery Trigger 1 */}
+            <motion.div 
+              whileHover={{ scale: 1.2 }}
+              onClick={() => triggerDiscovery('legend')}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 cursor-pointer z-50 rounded-full bg-primary/5 hover:bg-primary/20 flex items-center justify-center group"
+            >
+              <Sparkles className="text-primary opacity-0 group-hover:opacity-100 transition-opacity" size={40} />
+            </motion.div>
+            
             <div className="absolute -bottom-10 -right-10 bg-white p-8 rounded-[2rem] shadow-2xl space-y-2 border border-primary/10 hidden md:block">
                <span className="text-primary font-black uppercase tracking-widest text-xs">Patrimonio Cultural</span>
                <p className="text-xl font-headline font-bold">Relatos de la Ciénaga</p>
@@ -131,27 +145,28 @@ export default function Home() {
                  title: 'Herencia', 
                  icon: Anchor, 
                  desc: 'Recetas que han viajado por el Magdalena hasta nuestra cocina.',
-                 color: 'primary' 
+                 id: 'chef'
                },
                { 
                  title: 'Territorio', 
                  icon: Waves, 
                  desc: 'Apoyo directo a pescadores locales y agricultores de la Sierra Nevada.',
-                 color: 'accent'
+                 id: 'coconut'
                },
                { 
                  title: 'Maestría', 
                  icon: Sparkles, 
                  desc: 'La elegancia europea fusionada con la explosividad de Ciénaga.',
-                 color: 'primary'
+                 id: 'none'
                }
              ].map((item, i) => (
                <motion.div 
                  key={i}
                  whileHover={{ y: -30 }}
-                 className="p-16 rounded-[4rem] bg-secondary/10 border border-primary/5 space-y-10 text-center relative overflow-hidden group shadow-sm hover:shadow-2xl transition-all duration-500"
+                 onClick={() => item.id !== 'none' && triggerDiscovery(item.id)}
+                 className="p-16 rounded-[4rem] bg-secondary/10 border border-primary/5 space-y-10 text-center relative overflow-hidden group shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer"
                >
-                 <div className="w-24 h-24 bg-white rounded-3xl flex items-center justify-center text-primary mx-auto shadow-xl">
+                 <div className="w-24 h-24 bg-white rounded-3xl flex items-center justify-center text-primary mx-auto shadow-xl group-hover:scale-110 transition-transform">
                     <item.icon size={48} />
                  </div>
                  <h3 className="text-4xl font-bold font-headline">{item.title}</h3>
