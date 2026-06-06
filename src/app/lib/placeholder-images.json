@@ -1,0 +1,41 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "hero-beach",
+      "description": "Ciénaga Beach with palm trees and ocean view",
+      "imageUrl": "https://picsum.photos/seed/casa-origen-1/1920/1080",
+      "imageHint": "beach ocean"
+    },
+    {
+      "id": "tomasita-monument",
+      "description": "Tomasita Monument and Alligator statue in Ciénaga",
+      "imageUrl": "https://picsum.photos/seed/casa-origen-2/1200/800",
+      "imageHint": "monument alligator"
+    },
+    {
+      "id": "seafood-dish",
+      "description": "Elegant seafood casserole dish",
+      "imageUrl": "https://picsum.photos/seed/casa-origen-3/600/600",
+      "imageHint": "seafood gourmet"
+    },
+    {
+      "id": "cocktail",
+      "description": "Tropical craft cocktail with Caribbean garnish",
+      "imageUrl": "https://picsum.photos/seed/casa-origen-4/600/600",
+      "imageHint": "cocktail tropical"
+    },
+    {
+      "id": "sunset",
+      "description": "Beautiful sunset over the Caribbean sea in Ciénaga",
+      "imageUrl": "https://picsum.photos/seed/casa-origen-5/800/600",
+      "imageHint": "sunset beach"
+    },
+    {
+      "id": "restaurant-interior",
+      "description": "Elegant coastal restaurant interior with wooden accents",
+      "imageUrl": "https://picsum.photos/seed/casa-origen-6/1200/800",
+      "imageHint": "restaurant luxury"
+    }
+  ]
+}
