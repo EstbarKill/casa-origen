@@ -1,0 +1,49 @@
+
+{
+  "entities": {
+    "MenuItem": {
+      "title": "Menu Item",
+      "description": "A dish or drink in the restaurant menu",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "price": { "type": "number" },
+        "category": { "type": "string" },
+        "image": { "type": "string" },
+        "description": { "type": "string" },
+        "culturalStory": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["name", "price", "category"]
+    },
+    "Reservation": {
+      "title": "Reservation",
+      "description": "A table reservation record",
+      "type": "object",
+      "properties": {
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "time": { "type": "string" },
+        "tableId": { "type": "number" },
+        "guests": { "type": "number" },
+        "specialRequests": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled"] }
+      },
+      "required": ["customerName", "date", "time", "tableId"]
+    }
+  },
+  "auth": {
+    "providers": ["google"]
+  },
+  "firestore": {
+    "/menu/{itemId}": {
+      "schema": "MenuItem",
+      "description": "Collection of available dishes and beverages"
+    },
+    "/reservations/{resId}": {
+      "schema": "Reservation",
+      "description": "Store user table reservations"
+    }
+  }
+}
