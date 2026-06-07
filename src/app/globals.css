@@ -8,9 +8,16 @@
     /* Base Bone White */
     --background: 40 40% 97%;
     --foreground: 25 24% 28%;
+    --card: 0 0% 100%;
+    --card-foreground: 25 24% 28%;
     --primary: 30 25% 62%;
     --secondary: 32 25% 86%;
     --accent: 189 25% 54%;
+    --muted: 32 25% 92%;
+    --muted-foreground: 25 24% 45%;
+    --border: 30 25% 90%;
+    --input: 30 25% 90%;
+    --ring: 30 25% 62%;
     --radius: 1.5rem;
     
     /* Atmosphere Transitions */
@@ -20,21 +27,29 @@
   [data-atmosphere='morning'] {
     --background: 40 40% 97%;
     --accent: 189 25% 54%; /* Caribbean Blue */
+    --card: 0 0% 100%;
+    --card-foreground: 25 24% 28%;
   }
 
   [data-atmosphere='sunset'] {
     --background: 30 30% 92%;
     --primary: 25 60% 50%; /* Golden Sun */
     --accent: 15 50% 60%; /* Orange Glow */
+    --card: 30 30% 95%;
+    --card-foreground: 25 24% 20%;
   }
 
   [data-atmosphere='night'] {
-    --background: 220 20% 15%;
+    --background: 220 20% 10%;
     --foreground: 40 40% 95%;
-    --card: 220 20% 20%;
-    --primary: 30 20% 40%;
+    --card: 220 20% 15%;
+    --card-foreground: 40 40% 95%;
+    --primary: 30 20% 45%;
+    --secondary: 220 20% 20%;
     --accent: 200 30% 60%; /* Moonlight */
     --border: 220 20% 25%;
+    --muted: 220 20% 18%;
+    --muted-foreground: 220 10% 70%;
   }
 }
 
@@ -71,4 +86,13 @@
 .particle {
   @apply absolute bg-primary/20 rounded-full blur-[1px];
   animation: float linear infinite;
+}
+
+/* Hide Scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

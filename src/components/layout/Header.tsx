@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -36,8 +37,8 @@ export function Header() {
     <header className={cn(
       "fixed top-0 z-[100] w-full transition-all duration-700 ease-in-out",
       isScrolled 
-        ? "bg-background/95 backdrop-blur-2xl border-b shadow-lg h-20" 
-        : "bg-white/10 backdrop-blur-sm h-24"
+        ? "bg-background/95 backdrop-blur-2xl border-b border-primary/10 shadow-lg h-20" 
+        : "bg-background/10 backdrop-blur-sm h-24"
     )}>
       <div className="container mx-auto px-6 h-full">
         <div className="flex h-full items-center justify-between">
@@ -94,7 +95,7 @@ export function Header() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.6 }}
             >
-              <Button asChild className="bg-primary hover:bg-foreground text-white px-10 rounded-full h-12 shadow-xl hover:shadow-primary/20 transition-all duration-500 font-bold uppercase tracking-widest text-[10px]">
+              <Button asChild className="bg-primary hover:bg-foreground text-white px-10 rounded-full h-12 shadow-xl hover:shadow-primary/20 transition-all duration-500 font-bold uppercase tracking-widest text-[10px] border-none">
                 <Link href="/reservations">Reservar</Link>
               </Button>
             </motion.div>
@@ -103,7 +104,7 @@ export function Header() {
           {/* Mobile Menu Button */}
           <motion.button
             whileTap={{ scale: 0.9 }}
-            className="lg:hidden p-3 text-foreground bg-white/40 backdrop-blur-md rounded-2xl border border-primary/20 shadow-sm transition-colors hover:bg-white/60"
+            className="lg:hidden p-3 text-foreground bg-card/40 backdrop-blur-md rounded-2xl border border-primary/20 shadow-sm transition-colors hover:bg-card/60"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -158,7 +159,7 @@ export function Header() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
               >
-                <Button asChild size="lg" className="w-72 h-16 text-xl rounded-full mt-8 shadow-2xl bg-primary">
+                <Button asChild size="lg" className="w-72 h-16 text-xl rounded-full mt-8 shadow-2xl bg-primary border-none">
                   <Link href="/reservations" onClick={() => setIsMenuOpen(false)}>Reservar Ahora</Link>
                 </Button>
               </motion.div>
