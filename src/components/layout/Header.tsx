@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { Menu, X, Waves, Sparkles, Anchor } from 'lucide-react';
+import { Menu, X, Anchor } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -36,8 +36,8 @@ export function Header() {
     <header className={cn(
       "fixed top-0 z-[100] w-full transition-all duration-700 ease-in-out",
       isScrolled 
-        ? "bg-background/90 backdrop-blur-2xl border-b shadow-[0_4px_30px_rgba(0,0,0,0.03)] h-20" 
-        : "bg-transparent h-28"
+        ? "bg-background/95 backdrop-blur-2xl border-b shadow-lg h-20" 
+        : "bg-white/10 backdrop-blur-sm h-24"
     )}>
       <div className="container mx-auto px-6 h-full">
         <div className="flex h-full items-center justify-between">
@@ -52,11 +52,11 @@ export function Header() {
               className="group flex items-center space-x-2 relative"
             >
               <div className="flex flex-col items-center">
-                <span className="text-3xl md:text-4xl font-bold tracking-[0.25em] text-primary font-headline transition-transform duration-500 group-hover:scale-105">CASA ORIGEN</span>
-                <div className="flex items-center gap-2 opacity-80">
-                  <span className="h-[1px] w-4 bg-accent/40" />
-                  <span className="text-[9px] tracking-[0.4em] text-accent uppercase font-black">Ciénaga • Colombia</span>
-                  <span className="h-[1px] w-4 bg-accent/40" />
+                <span className="text-3xl md:text-4xl font-bold tracking-[0.25em] text-foreground font-headline transition-transform duration-500 group-hover:text-primary">CASA ORIGEN</span>
+                <div className="flex items-center gap-2 opacity-60">
+                  <span className="h-[1px] w-4 bg-primary/40" />
+                  <span className="text-[9px] tracking-[0.4em] text-primary uppercase font-black">Ciénaga • Colombia</span>
+                  <span className="h-[1px] w-4 bg-primary/40" />
                 </div>
               </div>
             </Link>
@@ -81,7 +81,7 @@ export function Header() {
                   >
                     {item.name}
                     <span className={cn(
-                      "absolute -bottom-1 left-1/2 -translate-x-1/2 h-[1px] bg-primary transition-all duration-500",
+                      "absolute -bottom-1 left-1/2 -translate-x-1/2 h-[1.5px] bg-primary transition-all duration-500",
                       pathname === item.href ? "w-full" : "w-0 group-hover:w-full"
                     )} />
                   </Link>
@@ -103,7 +103,7 @@ export function Header() {
           {/* Mobile Menu Button */}
           <motion.button
             whileTap={{ scale: 0.9 }}
-            className="lg:hidden p-3 text-foreground bg-white/20 backdrop-blur-md rounded-2xl border border-white/30 shadow-sm transition-colors hover:bg-white/40"
+            className="lg:hidden p-3 text-foreground bg-white/40 backdrop-blur-md rounded-2xl border border-primary/20 shadow-sm transition-colors hover:bg-white/60"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -129,8 +129,8 @@ export function Header() {
             </button>
 
             <div className="text-center space-y-2">
-              <span className="text-4xl font-bold tracking-[0.2em] text-primary font-headline">CASA ORIGEN</span>
-              <p className="text-[10px] tracking-[0.5em] text-accent uppercase font-black">Patrimonio del Caribe</p>
+              <span className="text-4xl font-bold tracking-[0.2em] text-foreground font-headline">CASA ORIGEN</span>
+              <p className="text-[10px] tracking-[0.5em] text-primary uppercase font-black">Patrimonio del Caribe</p>
             </div>
 
             <nav className="flex flex-col items-center space-y-8">
@@ -145,7 +145,7 @@ export function Header() {
                     href={item.href}
                     className={cn(
                       "text-3xl font-bold font-headline transition-all hover:text-primary",
-                      pathname === item.href ? "text-primary scale-110" : "text-foreground/50"
+                      pathname === item.href ? "text-primary scale-110" : "text-foreground/70"
                     )}
                     onClick={() => setIsMenuOpen(false)}
                   >
