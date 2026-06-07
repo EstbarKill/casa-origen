@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -59,7 +60,7 @@ export default function Home() {
           <motion.div 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-3 mb-8 px-8 py-3 rounded-full bg-white/60 backdrop-blur-xl border border-primary/20 text-primary text-[11px] font-black tracking-[0.4em] uppercase shadow-2xl"
+            className="inline-flex items-center gap-3 mb-8 px-8 py-3 rounded-full bg-card/60 backdrop-blur-xl border border-primary/20 text-primary text-[11px] font-black tracking-[0.4em] uppercase shadow-2xl"
           >
             <Sparkles size={16} />
             {atmosphere === 'morning' && 'Buenos Días en Ciénaga'}
@@ -91,10 +92,10 @@ export default function Home() {
             transition={{ delay: 1, duration: 1 }}
             className="flex flex-col sm:flex-row gap-8 justify-center items-center"
           >
-            <Button asChild size="lg" className="bg-primary hover:bg-foreground text-white px-16 h-20 text-2xl rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all hover:scale-105 font-black uppercase tracking-widest">
+            <Button asChild size="lg" className="bg-primary hover:bg-foreground text-white px-16 h-20 text-2xl rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all hover:scale-105 font-black uppercase tracking-widest border-none">
               <Link href="/reservations">Reservar Mesa</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="text-foreground hover:bg-white/60 backdrop-blur-md px-12 h-20 text-2xl rounded-full border-primary/20 transition-all font-black uppercase tracking-widest">
+            <Button asChild size="lg" variant="outline" className="text-foreground bg-card/10 hover:bg-card/40 backdrop-blur-md px-12 h-20 text-2xl rounded-full border-primary/20 transition-all font-black uppercase tracking-widest">
               <Link href="/menu" className="flex items-center gap-3">Explorar Menú <ArrowRight size={24} /></Link>
             </Button>
           </motion.div>
@@ -102,7 +103,7 @@ export default function Home() {
       </section>
 
       {/* CULTURE SECTION */}
-      <section className="relative min-h-screen py-40 flex flex-col items-center justify-center bg-secondary/5">
+      <section className="relative min-h-screen py-40 flex flex-col items-center justify-center bg-secondary/20">
         <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
           <motion.div 
             initial="hidden"
@@ -120,9 +121,9 @@ export default function Home() {
               <Sparkles className="text-primary opacity-0 group-hover:opacity-100 transition-opacity" size={48} />
             </motion.div>
             
-            <div className="absolute -bottom-12 -right-12 bg-white/90 backdrop-blur-xl p-10 rounded-[3rem] shadow-2xl space-y-3 border border-primary/10 hidden md:block max-w-xs">
+            <div className="absolute -bottom-12 -right-12 bg-card/90 backdrop-blur-xl p-10 rounded-[3rem] shadow-2xl space-y-3 border border-primary/10 hidden md:block max-w-xs">
                <span className="text-primary font-black uppercase tracking-widest text-[11px]">Patrimonio Vivo</span>
-               <p className="text-3xl font-headline font-bold text-foreground">Relatos de la Ciénaga Grande</p>
+               <p className="text-3xl font-headline font-bold text-card-foreground">Relatos de la Ciénaga Grande</p>
             </div>
           </motion.div>
 
@@ -159,7 +160,7 @@ export default function Home() {
       </section>
 
       {/* GASTRONOMY PREVIEW */}
-      <section className="relative min-h-screen py-40 bg-white">
+      <section className="relative min-h-screen py-40 bg-background">
         <div className="container mx-auto px-4">
           <motion.div 
             initial="hidden"
@@ -207,14 +208,14 @@ export default function Home() {
                  variants={itemVariants}
                  whileHover={{ y: -25, transition: { duration: 0.5 } }}
                  onClick={() => item.id !== 'none' && triggerDiscovery(item.id)}
-                 className="p-16 rounded-[4rem] bg-secondary/10 border border-primary/5 space-y-10 text-center relative overflow-hidden group shadow-sm hover:shadow-2xl transition-all duration-700 cursor-pointer"
+                 className="p-16 rounded-[4rem] bg-card border border-primary/5 space-y-10 text-center relative overflow-hidden group shadow-sm hover:shadow-2xl transition-all duration-700 cursor-pointer"
                >
-                 <div className="w-28 h-28 bg-white rounded-[2.5rem] flex items-center justify-center text-primary mx-auto shadow-2xl group-hover:scale-110 transition-transform border border-primary/5">
+                 <div className="w-28 h-28 bg-background rounded-[2.5rem] flex items-center justify-center text-primary mx-auto shadow-2xl group-hover:scale-110 transition-transform border border-primary/5">
                     <item.icon size={56} />
                  </div>
                  <div className="space-y-6">
-                    <h3 className="text-5xl font-bold font-headline text-foreground">{item.title}</h3>
-                    <p className="text-xl text-foreground/60 leading-relaxed italic font-light">{item.desc}</p>
+                    <h3 className="text-5xl font-bold font-headline text-card-foreground">{item.title}</h3>
+                    <p className="text-xl text-card-foreground/60 leading-relaxed italic font-light">{item.desc}</p>
                  </div>
                  <div className="flex justify-center gap-1.5 opacity-20">
                     {[1,2,3,4,5].map(s => <Star key={s} size={14} className="text-primary fill-primary" />)}
@@ -257,7 +258,7 @@ export default function Home() {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.6 }}
           >
-            <Button asChild size="lg" className="bg-primary hover:bg-white hover:text-primary text-white px-20 h-24 text-4xl rounded-full shadow-[0_30px_100px_rgba(0,0,0,0.5)] hover:scale-105 transition-all font-black uppercase tracking-[0.1em]">
+            <Button asChild size="lg" className="bg-primary hover:bg-white hover:text-primary text-white px-20 h-24 text-4xl rounded-full shadow-[0_30px_100px_rgba(0,0,0,0.5)] hover:scale-105 transition-all font-black uppercase tracking-[0.1em] border-none">
               <Link href="/reservations">Reservar Ahora</Link>
             </Button>
           </motion.div>

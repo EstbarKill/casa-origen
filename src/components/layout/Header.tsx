@@ -35,12 +35,12 @@ export function Header() {
 
   return (
     <header className={cn(
-      "fixed top-0 z-[100] w-full transition-all duration-700 ease-in-out",
+      "fixed top-0 z-[100] w-full transition-all duration-700 ease-in-out px-6",
       isScrolled 
         ? "bg-background/95 backdrop-blur-2xl border-b border-primary/10 shadow-lg h-20" 
-        : "bg-background/10 backdrop-blur-sm h-24"
+        : "bg-background/5 backdrop-blur-[2px] h-28"
     )}>
-      <div className="container mx-auto px-6 h-full">
+      <div className="container mx-auto h-full">
         <div className="flex h-full items-center justify-between">
           <motion.div
             initial={{ opacity: 0, x: -20 }}

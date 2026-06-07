@@ -45,7 +45,7 @@ export default function ContactPage() {
                 <MapPin size={32} />
               </div>
               <h3 className="text-2xl font-bold font-headline">Ubicación</h3>
-              <p className="text-foreground/70 leading-relaxed">Troncal del Caribe km 45,<br />Ciénaga, Magdalena, Colombia</p>
+              <p className="text-card-foreground/70 leading-relaxed">Troncal del Caribe km 45,<br />Ciénaga, Magdalena, Colombia</p>
             </div>
             
             <div className="p-10 bg-card text-card-foreground rounded-[3rem] space-y-6 border border-primary/10 shadow-lg hover:shadow-xl transition-all">
@@ -53,7 +53,7 @@ export default function ContactPage() {
                 <Clock size={32} />
               </div>
               <h3 className="text-2xl font-bold font-headline">Horarios</h3>
-              <p className="text-foreground/70 leading-relaxed">Lun - Sáb: 11am - 10pm<br />Dom: 10am - 9pm</p>
+              <p className="text-card-foreground/70 leading-relaxed">Lun - Sáb: 11am - 10pm<br />Dom: 10am - 9pm</p>
             </div>
 
             <div className="p-10 bg-card text-card-foreground rounded-[3rem] space-y-6 border border-primary/10 shadow-lg hover:shadow-xl transition-all">
@@ -61,7 +61,7 @@ export default function ContactPage() {
                 <Phone size={32} />
               </div>
               <h3 className="text-2xl font-bold font-headline">Reservas</h3>
-              <p className="text-foreground/70 leading-relaxed">+57 300 000 0000<br />+57 301 000 0000</p>
+              <p className="text-card-foreground/70 leading-relaxed">+57 300 000 0000<br />+57 301 000 0000</p>
             </div>
 
             <div className="p-10 bg-card text-card-foreground rounded-[3rem] space-y-6 border border-primary/10 shadow-lg hover:shadow-xl transition-all">
@@ -69,14 +69,14 @@ export default function ContactPage() {
                 <Mail size={32} />
               </div>
               <h3 className="text-2xl font-bold font-headline">Email</h3>
-              <p className="text-foreground/70 leading-relaxed">hola@casaorigen.com<br />eventos@casaorigen.com</p>
+              <p className="text-card-foreground/70 leading-relaxed">hola@casaorigen.com<br />eventos@casaorigen.com</p>
             </div>
           </div>
 
           {/* Interactive Map Section */}
           <div className="space-y-8">
             <h3 className="text-3xl font-bold font-headline">Cómo Llegar</h3>
-            <div className="w-full h-[450px] bg-muted rounded-[4rem] overflow-hidden relative shadow-2xl border-8 border-card group">
+            <div className="w-full h-[450px] bg-secondary/10 rounded-[4rem] overflow-hidden relative shadow-2xl border-8 border-card group">
                <div className="absolute inset-0 flex items-center justify-center text-foreground/20 flex-col gap-6">
                   <motion.div
                     animate={{ y: [0, -10, 0] }}
@@ -97,28 +97,28 @@ export default function ContactPage() {
         <div className="bg-card text-card-foreground p-12 md:p-20 rounded-[4rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] space-y-12 border border-primary/10 sticky top-32 h-fit">
           <div className="space-y-4">
             <Badge className="bg-primary/10 text-primary border-none">Contacto Directo</Badge>
-            <h2 className="text-5xl font-bold font-headline tracking-tighter text-foreground">Escríbenos</h2>
-            <p className="text-xl text-foreground/50 italic">Personaliza tu experiencia o solicita información sobre eventos.</p>
+            <h2 className="text-5xl font-bold font-headline tracking-tighter text-card-foreground">Escríbenos</h2>
+            <p className="text-xl text-card-foreground/50 italic">Personaliza tu experiencia o solicita información sobre eventos.</p>
           </div>
           
           <form onSubmit={handleSendMessage} className="space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-3">
-                <Label htmlFor="name" className="text-sm font-bold uppercase tracking-widest text-foreground/60">Nombre Completo</Label>
-                <Input id="name" placeholder="Tu nombre" required className="h-14 border-primary/10 rounded-2xl bg-background/50" />
+                <Label htmlFor="name" className="text-sm font-bold uppercase tracking-widest text-card-foreground/60">Nombre Completo</Label>
+                <Input id="name" placeholder="Tu nombre" required className="h-14 border-primary/10 rounded-2xl bg-background/50 text-card-foreground" />
               </div>
               <div className="space-y-3">
-                <Label htmlFor="email" className="text-sm font-bold uppercase tracking-widest text-foreground/60">Email</Label>
-                <Input id="email" type="email" placeholder="email@ejemplo.com" required className="h-14 border-primary/10 rounded-2xl bg-background/50" />
+                <Label htmlFor="email" className="text-sm font-bold uppercase tracking-widest text-card-foreground/60">Email</Label>
+                <Input id="email" type="email" placeholder="email@ejemplo.com" required className="h-14 border-primary/10 rounded-2xl bg-background/50 text-card-foreground" />
               </div>
             </div>
             <div className="space-y-3">
-              <Label htmlFor="subject" className="text-sm font-bold uppercase tracking-widest text-foreground/60">Asunto</Label>
-              <Input id="subject" placeholder="Ej: Cotización Boda, Reserva Grupo" className="h-14 border-primary/10 rounded-2xl bg-background/50" />
+              <Label htmlFor="subject" className="text-sm font-bold uppercase tracking-widest text-card-foreground/60">Asunto</Label>
+              <Input id="subject" placeholder="Ej: Cotización Boda, Reserva Grupo" className="h-14 border-primary/10 rounded-2xl bg-background/50 text-card-foreground" />
             </div>
             <div className="space-y-3">
-              <Label htmlFor="message" className="text-sm font-bold uppercase tracking-widest text-foreground/60">Mensaje</Label>
-              <Textarea id="message" placeholder="Cuéntanos cómo podemos ayudarte..." className="min-h-[180px] border-primary/10 rounded-3xl bg-background/50 p-6" required />
+              <Label htmlFor="message" className="text-sm font-bold uppercase tracking-widest text-card-foreground/60">Mensaje</Label>
+              <Textarea id="message" placeholder="Cuéntanos cómo podemos ayudarte..." className="min-h-[180px] border-primary/10 rounded-3xl bg-background/50 p-6 text-card-foreground" required />
             </div>
             <Button type="submit" className="w-full h-20 bg-primary text-white text-2xl rounded-3xl shadow-2xl hover:scale-[1.02] transition-all border-none">
               <Send size={24} className="mr-4" /> Enviar Mensaje

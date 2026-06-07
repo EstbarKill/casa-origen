@@ -2,11 +2,13 @@
 "use client";
 
 import React, { useRef, useEffect } from 'react';
-import { useScroll, useTransform } from 'framer-motion';
+import { useScroll } from 'framer-motion';
+import { useAtmosphere } from './AtmosphereProvider';
 
 export function BeachCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { scrollY } = useScroll();
+  const { atmosphere } = useAtmosphere();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -29,8 +31,19 @@ export function BeachCanvas() {
       if (!ctx || !canvas) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      // Background Sand Color
-      ctx.fillStyle = '#F9F6F2'; 
+      // Background Sand Color based on atmosphere
+      let sandColor = '#F9F6F2';
+      let waterColor = '#6E9FA8';
+
+      if (atmosphere === 'sunset') {
+        sandColor = '#E6D5B8';
+        waterColor = '#4A8D9A';
+      } else if (atmosphere === 'night') {
+        sandColor = '#1A1D23';
+        waterColor = '#1B3A4B';
+      }
+
+      ctx.fillStyle = sandColor; 
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const drawWave = (color: string, amplitude: number, frequency: number, speed: number, yOffset: number, opacity: number) => {
@@ -55,10 +68,10 @@ export function BeachCanvas() {
       };
 
       // Caribbean Blue Shades
-      drawWave('#6E9FA8', 30, 0.002, 0.005, canvas.height * 0.4, 0.1);
-      drawWave('#6E9FA8', 20, 0.004, 0.008, canvas.height * 0.5, 0.2);
-      drawWave('#6E9FA8', 15, 0.006, 0.012, canvas.height * 0.6, 0.3);
-      drawWave('#FFFFFF', 8, 0.008, 0.015, canvas.height * 0.65, 0.2);
+      drawWave(waterColor, 30, 0.002, 0.005, canvas.height * 0.4, 0.1);
+      drawWave(waterColor, 20, 0.004, 0.008, canvas.height * 0.5, 0.2);
+      drawWave(waterColor, 15, 0.006, 0.012, canvas.height * 0.6, 0.3);
+      drawWave('#FFFFFF', 8, 0.008, 0.015, canvas.height * 0.65, 0.1);
 
       offset += 1;
       animationFrameId = window.requestAnimationFrame(render);
@@ -70,12 +83,12 @@ export function BeachCanvas() {
       window.removeEventListener('resize', resize);
       window.cancelAnimationFrame(animationFrameId);
     };
-  }, [scrollY]);
+  }, [scrollY, atmosphere]);
 
   return (
     <canvas 
       ref={canvasRef} 
-      className="fixed inset-0 w-full h-full pointer-events-none" 
+      className="fixed inset-0 w-full h-full pointer-events-none transition-colors duration-1000" 
       style={{ zIndex: -1 }}
     />
   );
