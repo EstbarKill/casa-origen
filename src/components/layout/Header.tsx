@@ -8,6 +8,7 @@ import { Menu, X, Anchor } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
+import { url } from 'inspector';
 
 const navItems = [
   { name: 'Inicio', href: '/' },
@@ -35,15 +36,15 @@ export function Header() {
 
   return (
     <header className={cn(
-      "fixed top-0 z-[100] w-full transition-all duration-700 ease-in-out px-6",
+      "fixed top-0 z-[100] w-full transition-all duration-400 ease-in-out px-6 border-b border-red/900",
       isScrolled 
-        ? "bg-background/95 backdrop-blur-2xl border-b border-primary/10 shadow-lg h-20" 
+        ? "bg-background/95 backdrop-blur-2xl border-b border-blue/700 shadow-lg h-20" 
         : "bg-background/5 backdrop-blur-[2px] h-28"
     )}>
       <div className="container mx-auto h-full">
         <div className="flex h-full items-center justify-between">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0.2, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
@@ -56,7 +57,7 @@ export function Header() {
                 <span className="text-3xl md:text-4xl font-bold tracking-[0.25em] text-foreground font-headline transition-transform duration-500 group-hover:text-primary">CASA ORIGEN</span>
                 <div className="flex items-center gap-2 opacity-60">
                   <span className="h-[1px] w-4 bg-primary/40" />
-                  <span className="text-[9px] tracking-[0.4em] text-primary uppercase font-black">Ciénaga • Colombia</span>
+                  <span className="text-[9px] tracking-[0.4em] uppercase font-black">Ciénaga • Colombia</span>
                   <span className="h-[1px] w-4 bg-primary/40" />
                 </div>
               </div>
@@ -95,7 +96,7 @@ export function Header() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.6 }}
             >
-              <Button asChild className="bg-primary hover:bg-foreground text-white px-10 rounded-full h-12 shadow-xl hover:shadow-primary/20 transition-all duration-500 font-bold uppercase tracking-widest text-[10px] border-none">
+              <Button asChild className="bg-primary hover:bg-foreground/80 hover:text-black text-white px-10 rounded-full h-12 shadow-xl hover:shadow-primary/20 transition-all duration-500 font-bold uppercase tracking-widest text-[10px] border-none">
                 <Link href="/reservations">Reservar</Link>
               </Button>
             </motion.div>

@@ -39,20 +39,20 @@ export default function EventsPage() {
   return (
     <div className="bg-background">
       {/* Hero */}
-      <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[110vh] flex items-center justify-center overflow-hidden">
         <Image 
           src="https://picsum.photos/seed/casa-origen-events/1920/1080" 
           alt="Events at Casa Origen" 
           fill 
-          className="object-cover brightness-75 scale-105" 
+          className="object-cover brightness-100 scale-15" 
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-background" />
         <div className="relative z-10 text-center text-white px-4 max-w-5xl space-y-8">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: -60 }}
             animate={{ opacity: 1, y: 0 }}
-            className="space-y-4"
+            className="space-y-7"
           >
              <Badge className="bg-white/20 backdrop-blur text-white border-white/40 px-6 py-2 uppercase tracking-[0.3em]">Momentos Inolvidables</Badge>
              <h1 className="text-7xl md:text-9xl font-bold font-headline tracking-tighter leading-none">Celebra la Vida</h1>
@@ -67,10 +67,10 @@ export default function EventsPage() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-32 container mx-auto px-4">
+      <section className="py-20 container mx-auto px-4">
         <div className="text-center mb-24 space-y-4">
           <h2 className="text-5xl md:text-7xl font-bold font-headline">Nuestras Experiencias</h2>
-          <div className="w-24 h-1 bg-primary mx-auto" />
+          <div className="w-[30rem] h-[.02rem] bg-primary mx-auto" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
@@ -78,16 +78,16 @@ export default function EventsPage() {
             <motion.div 
               key={idx}
               whileHover={{ y: -20 }}
-              className="bg-white rounded-[3rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all border group"
+              className="bg-accent/70 rounded-[3rem] overflow-hidden shadow-xl hover:shadow-3xl transition-all border group"
             >
-              <div className="relative h-80">
+              <div className="relative h-60">
                 <Image src={event.image} alt={event.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" data-ai-hint={event.hint} />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
                 <div className="absolute top-8 left-8 bg-white/90 p-4 rounded-2xl text-primary shadow-xl">
-                   <event.icon size={28} />
+                   <event.icon size={20} />
                 </div>
               </div>
-              <div className="p-12 space-y-6">
+              <div className="p-7 space-y-4">
                 <h3 className="text-3xl font-bold font-headline">{event.title}</h3>
                 <p className="text-foreground/60 leading-relaxed text-lg italic">"{event.desc}"</p>
                 <Button variant="link" className="p-0 text-primary font-bold flex items-center gap-2 group-hover:gap-4 transition-all">
@@ -131,15 +131,15 @@ export default function EventsPage() {
       </section>
 
       {/* Testimonial CTA */}
-      <section className="py-40 bg-foreground text-white text-center relative overflow-hidden">
+      <section className="py-10 bg-foreground/70 text-blue-800 text-center relative overflow-hidden">
          <div className="absolute inset-0 bg-primary/10" />
          <div className="container mx-auto px-4 relative z-10 space-y-12">
             <h2 className="text-4xl md:text-6xl font-headline italic max-w-4xl mx-auto leading-tight">
                "Nuestra boda en Casa Origen fue como vivir dentro de una leyenda caribeña. El servicio y la comida fueron insuperables."
             </h2>
             <div className="space-y-2">
-               <p className="text-2xl font-bold text-primary">María \u0026 Juan</p>
-               <p className="text-white/40 uppercase tracking-[0.2em] text-xs">Novios 2024</p>
+               <p className="text-2xl font-bold text-primary">María y Juan 2026</p>
+               <p className="text-black uppercase tracking-[0.2em] text-xs">Novios 2024</p>
             </div>
          </div>
       </section>

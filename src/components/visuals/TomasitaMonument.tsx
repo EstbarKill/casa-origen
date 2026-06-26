@@ -2,6 +2,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { Fullscreen } from 'lucide-react';
 
 export function TomasitaMonument() {
   const { scrollYProgress } = useScroll();
@@ -29,32 +30,34 @@ export function TomasitaMonument() {
 
       {/* Tomasita Layer */}
       <motion.div 
-        style={{ y: yTomasita }}
+        style={{ y: yTomasita}}
         className="relative z-20 flex flex-col items-center"
       >
-        <div className="w-48 h-80 bg-gradient-to-b from-secondary to-primary/40 rounded-t-full relative overflow-hidden shadow-2xl border-4 border-white/50">
-          {/* Symbolic representation of the girl */}
-          <div className="absolute top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-white/80 rounded-full" />
-          <div className="absolute top-32 left-1/2 -translate-x-1/2 w-32 h-40 bg-white/60 rounded-b-full" />
+        <div className="w-48 h-80 bg-gradient-to-b from-secondary to-primary/40 rounded-t-full relative overflow-visible shadow-2xl border-4 border-white/20">
+          <img
+            src="/images/tomasita.png"
+            alt="tomasita"
+            className="absolute left-0 -top-[90px] right-0 w-cover h-[calc(100%+100px)] object-cover"
+          />
         </div>
-        <div className="mt-4 bg-white/90 px-6 py-2 rounded-full shadow-lg border border-primary/10">
-           <span className="text-primary font-headline italic text-lg">Tomasita</span>
+        <div className="mt-2 bg-white/90 px-4 py-2 rounded-full shadow-lg border border-primary/10">
+           <span className="text-primary font-headline italic text-xl">Tomasita</span>
         </div>
       </motion.div>
 
       {/* Caimán Layer */}
       <motion.div 
         style={{ y: yCaiman }}
-        className="absolute bottom-0 z-30"
+        className="absolute bottom-20 z-30"
       >
-        <div className="w-96 h-32 bg-foreground/90 rounded-[3rem] relative overflow-hidden shadow-2xl border-t-4 border-accent/30">
+        <div className="w-80 h-24 bg-foreground/90 rounded-[3rem] relative overflow-hidden shadow-2xl border-t-4 border-accent/30">
           {/* Eyes */}
           <div className="absolute top-4 left-20 w-4 h-4 bg-accent rounded-full animate-pulse" />
           <div className="absolute top-4 right-20 w-4 h-4 bg-accent rounded-full animate-pulse" />
           {/* Scales pattern */}
           <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
         </div>
-        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-accent text-white px-8 py-2 rounded-full font-headline font-bold text-xl tracking-widest shadow-xl">
+        <div className="absolute -bottom-6 left-1/3 -translate-x-1/4 bg-accent text-white px-8 py-2 rounded-full font-headline font-bold text-xl tracking-widest shadow-xl">
            LEYENDA DEL CAIMÁN
         </div>
       </motion.div>
@@ -73,11 +76,7 @@ export function TomasitaMonument() {
             repeat: Infinity,
             delay: i * 0.5
           }}
-          className="absolute w-2 h-2 bg-accent rounded-full blur-[1px]"
-          style={{
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-          }}
+          className="absolute w-5 h-5 bg-accent rounded-full blur-[20px]"
         />
       ))}
     </motion.div>

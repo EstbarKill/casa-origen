@@ -24,7 +24,7 @@ export function CaimanMascot() {
     if (saved) setFoundDiscoveries(JSON.parse(saved));
 
     const handleScroll = () => {
-      setIsSleeping(false);
+      setIsSleeping(true);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       
       const currentScrollY = window.scrollY;
@@ -32,18 +32,18 @@ export function CaimanMascot() {
       lastScrollY.current = currentScrollY;
 
       timeoutRef.current = setTimeout(() => {
-        setIsSleeping(true);
-      }, 20000);
+        setIsSleeping(false);
+      }, 2000);
     };
 
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
-      if (isSleeping) setIsSleeping(false);
+      if (isSleeping) setIsSleeping(true);
     };
 
     const handleWave = () => {
       setIsWaving(true);
-      setTimeout(() => setIsWaving(false), 2000);
+      setTimeout(() => setIsWaving(true), 2000);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -79,7 +79,7 @@ export function CaimanMascot() {
         pointerEvents: 'auto',
       }}
       animate={{
-        scale: isSleeping ? 0.75 : 1,
+        scale: isSleeping ? 1 : .9,
         y: isSleeping ? 15 : [0, -4, 0],
       }}
       transition={{
@@ -87,22 +87,22 @@ export function CaimanMascot() {
       }}
       className="cursor-pointer group"
     >
-      <div className="relative scale-75 md:scale-100">
+      <div className="relative scale-85 md:scale-100">
         {/* Footprints */}
         <AnimatePresence>
           {!isSleeping && (
             <motion.div 
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.15 }}
+              animate={{ opacity: 0.3 }}
               exit={{ opacity: 0 }}
-              className="absolute -bottom-10 left-1/2 -translate-x-1/2 flex flex-col gap-3"
+              className="absolute -bottom-7 left-2/4 -translate-x-1/2 flex flex-col-2 gap-11"
             >
-              {[1, 2, 3].map(i => (
+              {[1, 2].map(i => (
                 <motion.div 
                   key={i} 
-                  animate={{ opacity: [0, 1, 0], scale: [0.3, 1, 0.3] }}
-                  transition={{ delay: i * 0.3, repeat: Infinity, duration: 2.5 }}
-                  className="w-4 h-2 bg-black rounded-full blur-[2px]" 
+                  animate={{ opacity: [0, 1, 0], scale: [0.5, 1, 0.5] }}
+                  transition={{ delay: i * 0.3, repeat: Infinity, duration: 5 }}
+                  className="w-4 h-2 bg-black rounded-full blur-[5px]" 
                 />
               ))}
             </motion.div>
@@ -115,14 +115,14 @@ export function CaimanMascot() {
             rotateY: direction === 1 ? 0 : 180,
             rotate: isSleeping ? 0 : rotationToCursor / 12
           }}
-          className="w-48 h-20 relative"
+          className="w-28 h-10 relative"
         >
           {/* Main Torso */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#3a522d] via-[#4a6741] to-[#2d3a1f] rounded-[40%_60%_60%_40%] shadow-2xl border-b-4 border-black/30 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#3a522d] via-[#4a6741] to-[#2d3a1f] rounded-[40%_60%_60%_40%] shadow-2xl border-b-4 border-black/50 overflow-hidden">
              {/* Scales Texture Overlay */}
              <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] mix-blend-overlay" />
              {/* Back Ridge (Realistic Spikes) */}
-             <div className="absolute top-0 left-4 right-4 flex justify-around opacity-40">
+             <div className="absolute top-0 left-1 right-1 flex justify-around opacity-40">
                 {[...Array(6)].map((_, i) => (
                   <div key={i} className="w-4 h-4 bg-black/40 rotate-45 -mt-2" />
                 ))}
@@ -132,13 +132,13 @@ export function CaimanMascot() {
           {/* Head & Snout */}
           <motion.div 
             animate={{ rotate: isWaving ? -15 : 0 }}
-            className="absolute -right-12 top-2 w-24 h-14 bg-gradient-to-r from-[#4a6741] to-[#3a522d] rounded-[30%_70%_20%_40%] border-r-2 border-black/10 origin-left"
+            className="absolute -right-10 w-14 h-10 bg-gradient-to-r from-[#4a6741] to-[#3a522d] rounded-[30%_70%_20%_40%] border-r-2 border-black/10 origin-left"
           >
              {/* Mouth Line */}
-             <div className="absolute bottom-4 right-2 w-16 h-[2px] bg-black/20 rounded-full" />
+             <div className="absolute bottom-2 right-2 w-7 h-[1.5px] bg-black/70 rounded-full" />
              
              {/* Realistic Eye */}
-             <div className="absolute top-3 right-6 w-5 h-5 bg-[#d4e157] rounded-full flex items-center justify-center border border-black/20 shadow-inner">
+             <div className="absolute top-2 right-6 w-4 h-4 bg-[#d4e157] rounded-full flex items-center justify-center border border-black/20 shadow-inner">
                 <motion.div 
                   animate={{ scaleY: isSleeping ? 1 : 0.1, scaleX: isSleeping ? 1 : 0.8 }}
                   className="w-full h-full bg-[#1a1d23] rounded-full origin-center transition-all duration-500"
@@ -147,56 +147,56 @@ export function CaimanMascot() {
              </div>
 
              {/* Nostril */}
-             <div className="absolute bottom-6 right-2 w-1.5 h-1.5 bg-black/40 rounded-full" />
+             <div className="absolute bottom-5 right-2 w-1.5 h-1.5 bg-black/60 rounded-full" />
           </motion.div>
 
           {/* Tail (Segmented for realism) */}
-          <div className="absolute -left-16 top-4 w-24 h-10 flex items-center">
+          <div className="absolute -left-16 top-3 w-20 h-5 flex items-center">
              <motion.div 
-                animate={{ rotate: [0, 10, -10, 0] }}
+                animate={{ rotate: [0, 20, -15, 0] }}
                 transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-                className="w-full h-full bg-gradient-to-l from-[#4a6741] to-transparent rounded-[80%_20%_20%_80%] origin-right relative"
+                className="w-full h-full bg-gradient-to-r from-[#4a6741] to-transparent rounded-[0%_50%_100%_100%] origin-right relative"
              >
-                <div className="absolute inset-0 opacity-30 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+                <div className="absolute inset-0 rounded-[0%_10%_100%_100%] opacity-30 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
              </motion.div>
           </div>
 
           {/* Legs (Front) */}
-          <div className="absolute bottom-0 right-10 w-6 h-8 bg-[#3a522d] rounded-full -mb-2 border-b-4 border-black/20 shadow-lg" />
-          <div className="absolute bottom-0 left-10 w-8 h-10 bg-[#3a522d] rounded-full -mb-3 border-b-4 border-black/20 shadow-lg" />
+          <div className="absolute bottom-0 right-6 w-4 h-6 bg-[#3a522d] rounded-full -mb-4 border-b-4 border-black/50 shadow-lg" />
+          <div className="absolute bottom-0 left-3 w-5 h-7 bg-[#3a522d] rounded-full -mb-4 border-b-4 border-black/50 shadow-lg" />
         </motion.div>
 
         {/* UI Overlay Elements */}
         <AnimatePresence>
-          {foundDiscoveries.length < 3 && !isSleeping && (
+          {foundDiscoveries.length < 3 && isSleeping && (
             <motion.div 
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
-              className="absolute -top-24 left-1/2 -translate-x-1/2 bg-card/90 backdrop-blur-xl px-6 py-3 rounded-2xl shadow-2xl border border-primary/20 whitespace-nowrap z-50"
+              className="absolute -top-20 left-1/3 -translate-x-1/4 bg-card/90 backdrop-blur-xl px-2 py-2 rounded-2xl shadow-6xl border border-primary/90 whitespace-nowrap z-50"
             >
-              <div className="flex items-center gap-3">
-                <Sparkles size={16} className="text-primary animate-pulse" />
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Sigue el rastro de Ciénaga</span>
+              <div className="flex items-center gap-2">
+                <Sparkles size={14} className="text-primary/100 animate-pulse" />
+                <span className="text-[13px] font-black uppercase tracking-[0.2em] text-primary">Sigue el rastro de Ciénaga</span>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
 
         <AnimatePresence>
-          {isSleeping && (
+          {!isSleeping && (
             <motion.div 
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0 }}
-              className="absolute -top-20 -right-4 text-primary font-headline italic font-bold"
+              className="absolute top-[-60px] left-[-90px]  text-primary font-headline italic font-bold"
             >
-              <span className="block text-xl animate-bounce tracking-widest">Zzz...</span>
+              <span className="text-3xl animate-bounce tracking-widest">Zzz...</span>
             </motion.div>
           )}
         </AnimatePresence>
 
-        <div className="absolute -top-12 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-foreground text-white px-8 py-3 rounded-full text-[10px] uppercase tracking-[0.4em] font-black shadow-2xl whitespace-nowrap z-50">
-          {isSleeping ? "Despertar al Guardián" : "¿Buscas los tesoros de Ciénaga?"}
+        <div className="absolute bottom-20  left-1/6 translate-x-2 opacity-0 group-hover:opacity-100 transition-all duration-300 bg-card text-primary px-8 py-3 rounded-full text-[10px] uppercase tracking-[0.4em] font-black shadow-2xl whitespace-nowrap z-50">
+          {!isSleeping ? "Despertar al Guardián" : "¿Buscas los tesoros de Ciénaga?"}
         </div>
       </div>
     </motion.div>

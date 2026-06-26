@@ -65,4 +65,55 @@ export const MENU_ITEMS: MenuItem[] = [
     pairings: [],
     tags: ['Signature Drink']
   }
+  ,
+  {
+    id: 4,
+    name: 'Cóctel Tomasita',
+    price: 28000,
+    category: 'Cocktails',
+    image: 'https://picsum.photos/seed/casa-16/800/800',
+    rating: 5,
+    description: 'Gin, maracuyá, menta y un toque secreto cítrico.',
+    fullDescription: 'Un cóctel botánico que limpia el paladar y refresca el alma.',
+    culturalStory: 'Creado en honor a la leyenda de Tomasita, este cóctel busca capturar la alegría y el misterio del atardecer cienaguero.',
+    ingredients: ['Tanqueray Gin', 'Maracuyá', 'Menta fresca', 'Agua tónica'],
+    preparation: 'Mixología',
+    prepTime: '8 min',
+    pairings: [],
+    tags: ['Signature Drink']
+  }
+  ,
+  {
+    id: 5,
+    name: 'Cóctel Tomasita',
+    price: 28000,
+    category: 'Cocktails',
+    image: 'https://picsum.photos/seed/casa-16/800/800',
+    rating: 5,
+    description: 'Gin, maracuyá, menta y un toque secreto cítrico.',
+    fullDescription: 'Un cóctel botánico que limpia el paladar y refresca el alma.',
+    culturalStory: 'Creado en honor a la leyenda de Tomasita, este cóctel busca capturar la alegría y el misterio del atardecer cienaguero.',
+    ingredients: ['Tanqueray Gin', 'Maracuyá', 'Menta fresca', 'Agua tónica'],
+    preparation: 'Mixología',
+    prepTime: '8 min',
+    pairings: [],
+    tags: ['Signature Drink']
+  }
+  ,
+  {
+    id: 6,
+    name: 'Cóctel Tomasita',
+    price: 28000,
+    category: 'Cocktails',
+    image: 'https://picsum.photos/seed/casa-16/800/800',
+    rating: 5,
+    description: 'Gin, maracuyá, menta y un toque secreto cítrico.',
+    fullDescription: 'Un cóctel botánico que limpia el paladar y refresca el alma.',
+    culturalStory: 'Creado en honor a la leyenda de Tomasita, este cóctel busca capturar la alegría y el misterio del atardecer cienaguero.',
+    ingredients: ['Tanqueray Gin', 'Maracuyá', 'Menta fresca', 'Agua tónica'],
+    preparation: 'Mixología',
+    prepTime: '8 min',
+    pairings: [],
+    tags: ['Signature Drink']
+  }
 ];

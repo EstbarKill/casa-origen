@@ -69,28 +69,22 @@ export default function ContactPage() {
                 <Mail size={32} />
               </div>
               <h3 className="text-2xl font-bold font-headline">Email</h3>
-              <p className="text-card-foreground/70 leading-relaxed">hola@casaorigen.com<br />eventos@casaorigen.com</p>
+              <p className="text-card-foreground/70 leading-relaxed">casa-origen@gmail.com<br />eventos@casaorigen.com</p>
             </div>
           </div>
 
           {/* Interactive Map Section */}
-          <div className="space-y-8">
-            <h3 className="text-3xl font-bold font-headline">Cómo Llegar</h3>
-            <div className="w-full h-[450px] bg-secondary/10 rounded-[4rem] overflow-hidden relative shadow-2xl border-8 border-card group">
-               <div className="absolute inset-0 flex items-center justify-center text-foreground/20 flex-col gap-6">
-                  <motion.div
-                    animate={{ y: [0, -10, 0] }}
-                    transition={{ repeat: Infinity, duration: 2 }}
-                  >
-                    <MapPin size={80} className="text-primary" />
-                  </motion.div>
-                  <span className="font-black tracking-[0.5em] text-xs uppercase text-primary">Mapa Interactivo</span>
-               </div>
-               <div className="absolute bottom-10 left-1/2 -translate-x-1/2 bg-card/90 backdrop-blur px-8 py-4 rounded-full shadow-2xl border border-primary/20 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <p className="text-xs font-bold uppercase tracking-widest text-primary">Kilómetro 45 - Vía Santa Marta</p>
-               </div>
-            </div>
-          </div>
+<div className="w-full h-[450px] rounded-[4rem] overflow-hidden shadow-2xl border-8 border-card">
+  <iframe
+    src="https://www.google.com/maps?q=Casa+Origen+Cienaga+Magdalena&output=embed"
+    width="100%"
+    height="100%"
+    style={{ border: 0 }}
+    allowFullScreen
+    loading="lazy"
+    referrerPolicy="no-referrer-when-downgrade"
+  />
+</div>
         </div>
 
         {/* Contact Form */}

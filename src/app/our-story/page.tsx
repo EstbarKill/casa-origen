@@ -10,13 +10,13 @@ export default function OurStory() {
     { year: '2015', title: 'The Vision', desc: 'Inspired by the vibrant culture of the Ciénaga Caiman, our founders dreamed of a place where tradition met coastal elegance.' },
     { year: '2018', title: 'Breaking Ground', desc: 'Construction began on the shores of Ciénaga, using sustainable materials and local craftsmanship.' },
     { year: '2020', title: 'Opening Doors', desc: 'Casa Origen opened its doors to the community, becoming a beacon of Caribbean gastronomy.' },
-    { year: 'Present', title: 'Continuing Legacy', desc: 'Today, we are proud to be the heart of Ciénaga dining, welcoming guests from around the globe.' }
+    { year: 'Present', title: 'Continuing', desc: 'Today, we are proud to be the heart of Ciénaga dining, welcoming guests from around the globe.' }
   ];
 
   return (
     <div className="flex flex-col">
       {/* Hero */}
-      <section className="relative h-[60vh] flex items-center justify-center">
+      <section className="relative h-[100vh] flex items-center justify-center">
         <Image 
           src={images.find(i => i.id === 'restaurant-interior')?.imageUrl || ''} 
           alt="History" 
@@ -24,45 +24,45 @@ export default function OurStory() {
           className="object-cover brightness-50" 
         />
         <div className="relative z-10 text-center text-white px-4">
-          <h1 className="text-6xl md:text-8xl font-bold font-headline mb-4">Our Story</h1>
-          <p className="text-2xl font-light italic">Born from the Sea, Rooted in Tradition</p>
+          <h1 className="text-6xl md:text-8xl font-bold font-headline mb-4">Nuestra historia</h1>
+          <p className="text-2xl font-light italic">Nacido del mar, arraigado en la tradición.</p>
         </div>
       </section>
 
       {/* Narrative Section */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4 max-w-4xl text-center space-y-12">
-          <div className="flex justify-center text-primary">
-            <Anchor size={48} />
+      <section className="py-10 bg-background">
+        <div className="group container mx-auto px-4 max-w-4xl text-center space-y-12">
+          <div className="group-hover:text-cyan-400 flex justify-center text-primary">
+            <Anchor size={60} />
           </div>
-          <h2 className="text-4xl font-bold font-headline leading-tight">
-            A Gastronomic Sanctuary on the Magdalena Shores
+          <h2 className=" text-4xl font-bold font-headline leading-tight">
+            Un santuario gastronómico a orillas del Magdalena
           </h2>
-          <div className="space-y-6 text-xl text-foreground/70 leading-relaxed text-justify">
+          <div className="space-y-4 text-xl text-foreground/90 leading-relaxed text-justify">
             <p>
-              In the heart of Ciénaga, where the Magdalena River meets the Caribbean Sea, lies Casa Origen. Our story is one of heritage, resilience, and a deep-seated love for the culinary treasures of our region.
+              Entre el vaivén del mar, sabores de saben a hogar, música que invita a quedarse y un lugar con origen.
             </p>
             <p>
-              Ciénaga is more than a location; it is an inspiration. The Legend of the Caiman, the rhythmic movement of the palm trees, and the warm smiles of our local fishermen are the ingredients that season every dish we serve.
+              Ciénaga es más que un lugar; es una fuente de inspiración. La leyenda del caimán, el rítmico vaivén de las palmeras y las cálidas sonrisas de nuestros pescadores locales son los ingredientes que dan sabor a cada plato que servimos.
             </p>
             <p>
-              Our architecture blends Mediterranean sophistication with the rustic charm of the Colombian Caribbean, creating an atmosphere that feels both world-class and intimately familiar.
+              Nuestra arquitectura combina la sofisticación mediterránea con el encanto rústico del Caribe colombiano, creando una atmósfera que se siente a la vez de primera clase e íntimamente familiar.
             </p>
           </div>
         </div>
       </section>
 
       {/* Timeline */}
-      <section className="py-24 bg-secondary/20">
+      <section className="py-[3rem] bg-secondary/100">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold font-headline text-center mb-16">The Journey</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <h2 className="text-[4rem] font-bold font-headline text-center mb-10">El viaje</h2>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
             {timeline.map((item, idx) => (
-              <div key={idx} className="relative p-8 bg-white rounded-3xl shadow-sm border border-primary/10">
-                <span className="text-5xl font-bold font-headline text-primary/20 absolute top-4 right-4">{item.year}</span>
+              <div key={idx} className="group hover:border-primary/80 border-4 hover:-translate-y-5 relative p-8 bg-accent rounded-3xl shadow-sm border border-primary/10 transition-all">
+                <span className="group-hover:text-blue-500 text-5xl font-bold font-headline text-card/90 absolute top-4 right-4">{item.year}</span>
                 <div className="relative z-10 space-y-4">
-                  <h3 className="text-2xl font-bold font-headline">{item.title}</h3>
-                  <p className="text-foreground/70">{item.desc}</p>
+                  <h3 className="relative group-hover:text-blue-900 -left-5 text-2xl font-bold font-headline">{item.title}</h3>
+                  <p className="group-hover:text-blue-700 text-foreground/100">{item.desc}</p>
                 </div>
               </div>
             ))}

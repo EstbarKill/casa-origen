@@ -23,7 +23,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
       </head>
-      <body className="antialiased selection:bg-accent/30">
+      <body className="antialiased selection:bg-accent/10">
         <AtmosphereProvider>
           <div className="particles-container">
             {[...Array(20)].map((_, i) => (

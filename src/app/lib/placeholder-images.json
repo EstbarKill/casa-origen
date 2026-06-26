@@ -34,7 +34,7 @@
     {
       "id": "restaurant-interior",
       "description": "Elegant coastal restaurant interior with wooden accents",
-      "imageUrl": "https://picsum.photos/seed/casa-origen-6/1200/800",
+      "imageUrl": "/images/our-story.jpg",
       "imageHint": "restaurant luxury"
     }
   ]

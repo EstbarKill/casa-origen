@@ -46,7 +46,7 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-[300vh]">
+    <div className="relative min-h-[100vh]">
       <BeachCanvas />
       <CaimanMascot />
       <DiscoverySystem />
@@ -60,19 +60,19 @@ export default function Home() {
           <motion.div 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-3 mb-8 px-8 py-3 rounded-full bg-card/60 backdrop-blur-xl border border-primary/20 text-primary text-[11px] font-black tracking-[0.4em] uppercase shadow-2xl"
+            className="inline-flex items-center gap-5 mb-3 mt-20 px-8 py-3 rounded-full bg-card/60 backdrop-blur-xl border border-primary/20 text-blue-600 hover:text-cyan-600 text-[15px] font-black tracking-[0.4em] uppercase shadow-4xl"
           >
-            <Sparkles size={16} />
-            {atmosphere === 'morning' && 'Buenos Días en Ciénaga'}
-            {atmosphere === 'sunset' && 'Atardecer Dorado Caribeño'}
-            {atmosphere === 'night' && 'Noches Bajo la Luna de Ciénaga'}
+            <Sparkles size={20}/>
+            {atmosphere === 'morning' && 'Buenos Días, brisas Cienagueras'}
+            {atmosphere === 'sunset' && 'Un atardecer Dorado Caribeño'}
+            {atmosphere === 'night' && 'Noches en el reflejo de la luna'}
           </motion.div>
           
           <motion.h1 
             initial={{ opacity: 0, filter: 'blur(20px)' }}
             animate={{ opacity: 1, filter: 'blur(0px)' }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="text-[10vw] md:text-[11rem] font-bold font-headline mb-4 tracking-tighter leading-[0.8] text-foreground"
+            transition={{ duration: .2, ease: "easeOut" }}
+            className="hover:text-cyan-600 text-[10vw] md:text-[11rem] font-bold font-headline mb-8 tracking-tighter leading-[0.8] text-foreground"
           >
             Casa Origen
           </motion.h1>
@@ -92,38 +92,38 @@ export default function Home() {
             transition={{ delay: 1, duration: 1 }}
             className="flex flex-col sm:flex-row gap-8 justify-center items-center"
           >
-            <Button asChild size="lg" className="bg-primary hover:bg-foreground text-white px-16 h-20 text-2xl rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all hover:scale-105 font-black uppercase tracking-widest border-none">
+            <Button asChild size="lg" className="bg-primary hover:bg-primary/50 text-white px-16 h-20 text-2xl rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all hover:scale-105 font-black uppercase tracking-widest border-none">
               <Link href="/reservations">Reservar Mesa</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="text-foreground bg-card/10 hover:bg-card/40 backdrop-blur-md px-12 h-20 text-2xl rounded-full border-primary/20 transition-all font-black uppercase tracking-widest">
-              <Link href="/menu" className="flex items-center gap-3">Explorar Menú <ArrowRight size={24} /></Link>
+            <Button asChild size="lg" variant="outline" className="text-foreground bg-card/70 hover:bg-card/40 backdrop-blur-md px-12 h-20 text-2xl rounded-full border-primary/20 transition-all font-black uppercase tracking-widest">
+              <Link href="/menu" className="flex items-center gap-3 hover:text-white hover:bg-primary/70">Explorar Menú <ArrowRight size={24} /></Link>
             </Button>
           </motion.div>
         </motion.div>
       </section>
 
       {/* CULTURE SECTION */}
-      <section className="relative min-h-screen py-40 flex flex-col items-center justify-center bg-secondary/20">
+      <section className="relative min-h-screen py-[3rem] flex flex-col items-center justify-center bg-secondary/20">
         <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
           <motion.div 
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "200px" }}
             variants={itemVariants}
             className="order-2 lg:order-1 relative"
           >
             <TomasitaMonument />
             <motion.div 
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.5 }}
               onClick={() => triggerDiscovery('legend')}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 cursor-pointer z-50 rounded-full bg-primary/20 hover:bg-primary/30 flex items-center justify-center group backdrop-blur-md border border-white/40 shadow-2xl"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[7rem] h-[7rem] cursor-pointer z-50 rounded-full bg-transparent hover:bg-primary/50 flex items-center justify-center group backdrop-blur-sm border border-white/30 shadow-4xl"
             >
-              <Sparkles className="text-primary opacity-0 group-hover:opacity-100 transition-opacity" size={48} />
+              <Sparkles className="text-black hover:text-primary opacity-20 group-hover:opacity-100 transition-opacity" size={48} />
             </motion.div>
             
-            <div className="absolute -bottom-12 -right-12 bg-card/90 backdrop-blur-xl p-10 rounded-[3rem] shadow-2xl space-y-3 border border-primary/10 hidden md:block max-w-xs">
-               <span className="text-primary font-black uppercase tracking-widest text-[11px]">Patrimonio Vivo</span>
-               <p className="text-3xl font-headline font-bold text-card-foreground">Relatos de la Ciénaga Grande</p>
+            <div className="absolute bottom-20 -right-20 bg-card/90 backdrop-blur-xl p-5 rounded-[4rem] shadow-2xl space-y-2 border border-primary/70 hidden md:block max-w-xs">
+               <span className="text-primary font-black uppercase tracking-widest text-[1rem]">Patrimonio Vivo</span>
+               <p className="text-xl font-headline font-bold text-card-foreground">Relatos de la Ciénaga Grande</p>
             </div>
           </motion.div>
 
@@ -135,14 +135,14 @@ export default function Home() {
             className="space-y-12 order-1 lg:order-2"
           >
             <motion.div variants={itemVariants} className="space-y-6">
-              <Badge className="bg-accent/20 text-accent hover:bg-accent/30 border-none px-8 py-3 text-[11px] uppercase tracking-[0.5em] font-black rounded-full">Identidad Cultural</Badge>
-              <h2 className="text-7xl md:text-9xl font-bold font-headline leading-[0.9] tracking-tighter text-foreground">
+              <Badge className="bg-accent/20 text-black hover:bg-accent/70 border-none px-8 py-2 text-[15px] uppercase tracking-[0.5em] font-black rounded-full">Identidad Cultural</Badge>
+              <h2 className="hover:text-blue-300 text-7xl md:text-9xl font-bold font-headline leading-[0.5] tracking-tighter text-foreground">
                 El Espíritu <br /> de Ciénaga
               </h2>
             </motion.div>
-            <motion.div variants={itemVariants} className="space-y-10 text-2xl text-foreground/80 leading-relaxed font-light italic text-justify max-w-2xl">
-              <p>
-                En Casa Origen, honramos el Festival del Caimán Cienaguero y la leyenda de la pequeña Tomasita. Cada rincón de nuestra casa cuenta una historia de pesca, brisa eterna y mar.
+            <motion.div variants={itemVariants} className="space-y-5 text-xl text-foreground/80 leading-relaxed font-light italic text-justify max-w-2xl">
+              <p className='text-2xl md:text-3xl text-foreground/50 italic font-light max-w-4xl mx-auto leading-relaxed'>
+                En casa origen comienza lahistoria. Sabores que abrazan, momentos que quedan. <br /> Queremos escribirla contigo.En honor al Festival del Caimán Cienaguero y la leyenda de la pequeña Tomasita. Cada rincón de nuestra casa cuenta una historia de pesca, brisa eterna y mar.
               </p>
             </motion.div>
             <motion.div variants={itemVariants}>
@@ -160,16 +160,16 @@ export default function Home() {
       </section>
 
       {/* GASTRONOMY PREVIEW */}
-      <section className="relative min-h-screen py-40 bg-background">
+      <section className="relative min-h-screen py-20 border border-t-2 border-white/20 bg-background">
         <div className="container mx-auto px-4">
           <motion.div 
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={itemVariants}
-            className="text-center mb-40 space-y-8"
+            className="text-center mb-20 space-y-8"
           >
-             <Badge className="bg-primary/10 text-primary border-none px-10 py-4 text-[11px] uppercase tracking-[0.6em] font-black rounded-full">Gastronomía Narrativa</Badge>
+             <Badge className="bg-primary/10 text-primary/100 border-none px-10 py-4 text-[11px] uppercase tracking-[0.6em] font-black rounded-full">Gastronomía Narrativa</Badge>
              <h2 className="text-7xl md:text-[10rem] font-bold font-headline tracking-tighter leading-none text-foreground">Platos con Alma</h2>
              <p className="text-2xl md:text-3xl text-foreground/50 italic font-light max-w-4xl mx-auto leading-relaxed">
                Nuestra cocina narra la cultura caribeña a través de ingredientes recolectados bajo el sol y la marea de Ciénaga.
@@ -227,7 +227,7 @@ export default function Home() {
       </section>
 
       {/* FINAL CTA */}
-      <section className="relative h-screen flex items-center justify-center bg-foreground overflow-hidden">
+      <section className="relative h-auto flex items-center justify-center py-10">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/30 via-transparent to-transparent opacity-60" />
         <Image 
           src="https://picsum.photos/seed/casa-sunset-final/1920/1080" 
@@ -235,7 +235,6 @@ export default function Home() {
           fill 
           className="object-cover brightness-50 opacity-40 scale-105" 
         />
-        
         <div className="container mx-auto px-4 relative z-10 text-center text-white space-y-20">
           <motion.h2 
             initial={{ opacity: 0, y: 40 }}

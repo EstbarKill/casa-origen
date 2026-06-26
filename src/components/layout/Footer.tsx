@@ -5,12 +5,12 @@ import { Badge } from '@/components/ui/badge';
 
 export function Footer() {
   return (
-    <footer className="relative z-50 bg-[#0F172A] text-white pt-32 pb-12 overflow-hidden border-t border-white/5">
+    <footer className="relative z-50 bg-[#0F172A] text-white pt-10 overflow-hidden border-t-0 border-white/10">
       {/* Decorative Waves Overlay */}
       <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-primary via-accent to-primary opacity-30" />
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 mb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 mb-[2rem]">
           {/* Brand Identity */}
           <div className="lg:col-span-5 space-y-10">
             <div className="space-y-4">
@@ -97,7 +97,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-12 border-t border-white/5 flex flex-col md:row justify-between items-center gap-8">
+        <div className="py-5 border-t border-white/5 flex flex-col md:row justify-between items-center gap-8">
           <p className="text-white/30 text-xs font-bold tracking-widest uppercase">
             © {new Date().getFullYear()} Casa Origen. Desarrollado bajo la brisa del Magdalena.
           </p>
