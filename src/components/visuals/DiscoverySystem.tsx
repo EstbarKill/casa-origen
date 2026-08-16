@@ -73,21 +73,21 @@ export function DiscoverySystem() {
     <>
       {/* Floating Trophy Button */}
       <motion.button
-        whileHover={{ scale: 1.1, rotate: 5 }}
-        whileTap={{ scale: 0.9 }}
+        whileHover={{ scale: 1, rotate: -5 }}
+        whileTap={{ scale: 0.9}}
         onClick={() => setShowInventory(true)}
-        className="fixed bottom-32 left-8 z-[60] bg-white/95 backdrop-blur px-5 py-5 rounded-full border-2 border-primary/20 text-primary shadow-[0_20px_50px_rgba(0,0,0,0.2)] flex items-center gap-3 group overflow-hidden"
+        className="fixed bottom-32 left-8 z-[60] bg-foreground backdrop-blur px-4 py-4 rounded-full border-2 border-primary text-primary shadow-[0_20px_50px_rgba(0,0,0,0.2)] flex items-center gap-3 group overflow-hidden"
       >
         <div className="relative z-10 flex items-center gap-3">
           <div className="relative">
-            <Trophy size={28} className={foundIds.length > 0 ? "text-orange-400 fill-orange-400 animate-bounce" : "text-foreground/20"} />
+            <Trophy size={28} className={foundIds.length > 0 ? "text-sun fill-orange-400 animate-bounce" : "text-foreground/20"} />
             {foundIds.length > 0 && (
-              <span className="absolute -top-2 -right-2 bg-primary text-white text-[10px] w-6 h-6 rounded-full flex items-center justify-center font-bold shadow-lg ring-2 ring-white">
+              <span className="absolute -top-2 -right-2 bg-primary text-sun text-[10px] w-6 h-6 rounded-full flex items-center justify-center font-bold shadow-lg ring-2 ring-white">
                 {foundIds.length}
               </span>
             )}
           </div>
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] hidden group-hover:block transition-all pr-2">Inventario Cultural</span>
+          <span className="text-[15px] font-black uppercase tracking-[0.2em] hidden group-hover:block transition-all pr-2">Inventario Cultural</span>
         </div>
         <div className="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors" />
       </motion.button>
@@ -95,13 +95,13 @@ export function DiscoverySystem() {
       {/* Discovery Modal with Dynamic Background */}
       <AnimatePresence>
         {activeDiscovery && (
-          <div className="overflow-hidden fixed inset-0 z-[110] flex items-center justify-center pt-30 bg-black/80 backdrop-blur-xl">
+          <div className="overflow-hidden fixed inset-0 z-[110] flex items-start pt-10 justify-center bg-black/80 backdrop-blur-xl">
             <motion.div
-              initial={{ scale: 0.8, opacity: 0, rotateY: 180 }}
+              initial={{ scale: 0.5, opacity: 0, rotateY: 180 }}
               animate={{ scale: 1, opacity: 1, rotateY: 0 }}
               exit={{ scale: 0.8, opacity: 0, rotateY: -180 }}
               transition={{ type: "spring", damping: 15 }}
-              className="bg-foreground/50 rounded-[4rem] top-[5rem] p-5 max-w-full max-h-400 relative shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border-t-[12px] border-primary overflow-scroll"
+              className="bg-foreground/50 rounded-[4rem] top-[4rem] p-3 relative shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border-t-[10px] border-primary"
             >
               {/* Decorative Aura */}
               <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/40 rounded-full blur-3xl" />
@@ -127,13 +127,13 @@ export function DiscoverySystem() {
                   <h3 className="text-5xl font-headline font-bold leading-none">{activeDiscovery.title}</h3>
                 </div>
 
-                <p className="text-xl pb-5 text-foreground/60 italic leading-relaxed font-light">"{activeDiscovery.text}"</p>
+                <p className="text-xl pb-5 text-secondary italic leading-relaxed font-light">"{activeDiscovery.text}"</p>
                 
                 <motion.div 
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.4 }}
-                  className="p-3 bg-secondary/10 rounded-[3rem] border-2 border-primary/20 space-y-6 shadow-2xl relative"
+                  className="p-3 bg-secondary/10 rounded-[2rem] border-2 border-primary/20 space-y-2 shadow-2xl relative"
                 >
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-white px-4 py-1 rounded-full border border-primary/90 text-[15px] font-black uppercase tracking-widest text-primary">Beneficio VIP</div>
                   <div className="flex items-center justify-center gap-4 text-primary">
@@ -159,7 +159,7 @@ export function DiscoverySystem() {
       {/* Inventory Panel - Styled like a Journal */}
       <AnimatePresence>
         {showInventory && (
-          <div className="fixed inset-0 z-[105] flex items-end justify-center sm:items-center pt-56 overflow-scroll">
+          <div className="fixed inset-0 z-[105] flex items-center justify-center pt-10">
             <motion.div 
               initial={{ opacity: 0 }} 
               animate={{ opacity: 1 }} 
@@ -171,9 +171,9 @@ export function DiscoverySystem() {
               initial={{ y: "100%", opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: "100%", opacity: 0 }}
-              className="bg-foreground/70 rounded-t-[4rem] sm:rounded-[4rem] w-full max-w-7xl p-20 relative shadow-4xl space-y-5 max-h-[140vh] overflow-y-auto"
+              className="bg-foreground/70 rounded-[3rem] sm:rounded-[7rem] w-cover h-cover p-10 relative shadow-4xl"
             >
-              <div className="flex items-center justify-between border-b border-primary/10 pb-8">
+              <div className="flex items-center justify-between border-b border-primary/10 p-2">
                 <div>
                   <h3 className="text-4xl text-muted font-headline font-bold">Diario de Tesoros</h3>
                   <p className="text-primary text-lg italic">Explora la cultura de Ciénaga para desbloquear privilegios.</p>
@@ -183,7 +183,7 @@ export function DiscoverySystem() {
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pb-5">
                 {DISCOVERIES.map(disc => {
                   const isFound = foundIds.includes(disc.id);
                   return (
@@ -208,7 +208,7 @@ export function DiscoverySystem() {
                           {isFound ? 'Ver Recompensa' : 'Sigue explorando Ciénaga'}
                         </p>
                       </div>
-                      {!isFound && <div className="absolute top-2 right-4 text-[10px] font-black text-card uppercase tracking-widest">???</div>}
+                      {!isFound && <div className="absolute top-20 right-4 text-[10px] font-black text-card uppercase tracking-widest">???</div>}
                     </motion.div>
                   );
                 })}
@@ -218,7 +218,7 @@ export function DiscoverySystem() {
                 <motion.div 
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  className="p-4 bg-card/70 text-white rounded-[3rem] text-center shadow-2xl relative overflow-hidden"
+                  className="p-4 bg-card/70 text-white rounded-[2rem] text-center shadow-2xl relative overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-primary/10 opacity-30 animate-pulse" />
                   <Star className="mx-auto text-orange-400 fill-orange-400" size={30} />

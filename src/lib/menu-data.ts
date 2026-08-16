@@ -5,6 +5,7 @@ export interface MenuItem {
   price: number;
   category: string;
   image: string;
+  images: string[];
   rating: number;
   description: string;
   fullDescription: string;
@@ -23,6 +24,11 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 45000,
     category: 'Seafood',
     image: 'https://picsum.photos/seed/casa-10/800/800',
+    images: [
+      "/images/menu/mojarra-dorada-1.jpg",
+      "/images/menu/mojarra-dorada-2.jpg",
+      "/images/menu/mojarra-dorada-3.jpg",
+    ],
     rating: 5,
     description: 'Nuestra joya de la corona: una sinfonía de mariscos frescos en base de coco artesanal.',
     fullDescription: 'Una receta ancestral que combina la frescura del Mar Caribe con la cremosidad del coco de nuestras palmeras.',
@@ -39,6 +45,11 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 32000,
     category: 'Seafood',
     image: 'https://picsum.photos/seed/casa-11/800/800',
+    images: [
+      "/images/menu/mojarra-dorada-1.jpg",
+      "/images/menu/mojarra-dorada-2.jpg",
+      "/images/menu/mojarra-dorada-3.jpg",
+    ],
     rating: 5,
     description: 'Mojarra fresca frita en leña, acompañada de arroz de coco y patacón.',
     fullDescription: 'El plato más honesto de nuestra costa. Mojarra seleccionada del día, frita a fuego alto.',
@@ -55,6 +66,11 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 28000,
     category: 'Cocktails',
     image: 'https://picsum.photos/seed/casa-16/800/800',
+    images: [
+      "/images/menu/mojarra-dorada-1.jpg",
+      "/images/menu/mojarra-dorada-2.jpg",
+      "/images/menu/mojarra-dorada-3.jpg",
+    ],
     rating: 5,
     description: 'Gin, maracuyá, menta y un toque secreto cítrico.',
     fullDescription: 'Un cóctel botánico que limpia el paladar y refresca el alma.',
@@ -72,6 +88,11 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 28000,
     category: 'Cocktails',
     image: 'https://picsum.photos/seed/casa-16/800/800',
+    images: [
+      "/images/menu/mojarra-dorada-1.jpg",
+      "/images/menu/mojarra-dorada-2.jpg",
+      "/images/menu/mojarra-dorada-3.jpg",
+    ],
     rating: 5,
     description: 'Gin, maracuyá, menta y un toque secreto cítrico.',
     fullDescription: 'Un cóctel botánico que limpia el paladar y refresca el alma.',
@@ -89,6 +110,11 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 28000,
     category: 'Cocktails',
     image: 'https://picsum.photos/seed/casa-16/800/800',
+    images: [
+      "/images/menu/mojarra-dorada-1.jpg",
+      "/images/menu/mojarra-dorada-2.jpg",
+      "/images/menu/mojarra-dorada-3.jpg",
+    ],
     rating: 5,
     description: 'Gin, maracuyá, menta y un toque secreto cítrico.',
     fullDescription: 'Un cóctel botánico que limpia el paladar y refresca el alma.',
@@ -106,6 +132,11 @@ export const MENU_ITEMS: MenuItem[] = [
     price: 28000,
     category: 'Cocktails',
     image: 'https://picsum.photos/seed/casa-16/800/800',
+    images: [
+      "/images/menu/mojarra-dorada-1.jpg",
+      "/images/menu/mojarra-dorada-2.jpg",
+      "/images/menu/mojarra-dorada-3.jpg",
+    ],
     rating: 5,
     description: 'Gin, maracuyá, menta y un toque secreto cítrico.',
     fullDescription: 'Un cóctel botánico que limpia el paladar y refresca el alma.',

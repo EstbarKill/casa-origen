@@ -10,7 +10,7 @@ export function TomasitaMonument() {
   // Parallax effects
   const yTomasita = useTransform(scrollYProgress, [0, 0.3], [0, -100]);
   const yCaiman = useTransform(scrollYProgress, [0, 0.3, 0.5], [100, 0, -50]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1.2]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1]);
   const rotate = useTransform(scrollYProgress, [0, 0.5], [0, 5]);
 
   return (
@@ -33,7 +33,7 @@ export function TomasitaMonument() {
         style={{ y: yTomasita}}
         className="relative z-20 flex flex-col items-center"
       >
-        <div className="w-48 h-80 bg-gradient-to-b from-secondary to-primary/40 rounded-t-full relative overflow-visible shadow-2xl border-4 border-white/20">
+        <div className="w-48 h-80 bg-gradient-to-b from-sun to-ocean/40 rounded-t-full relative overflow-visible shadow-2xl border-4 border-white/20">
           <img
             src="/images/tomasita.png"
             alt="tomasita"
@@ -41,7 +41,7 @@ export function TomasitaMonument() {
           />
         </div>
         <div className="mt-2 bg-white/90 px-4 py-2 rounded-full shadow-lg border border-primary/10">
-           <span className="text-primary font-headline italic text-xl">Tomasita</span>
+           <span className="text-label font-headline text-2xl font-black">Tomasita</span>
         </div>
       </motion.div>
 
@@ -57,7 +57,7 @@ export function TomasitaMonument() {
           {/* Scales pattern */}
           <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
         </div>
-        <div className="absolute -bottom-6 left-1/3 -translate-x-1/4 bg-accent text-white px-8 py-2 rounded-full font-headline font-bold text-xl tracking-widest shadow-xl">
+        <div className="absolute justify-content-center -bottom-6 left-1/3 -translate-x-1/4 bg-secondary text-center text-foreground px-8 py-2 rounded-full font-headline font-bold text-xl tracking-widest shadow-xl">
            LEYENDA DEL CAIMÁN
         </div>
       </motion.div>

@@ -18,12 +18,13 @@ export function AtmosphereProvider({ children }: { children: React.ReactNode }) 
 
   useEffect(() => {
     const updateAtmosphere = () => {
-      const hour = new Date().getHours();
-      if (hour >= 6 && hour < 17) setAtmosphere('morning');
-      else if (hour >= 17 && hour < 19) setAtmosphere('sunset');
-      else setAtmosphere('night');
+      //const hour = new Date().getHours();
+      //if (hour >= 6 && hour < 17) setAtmosphere('morning');
+      //else if (hour >= 17 && hour < 19) setAtmosphere('sunset');
+      //else setAtmosphere('night');
+      setAtmosphere('morning');
     };
-
+    
     updateAtmosphere();
     const interval = setInterval(updateAtmosphere, 60000);
     return () => clearInterval(interval);

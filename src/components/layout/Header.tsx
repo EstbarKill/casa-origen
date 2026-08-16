@@ -36,10 +36,10 @@ export function Header() {
 
   return (
     <header className={cn(
-      "fixed top-0 z-[100] w-full transition-all duration-400 ease-in-out px-6 border-b border-red/900",
+      "fixed top-0 z-[100] w-full transition-all duration-400 ease-in-out px-5 border-b border-red/900 hover:border-b-ocean",
       isScrolled 
-        ? "bg-background/95 backdrop-blur-2xl border-b border-blue/700 shadow-lg h-20" 
-        : "bg-background/5 backdrop-blur-[2px] h-28"
+        ? "bg-background/5 backdrop-blur-3xl border-b border-blue/700 shadow-xl h-25" 
+        : "bg-background/90 backdrop-blur-2xl h-20"
     )}>
       <div className="container mx-auto h-full">
         <div className="flex h-full items-center justify-between">
@@ -54,10 +54,10 @@ export function Header() {
               className="group flex items-center space-x-2 relative"
             >
               <div className="flex flex-col items-center">
-                <span className="text-3xl md:text-4xl font-bold tracking-[0.25em] text-foreground font-headline transition-transform duration-500 group-hover:text-primary">CASA ORIGEN</span>
+                <span className="text-3xl md:text-4xl font-bold tracking-[0.25em] text-foreground font-headline transition-transform duration-500 group-hover:text-label">CASA ORIGEN</span>
                 <div className="flex items-center gap-2 opacity-60">
                   <span className="h-[1px] w-4 bg-primary/40" />
-                  <span className="text-[9px] tracking-[0.4em] uppercase font-black">Ciénaga • Colombia</span>
+                  <span className="text-[9px] tracking-[0.4em] group-hover:text-primary uppercase font-black">Ciénaga • Colombia</span>
                   <span className="h-[1px] w-4 bg-primary/40" />
                 </div>
               </div>
@@ -65,8 +65,8 @@ export function Header() {
           </motion.div>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center space-x-12">
-            <ul className="flex items-center space-x-10">
+          <nav className="hidden lg:flex items-center space-x-10">
+            <ul className="flex items-center space-x-8">
               {navItems.map((item, idx) => (
                 <motion.li
                   key={item.href}
@@ -77,8 +77,8 @@ export function Header() {
                   <Link
                     href={item.href}
                     className={cn(
-                      "text-[11px] font-black uppercase tracking-[0.25em] transition-all duration-300 relative group py-2",
-                      pathname === item.href ? "text-primary" : "text-foreground hover:text-primary"
+                      "text-[12px] font-black uppercase tracking-[0.25em] transition-all duration-300 relative group py-1",
+                      pathname === item.href ? "text-label/70" : "text-foreground hover:text-label"
                     )}
                   >
                     {item.name}
@@ -96,7 +96,7 @@ export function Header() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.6 }}
             >
-              <Button asChild className="bg-primary hover:bg-foreground/80 hover:text-black text-white px-10 rounded-full h-12 shadow-xl hover:shadow-primary/20 transition-all duration-500 font-bold uppercase tracking-widest text-[10px] border-none">
+              <Button asChild className="bg-foreground/60 hover:bg-foreground/80 hover:text-sun/80 text-label px-5 rounded-full h-10 shadow-lg hover:shadow-primary/70 transition-all duration-500 font-bold uppercase tracking-widest text-[15px] border-none">
                 <Link href="/reservations">Reservar</Link>
               </Button>
             </motion.div>

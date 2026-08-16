@@ -64,7 +64,7 @@ export function CaimanMascot() {
     const rect = caimanElement.getBoundingClientRect();
     const caimanX = rect.left + rect.width / 2;
     const caimanY = rect.top + rect.height / 2;
-    const angle = Math.atan2(mousePos.y - caimanY, mousePos.x - caimanX) * (180 / Math.PI);
+    const angle = Math.atan2(mousePos.y - caimanY, mousePos.x - caimanX) * (120 / Math.PI);
     return direction === 1 ? angle : angle + 180;
   }, [mousePos, direction]);
 
@@ -172,11 +172,11 @@ export function CaimanMascot() {
             <motion.div 
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
-              className="absolute -top-20 left-1/3 -translate-x-1/4 bg-card/90 backdrop-blur-xl px-2 py-2 rounded-2xl shadow-6xl border border-primary/90 whitespace-nowrap z-50"
+              className="absolute -top-12  -translate-x-1/4 bg-card/90 backdrop-blur-xl px-2 py-2 rounded-2xl shadow-6xl border border-primary/90 whitespace-nowrap z-50"
             >
               <div className="flex items-center gap-2">
                 <Sparkles size={14} className="text-primary/100 animate-pulse" />
-                <span className="text-[13px] font-black uppercase tracking-[0.2em] text-primary">Sigue el rastro de Ciénaga</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Sigue el rastro de Ciénaga</span>
               </div>
             </motion.div>
           )}
@@ -188,9 +188,9 @@ export function CaimanMascot() {
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0 }}
-              className="absolute top-[-60px] left-[-90px]  text-primary font-headline italic font-bold"
+              className="absolute top-[-32px] left-[-80px]  text-primary font-headline italic font-bold"
             >
-              <span className="text-3xl animate-bounce tracking-widest">Zzz...</span>
+              <span className="text-xl animate-bounce tracking-widest">Zzz...</span>
             </motion.div>
           )}
         </AnimatePresence>
