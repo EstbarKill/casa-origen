@@ -115,7 +115,7 @@ export default function Home() {
             <motion.div 
               whileHover={{ scale: 1.5 }}
               onClick={() => triggerDiscovery('legend')}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[7rem] h-[7rem] cursor-pointer z-50 rounded-full bg-transparent hover:bg-primary/50 flex items-center justify-center group backdrop-blur-sm border border-white/30 shadow-4xl"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[3rem] h-[3rem] cursor-pointer z-50 rounded-full bg-transparent hover:bg-primary/50 flex items-center justify-center group backdrop-blur-sm border border-white/30 shadow-4xl"
             >
               <Sparkles className="text-black hover:text-primary opacity-20 group-hover:opacity-100 transition-opacity" size={48} />
             </motion.div>

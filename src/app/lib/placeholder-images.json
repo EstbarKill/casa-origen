@@ -22,19 +22,19 @@
     {
       "id": "cocktail",
       "description": "Tropical craft cocktail with Caribbean garnish",
-      "imageUrl": "https://picsum.photos/seed/casa-origen-4/600/600",
+      "imageUrl": "/images/cocktail-tropical.png",
       "imageHint": "cocktail tropical"
     },
     {
       "id": "sunset",
       "description": "Beautiful sunset over the Caribbean sea in Ciénaga",
-      "imageUrl": "https://picsum.photos/seed/casa-origen-5/800/600",
+      "imageUrl":"/images/value-image.png", 
       "imageHint": "sunset beach"
     },
     {
       "id": "restaurant-interior",
       "description": "Elegant coastal restaurant interior with wooden accents",
-      "imageUrl": "/images/our-story.jpg",
+      "imageUrl": "/images/bg-history.png",
       "imageHint": "restaurant luxury"
     }
   ]

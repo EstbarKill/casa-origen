@@ -14,18 +14,83 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { format, getDate } from 'date-fns';
+import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { cn } from '@/lib/utils';
 
 const TABLES = [
-  { id: 1, type: 'Beachfront', x: 15, y: 0, capacity: 2, desc: 'Vista directa al Caribe' },
-  { id: 2, type: 'Beachfront', x: 15, y: 35, capacity: 2, desc: 'Perfecta para parejas' },
-  { id: 3, type: 'Beachfront', x: 15, y: 75, capacity: 4, desc: 'Perfecta para parejas' },
-  { id: 4, type: 'Sunset', x: 45, y: 10, capacity: 6, desc: 'Mejor vista al atardecer' },
-  { id: 5, type: 'VIP Lounge', x: 75, y: 0, capacity: 4, desc: 'Privacidad y lujo absoluto' },
-  { id: 6, type: 'Family Garden', x: 45, y: 65, capacity: 8, desc: 'Espacio para grandes momentos' },
-  { id: 7, type: 'Garden', x: 75, y: 65, capacity: 3, desc: 'Grandes momentos' },
-  { id: 8, type: 'Romantic', x: 75, y: 35, capacity: 2, desc: 'Iluminación tenue y brisa' },
+  {
+    id: 1,
+    zone: 'interior',
+    type: 'Beachfront',
+    x: 15,
+    y: 0,
+    capacity: 2,
+    desc: 'Vista directa al Caribe',
+  },
+  {
+    id: 2,
+    zone: 'interior',
+    type: 'Beachfront',
+    x: 15,
+    y: 35,
+    capacity: 2,
+    desc: 'Perfecta para parejas',
+  },
+  {
+    id: 3,
+    zone: 'interior',
+    type: 'Beachfront',
+    x: 15,
+    y: 75,
+    capacity: 4,
+    desc: 'Espacio junto al mar',
+  },
+  {
+    id: 4,
+    zone: 'interior',
+    type: 'Sunset',
+    x: 45,
+    y: 10,
+    capacity: 6,
+    desc: 'Mejor vista al atardecer',
+  },
+  {
+    id: 5,
+    zone: 'exterior',
+    type: 'VIP Lounge',
+    x: 75,
+    y: 0,
+    capacity: 4,
+    desc: 'Privacidad y lujo absoluto',
+  },
+  {
+    id: 6,
+    zone: 'interior',
+    type: 'Family Garden',
+    x: 45,
+    y: 65,
+    capacity: 8,
+    desc: 'Espacio para grandes momentos',
+  },
+  {
+    id: 7,
+    zone: 'exterior',
+    type: 'Garden',
+    x: 75,
+    y: 65,
+    capacity: 3,
+    desc: 'Grandes momentos',
+  },
+  {
+    id: 8,
+    zone: 'exterior',
+    type: 'Romantic',
+    x: 75,
+    y: 35,
+    capacity: 2,
+    desc: 'Iluminación tenue y ambiente íntimo',
+  },
 ];
 
 const TIME_SLOTS = [
@@ -34,6 +99,16 @@ const TIME_SLOTS = [
 
 export default function ReservationsPage() {
   const [selectedTable, setSelectedTable] = useState<typeof TABLES[0] | null>(null);
+  const [selectedZone, setSelectedZone] = useState<'interior' | 'exterior'>(
+  'exterior'
+);
+const filteredTables = TABLES.filter(
+  (table) => table.zone === selectedZone
+);
+const handleZoneSelect = (zone: 'interior' | 'exterior') => {
+  setSelectedZone(zone);
+  setSelectedTable(null);
+};
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,6 +119,7 @@ export default function ReservationsPage() {
     name: '',
     phone: '',
     guests: '',
+    occasion: '',
     notes: ''
   });
 
@@ -56,7 +132,8 @@ export default function ReservationsPage() {
       toast({
         variant: "destructive",
         title: "Selección incompleta",
-        description: "Por favor elige una mesa, fecha y hora para continuar.",
+        description:
+  "Por favor elige una fecha, hora, zona y mesa para continuar.",
       });
       return;
     }
@@ -72,9 +149,11 @@ export default function ReservationsPage() {
       `📞 Teléfono: ${formData.phone}\n` +
       `🗓️ Fecha: ${format(date!, 'PPP', { locale: es })}\n` +
       `⏰ Hora: ${selectedTime}\n` +
+      `📍 Zona: ${selectedZone === 'interior' ? 'Interior' : 'Exterior'}\n` +
       `🪑 Mesa: ${selectedTable?.type} (Mesa #${selectedTable?.id})\n` +
       `👥 Personas: ${formData.guests || selectedTable?.capacity}\n` +
-      `📝 Notas: ${formData.notes || 'Ninguna'}\n\n` +
+      `🎉 Ocasión: ${formData.occasion || 'Cena casual'}\n` +
+      `💬 Solicitud especial: ${formData.notes || 'Ninguna'}\n\n` +
       `¡Nos vemos pronto bajo la brisa del Caribe! 🌊`;
     
     const encoded = encodeURIComponent(message);
@@ -162,7 +241,91 @@ export default function ReservationsPage() {
 
           {/* Table Map Selection */}
           <div className="xl:col-span-6 space-y-5 ">
-            <div className="relative aspect-[16/12] bg-foreground/50 rounded-[4rem] shadow-2xl overflow-hidden border-[2px] border-primary/60 p-5 group">
+
+  {/* Zone Selection */}
+  <Card className="rounded-[2rem] border-none shadow-xl bg-foreground/10 overflow-hidden">
+    <CardContent className="p-4 sm:p-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-foreground/40">
+            3. Ubicación
+          </p>
+
+          <h3 className="text-xl sm:text-2xl font-headline font-bold mt-1">
+            ¿Dónde quieres disfrutar?
+          </h3>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2 w-full sm:w-auto">
+          <Button
+            type="button"
+            onClick={() => handleZoneSelect('interior')}
+            variant="outline"
+            className={cn(
+              `
+                h-12
+                px-5
+                rounded-2xl
+                font-black
+                uppercase
+                tracking-wider
+                text-xs
+                transition-all
+              `,
+              selectedZone === 'interior'
+                ? 'bg-primary text-white border-primary shadow-lg'
+                : 'bg-white/70 text-foreground/60 hover:border-primary'
+            )}
+          >
+            Interior
+          </Button>
+
+          <Button
+            type="button"
+            onClick={() => handleZoneSelect('exterior')}
+            variant="outline"
+            className={cn(
+              `
+                h-12
+                px-5
+                rounded-2xl
+                font-black
+                uppercase
+                tracking-wider
+                text-xs
+                transition-all
+              `,
+              selectedZone === 'exterior'
+                ? 'bg-primary text-white border-primary shadow-lg'
+                : 'bg-white/70 text-foreground/60 hover:border-primary'
+            )}
+          >
+            Exterior
+          </Button>
+        </div>
+
+      </div>
+    </CardContent>
+  </Card>
+            <div
+  className="
+    relative
+    aspect-[4/5]
+    sm:aspect-[16/12]
+    bg-foreground/50
+    rounded-[2rem]
+    sm:rounded-[3rem]
+    lg:rounded-[4rem]
+    shadow-2xl
+    overflow-hidden
+    border-[2px]
+    border-primary/60
+    p-3
+    sm:p-5
+    group
+  "
+>
                {/* Sea Visual Side */}
                <div className="absolute top-0 left-0 bottom-0 w-20 md:w-24 bg-accent/40 flex flex-col items-center justify-center gap-6 text-blue-200 overflow-hidden">
                   <motion.div animate={{ y: [0, -20, 0] }} transition={{ repeat: Infinity, duration: 4 }}>
@@ -176,30 +339,67 @@ export default function ReservationsPage() {
                
                {/* Tables Layout */}
                <div className="relative w-full h-full">
-                  {TABLES.map(table => (
+                  {filteredTables.map((table) => (
                     <motion.button
                       key={table.id}
                       whileHover={{ scale: 1.1, zIndex: 10 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => handleTableSelect(table)}
                       style={{ left: `${table.x}%`, top: `${table.y}%` }}
-                      className={`absolute w-16 h-16 md:w-20 md:h-20 rounded-[1.5rem] flex flex-col items-center justify-center transition-all shadow-xl border-2 ${
-                        selectedTable?.id === table.id 
-                        ? 'bg-primary text-white border-primary ring-8 ring-primary/10' 
-                        : 'bg-foreground/90 text-muted/80 border-transparent hover:bg-white hover:border-primary/30 hover:text-primary'
-                      }`}
+                      className={`
+  absolute
+  w-12 h-12
+  sm:w-16 sm:h-16
+  md:w-20 md:h-20
+  rounded-2xl
+  sm:rounded-[1.5rem]
+  flex flex-col
+  items-center
+  justify-center
+  transition-all
+  shadow-xl
+  border-2
+  ${
+    selectedTable?.id === table.id
+      ? 'bg-primary text-white border-primary ring-4 sm:ring-8 ring-primary/10'
+      : 'bg-foreground/90 text-muted/80 border-transparent hover:bg-white hover:border-primary/30 hover:text-primary'
+  }
+`}
                     >
-                      <User size={selectedTable?.id === table.id ? 28 : 20} />
-                      <span className="absolute -top-3 -right-3 bg-white text-muted text-[15px] font-black w-8 h-8 rounded-full flex items-center justify-center border-2 border-primary/10 shadow-lg">x{table.capacity}</span>
+                      <User size={selectedTable?.id === table.id ? 22 : 17} />
+<span
+  className="
+    absolute
+    -top-2
+    -right-2
+    sm:-top-3
+    sm:-right-3
+    bg-white
+    text-muted
+    text-[10px]
+    sm:text-[15px]
+    font-black
+    w-6 h-6
+    sm:w-8 sm:h-8
+    rounded-full
+    flex items-center justify-center
+    border-2
+    border-primary/10
+    shadow-lg
+  "
+>
+  x{table.capacity}
+</span>
                       <span className="text-[8px] font-bold uppercase tracking-tighter mt-1 hidden md:block">{table.type}</span>
+                    
                     </motion.button>
                   ))}
                </div>
 
                {/* Map Key */}
-               <div className="absolute text-muted bottom-5 right-8 flex gap-2 md:gap-6 bg-white/80 backdrop-blur px-6 py-3 rounded-full border shadow-sm">
-                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest"><div className="w-3 h-3 bg-primary rounded-full" /> Seleccionada</div>
-                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest"><div className="w-3 h-3 bg-secondary/40 rounded-full" /> Disponible</div>
+               <div className="absolute text-primary bottom-5 right-8 flex gap-2 md:gap-6 bg-white/80 backdrop-blur px-6 py-3 rounded-full border shadow-sm">
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest"><div className="w-3 h-3 bg-label rounded-full" /> Seleccionada</div>
+                  <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest"><div className="w-3 h-3 bg-label rounded-full" /> Disponible</div>
                </div>
             </div>
 
@@ -210,20 +410,45 @@ export default function ReservationsPage() {
                   initial={{ opacity: 0, y: -50 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 20 }}
-                  className="bg-foreground/60 text-white p-10 rounded-[4rem] shadow-4xl flex flex-col md:flex-row items-center justify-between gap-10 border-t-8 border-primary"
+                  className="bg-foreground/10 p-10 rounded-[4rem] shadow-4xl justify-between border-t-8 border-primary"
                 >
                   <div className="flex-col text-center md:text-left">
-                    <div className="flex min-w-[10rem] max-w-[20rem] text-20 gap-2 md:justify-start">
-                       <Badge className="bg-primary/40 hover:bg-primary/70 text-muted/100 hover:text-foreground border-b-white">{selectedTable.type}</Badge>
-                       <Badge className="bg-white/20 text-primary hover:text-foreground border-none">{selectedTime || 'Elige hora'}</Badge>
-                       <Badge className="border-none">{` ${format(date!, 'PP', { locale: es })}\n` || "Elige una fecha"}</Badge>
+                    <div className="flex min-w-fit text-15 gap-3 md:justify-start">
+<Badge
+  className="
+    bg-accent/60
+    hover:bg-accent
+    text-bacground
+    hover:text-label
+    border-none
+  "
+>
+  {selectedZone === 'interior' ? 'Interior' : 'Exterior'}
+</Badge>
+
+<Badge
+  className="
+    bg-accent/60
+    hover:bg-accent
+    text-bacground
+    hover:text-label
+    border-none
+  "
+>
+  {selectedTable.type}
+</Badge>
+                       <Badge className="bg-accent/60 text-bacground hover:bg-accent hover:text-label border-none">{selectedTime || 'Elige hora'}</Badge>
+                       <Badge className="bg-accent/60 *:border-none hover:bg-accent hover:text-label">{` ${format(date!, 'PP', { locale: es })}\n` || "Elige una fecha"}</Badge>
                     </div>
-                    <h3 className="mt-4 text-3xl font-headline font-bold">Mesa para {selectedTable.capacity} - Zona {selectedTable.type}</h3>
-                    <p className="absolut text-primary italic text-xl">"{selectedTable.desc}"</p>
+                    <h3 className="flex my-4 text-bacground hover:text-label text-2xl sm:text-4xl font-headline font-bold">
+  Mesa para {selectedTable.capacity} · {selectedZone === 'interior' ? 'Interior' : 'Exterior'}
+</h3>
+                    <p className="my-4 text-primary hover:text-label italic text-xl">"{selectedTable.desc}"</p>
                     </div>
                   <Button 
                     onClick={handleOpenModal}
-                    className="w-full md:w-auto h-16 bg-primary hover:bg-white hover:text-primary text-white text-xl font-bold rounded-3xl shadow-2xl transition-all"
+                    className="flex relative justify-self-end w-full md:w-auto h-16 bg-primary hover:bg-accent hover:text-primary text-white text-xl font-bold rounded-3xl shadow-2xl transition-all"
+
                   >
                     Confirmar Reserva <Send size={50} className="" />
                   </Button>
@@ -234,96 +459,657 @@ export default function ReservationsPage() {
         </div>
       </div>
 
-      {/* Reservation Details Modal */}
-      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="sm:max-w-[550px] p-0 overflow-hidden border-none rounded-[3rem] bg-white">
-          <div className="bg-primary h-28 flex items-center justify-center text-white text-center p-6">
+{/* Reservation Details Modal */}
+<Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+  <DialogContent
+    className="
+      w-[calc(100%-1rem)]
+      sm:w-full
+      sm:max-w-[620px]
+      max-h-[92vh]
+      p-0
+      overflow-hidden
+      border-none
+      rounded-[2rem]
+      sm:rounded-[2.5rem]
+      bg-background
+      shadow-2xl
+    "
+  >
+    {/* =========================
+        HEADER
+    ========================== */}
+    <div className="relative overflow-hidden bg-primary text-white">
+      
+      {/* Decorative background */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute -top-20 -right-20 w-56 h-56 rounded-full border-[30px] border-white" />
+        <div className="absolute -bottom-24 -left-20 w-64 h-64 rounded-full border-[25px] border-white" />
+      </div>
+
+      <div className="relative px-6 sm:px-8 pt-7 pb-6">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="
+            w-11 h-11
+            rounded-2xl
+            bg-white/15
+            backdrop-blur-md
+            flex items-center justify-center
+            border border-white/20
+          ">
+            <MessageSquare size={20} />
+          </div>
+
+          <div>
+            <p className="
+              text-[9px]
+              font-black
+              uppercase
+              tracking-[0.3em]
+              text-white/60
+            ">
+              Casa Origen
+            </p>
+
+            <p className="
+              text-xs
+              font-medium
+              text-white/80
+            ">
+              Ciénaga · Caribe
+            </p>
+          </div>
+        </div>
+
+        <DialogTitle
+          className="
+            text-2xl
+            sm:text-3xl
+            font-headline
+            font-bold
+            tracking-tight
+          "
+        >
+          Confirma tu experiencia
+        </DialogTitle>
+
+        <DialogDescription
+          className="
+            mt-1
+            text-sm
+            sm:text-base
+            text-white/70
+            italic
+          "
+        >
+          Completa tus datos y envía tu solicitud a nuestro equipo.
+        </DialogDescription>
+      </div>
+    </div>
+
+    {/* =========================
+        CONTENT
+    ========================== */}
+    <div className="overflow-y-auto max-h-[calc(92vh-170px)]">
+      <form
+        onSubmit={handleConfirmReservation}
+        className="p-5 sm:p-8 space-y-7"
+      >
+
+        {/* =========================
+            RESERVATION SUMMARY
+        ========================== */}
+        <div
+          className="
+            rounded-2xl
+            sm:rounded-[1.75rem]
+            bg-secondary/10
+            border border-primary/10
+            p-4
+            sm:p-5
+          "
+        >
+          <div className="flex items-center justify-between mb-4">
             <div>
-              <DialogTitle className="text-3xl font-headline font-bold">Check-in Gastronómico</DialogTitle>
-              <DialogDescription className="text-white/70 italic text-sm">Casi listo para tu experiencia en Casa Origen</DialogDescription>
+              <p className="
+                text-[9px]
+                font-black
+                uppercase
+                tracking-[0.25em]
+                text-foreground/40
+              ">
+                Tu reserva
+              </p>
+
+              <p className="
+                text-lg
+                font-headline
+                font-bold
+                text-foreground
+              ">
+                {selectedTable?.type}
+              </p>
+            </div>
+
+            <Badge
+              className="
+                bg-primary
+                text-white
+                border-none
+                rounded-full
+                px-3
+                py-1
+                text-[10px]
+                font-black
+              "
+            >
+              Mesa #{selectedTable?.id}
+            </Badge>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2">
+            
+            {/* Date */}
+            <div className="
+              rounded-xl
+              bg-background
+              border
+              border-primary/5
+              p-3
+            ">
+              <CalendarIcon
+                size={15}
+                className="text-primary mb-2"
+              />
+
+              <p className="
+                text-[8px]
+                uppercase
+                tracking-widest
+                font-black
+                text-foreground/30
+              ">
+                Fecha
+              </p>
+
+              <p className="
+                text-xs
+                font-bold
+                text-foreground
+                mt-1
+                truncate
+              ">
+                {date
+                  ? format(date, "dd MMM", { locale: es })
+                  : "—"}
+              </p>
+            </div>
+
+            {/* Time */}
+            <div className="
+              rounded-xl
+              bg-background
+              border
+              border-primary/5
+              p-3
+            ">
+              <Clock
+                size={15}
+                className="text-primary mb-2"
+              />
+
+              <p className="
+                text-[8px]
+                uppercase
+                tracking-widest
+                font-black
+                text-foreground/30
+              ">
+                Hora
+              </p>
+
+              <p className="
+                text-xs
+                font-bold
+                text-foreground
+                mt-1
+                truncate
+              ">
+                {selectedTime || "—"}
+              </p>
+            </div>
+
+            {/* Capacity */}
+            <div className="
+              rounded-xl
+              bg-background
+              border
+              border-primary/5
+              p-3
+            ">
+              <User
+                size={15}
+                className="text-primary mb-2"
+              />
+
+              <p className="
+                text-[8px]
+                uppercase
+                tracking-widest
+                font-black
+                text-foreground/30
+              ">
+                Capacidad
+              </p>
+
+              <p className="
+                text-xs
+                font-bold
+                text-foreground
+                mt-1
+                truncate
+              ">
+                {selectedTable?.capacity} personas
+              </p>
             </div>
           </div>
-          
-          <form onSubmit={handleConfirmReservation} className="p-8 space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="res-name" className="text-[10px] font-black uppercase tracking-widest text-foreground/40 ml-1">Nombre Completo</Label>
-                <Input 
-                  id="res-name" 
-                  placeholder="Tomasita García" 
-                  value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  required 
-                  className="h-12 rounded-xl bg-secondary/10 border-none focus-visible:ring-primary"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="res-phone" className="text-[10px] font-black uppercase tracking-widest text-foreground/40 ml-1">WhatsApp</Label>
-                <Input 
-                  id="res-phone" 
-                  type="tel" 
-                  placeholder="+57 300..." 
-                  value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                  required 
-                  className="h-12 rounded-xl bg-secondary/10 border-none focus-visible:ring-primary"
-                />
-              </div>
-            </div>
+        </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label className="text-[10px] font-black uppercase tracking-widest text-foreground/40 ml-1">Comensales</Label>
-                <Select onValueChange={(val) => setFormData({...formData, guests: val})}>
-                  <SelectTrigger className="h-12 rounded-xl bg-secondary/10 border-none">
-                    <SelectValue placeholder={`Capacidad: ${selectedTable?.capacity}`} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {[1,2,3,4,5,6,7,8].map(n => (
-                      <SelectItem key={n} value={n.toString()}>{n} personas</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label className="text-[10px] font-black uppercase tracking-widest text-foreground/40 ml-1">Ocasión</Label>
-                <Select>
-                  <SelectTrigger className="h-12 rounded-xl bg-secondary/10 border-none">
-                    <SelectValue placeholder="Cena casual" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="casual">Cena Casual</SelectItem>
-                    <SelectItem value="birthday">Cumpleaños</SelectItem>
-                    <SelectItem value="anniversary">Aniversario</SelectItem>
-                    <SelectItem value="business">Negocios</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+        {/* =========================
+            PERSONAL INFORMATION
+        ========================== */}
+        <div className="space-y-4">
+          <div>
+            <p className="
+              text-[10px]
+              font-black
+              uppercase
+              tracking-[0.25em]
+              text-primary
+            ">
+              Tus datos
+            </p>
 
+            <p className="
+              text-sm
+              text-foreground/50
+              mt-1
+            ">
+              Necesitamos esta información para contactarte.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            {/* Name */}
             <div className="space-y-2">
-              <Label htmlFor="res-notes" className="text-[10px] font-black uppercase tracking-widest text-foreground/40 ml-1">Notas Especiales</Label>
-              <Textarea 
-                id="res-notes" 
-                placeholder="Alergias o solicitudes específicas..." 
-                value={formData.notes}
-                onChange={(e) => setFormData({...formData, notes: e.target.value})}
-                className="min-h-[100px] rounded-2xl bg-secondary/10 border-none p-4 text-sm"
+              <Label
+                htmlFor="res-name"
+                className="
+                  text-[9px]
+                  font-black
+                  uppercase
+                  tracking-widest
+                  text-foreground/50
+                  ml-1
+                "
+              >
+                Nombre completo
+              </Label>
+
+              <Input
+                id="res-name"
+                placeholder="Tomasita García"
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    name: e.target.value,
+                  })
+                }
+                required
+                className="
+                  h-12
+                  rounded-xl
+                  bg-secondary/10
+                  border
+                  border-primary/5
+                  px-4
+                  text-sm
+                  shadow-none
+                  transition-all
+                  focus-visible:ring-2
+                  focus-visible:ring-primary/30
+                  focus-visible:border-primary/30
+                "
               />
             </div>
 
-            <div className="pt-2">
-              <Button type="submit" className="w-full h-16 rounded-2xl bg-primary hover:bg-foreground text-white text-lg font-bold shadow-xl transition-all">
-                 Finalizar y Enviar a WhatsApp
-              </Button>
-              <div className="flex items-center justify-center gap-2 mt-4 text-accent">
-                <MessageSquare size={14} />
-                <p className="text-[10px] font-bold uppercase tracking-widest">Resumen automático vía WhatsApp</p>
-              </div>
+            {/* Phone */}
+            <div className="space-y-2">
+              <Label
+                htmlFor="res-phone"
+                className="
+                  text-[9px]
+                  font-black
+                  uppercase
+                  tracking-widest
+                  text-foreground/50
+                  ml-1
+                "
+              >
+                WhatsApp
+              </Label>
+
+              <Input
+                id="res-phone"
+                type="tel"
+                placeholder="+57 300..."
+                value={formData.phone}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    phone: e.target.value,
+                  })
+                }
+                required
+                className="
+                  h-12
+                  rounded-xl
+                  bg-secondary/10
+                  border
+                  border-primary/5
+                  px-4
+                  text-sm
+                  shadow-none
+                  transition-all
+                  focus-visible:ring-2
+                  focus-visible:ring-primary/30
+                  focus-visible:border-primary/30
+                "
+              />
             </div>
-          </form>
-        </DialogContent>
-      </Dialog>
+          </div>
+        </div>
+
+        {/* =========================
+            RESERVATION DETAILS
+        ========================== */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+          {/* Guests */}
+          <div className="space-y-2">
+            <Label
+              className="
+                text-[9px]
+                font-black
+                uppercase
+                tracking-widest
+                text-foreground/50
+                ml-1
+              "
+            >
+              Comensales
+            </Label>
+
+            <Select
+              onValueChange={(val) =>
+                setFormData({
+                  ...formData,
+                  guests: val,
+                })
+              }
+            >
+              <SelectTrigger
+                className="
+                  h-12
+                  rounded-xl
+                  bg-secondary/10
+                  border
+                  border-primary/5
+                  shadow-none
+                  text-sm
+                  focus:ring-primary/30
+                "
+              >
+                <SelectValue
+                  placeholder={`Capacidad: ${selectedTable?.capacity}`}
+                />
+              </SelectTrigger>
+
+              <SelectContent>
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+                  <SelectItem
+                    key={n}
+                    value={n.toString()}
+                  >
+                    {n} {n === 1 ? "persona" : "personas"}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Occasion */}
+          <div className="space-y-2">
+            <Label
+              className="
+                text-[9px]
+                font-black
+                uppercase
+                tracking-widest
+                text-foreground/50
+                ml-1
+              "
+            >
+              Ocasión
+            </Label>
+
+            <Select
+  value={formData.occasion}
+  onValueChange={(val) =>
+    setFormData({
+      ...formData,
+      occasion: val,
+    })
+  }
+>
+              <SelectTrigger
+                className="
+                  h-12
+                  rounded-xl
+                  bg-secondary/10
+                  border
+                  border-primary/5
+                  shadow-none
+                  text-sm
+                  focus:ring-primary/30
+                "
+              >
+                <SelectValue placeholder="Cena casual" />
+              </SelectTrigger>
+
+              <SelectContent>
+                <SelectItem value="casual">
+                  Cena casual
+                </SelectItem>
+
+                <SelectItem value="birthday">
+                  Cumpleaños
+                </SelectItem>
+
+                <SelectItem value="anniversary">
+                  Aniversario
+                </SelectItem>
+
+                <SelectItem value="business">
+                  Negocios
+                </SelectItem>
+
+                <SelectItem value="special">
+                  Ocasión especial
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        {/* =========================
+            SPECIAL REQUEST
+        ========================== */}
+        <div className="space-y-3">
+
+          <div className="flex items-end justify-between gap-3">
+            <div>
+              <Label
+                htmlFor="res-notes"
+                className="
+                  text-[9px]
+                  font-black
+                  uppercase
+                  tracking-widest
+                  text-foreground/50
+                "
+              >
+                Solicitud especial
+              </Label>
+
+              <p className="
+                text-[11px]
+                text-foreground/35
+                mt-1
+              ">
+                Cuéntanos cómo podemos preparar tu experiencia.
+              </p>
+            </div>
+
+            <span className="
+              shrink-0
+              text-[9px]
+              font-medium
+              uppercase
+              tracking-wider
+              text-foreground/30
+            ">
+              Opcional
+            </span>
+          </div>
+
+          <div className="
+            relative
+            rounded-2xl
+            bg-secondary/10
+            border
+            border-primary/5
+            transition-all
+            focus-within:border-primary/30
+            focus-within:ring-2
+            focus-within:ring-primary/10
+          ">
+            <Textarea
+              id="res-notes"
+              placeholder="
+                Ej: decoración para cumpleaños,
+                mesa especial, silla para bebé,
+                alergias o cualquier solicitud...
+              "
+              value={formData.notes}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  notes: e.target.value,
+                })
+              }
+              maxLength={500}
+              className="
+                min-h-[120px]
+                rounded-2xl
+                bg-transparent
+                border-none
+                p-4
+                pb-8
+                text-sm
+                leading-relaxed
+                resize-none
+                shadow-none
+                focus-visible:ring-0
+              "
+            />
+
+            <span className="
+              absolute
+              bottom-3
+              right-4
+              text-[9px]
+              font-medium
+              text-foreground/25
+            ">
+              {formData.notes.length}/500
+            </span>
+          </div>
+        </div>
+
+        {/* =========================
+            CTA
+        ========================== */}
+        <div className="pt-1 space-y-4">
+
+          <Button
+            type="submit"
+            className="
+              group
+              w-full
+              h-14
+              sm:h-16
+              rounded-2xl
+              bg-primary
+              hover:bg-foreground
+              text-white
+              text-sm
+              sm:text-base
+              font-bold
+              shadow-xl
+              hover:shadow-2xl
+              transition-all
+              duration-300
+            "
+          >
+            <MessageSquare
+              size={20}
+              className="
+                mr-3
+                transition-transform
+                group-hover:scale-110
+              "
+            />
+
+            Finalizar y enviar a WhatsApp
+          </Button>
+
+          <div className="
+            flex
+            items-center
+            justify-center
+            gap-2
+            text-foreground/30
+          ">
+            <CheckCircle2 size={13} />
+
+            <p className="
+              text-[9px]
+              font-bold
+              uppercase
+              tracking-[0.18em]
+            ">
+              Podrás confirmar directamente con nuestro equipo
+            </p>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </DialogContent>
+</Dialog>
     </div>
   );
 }

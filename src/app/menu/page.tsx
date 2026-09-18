@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import * as React from "react";
 import Image from "next/image";
-import { hover, motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -17,6 +17,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Images,
+  Fish,
 } from "lucide-react";
 import {
   Dialog,
@@ -61,18 +62,16 @@ function DishModalContent({
 }) {
   const [currentImage, setCurrentImage] = React.useState(0);
 
-  /*
-   * Si el producto tiene un array "images", utilizamos
-   * todas las imágenes.
-   *
-   * Si solamente tiene "image", utilizamos esa como fallback.
-   */
   const images =
     "images" in selectedItem &&
     Array.isArray((selectedItem as any).images) &&
     (selectedItem as any).images.length > 0
       ? (selectedItem as any).images
       : [selectedItem.image];
+
+  React.useEffect(() => {
+    setCurrentImage(0);
+  }, [selectedItem.id]);
 
   const nextImage = () => {
     setCurrentImage((prev) =>
@@ -87,781 +86,929 @@ function DishModalContent({
   };
 
   return (
-    <div
-  className="
-    grid
-    h-full
-    min-h-0
-    grid-cols-1
-    lg:grid-cols-3
-    overflow-hidden
-  "
->
+    <div className="relative h-full min-h-0 overflow-hidden bg-[#f4eee5]">
 
       {/* =====================================================
-          COLUMN 1
-          VISUAL EXPERIENCE / CAROUSEL
+          BOOK BACKGROUND
           ===================================================== */}
 
-      <section
-  className="
-    relative
-    min-h-[280px]
-    h-[32vh]
-    sm:h-[380px]
-    lg:h-full
-    lg:min-h-0
-    overflow-hidden
-    bg-secondary/20
-  "
->
+      <div className="absolute inset-0 pointer-events-none">
 
-        {/* Main image */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#f8f3eb] via-[#f1e9de] to-[#e9dfd1]" />
 
-<Image
-  src={images[currentImage]}
-  alt={selectedItem.name}
-  fill
-  priority
-  sizes="(max-width: 1024px) 100vw, 33vw"
-  className="
-    object-cover
-    transition-all
-    duration-700
-  "
-/>
-
-        {/* Image overlay */}
-
+        {/* Textura decorativa */}
         <div
           className="
             absolute
             inset-0
-            bg-gradient-to-t
-            from-black/60
-            via-black/10
-            to-transparent
+            opacity-[0.035]
+            bg-[radial-gradient(circle_at_center,#000_1px,transparent_1px)]
+            [background-size:18px_18px]
           "
         />
 
-
-        {/* =================================================
-            CATEGORY
-            ================================================= */}
-
-        <div className="absolute left-6 top-6 z-10">
-
-          <div
-            className="
-              flex
-              items-center
-              gap-2
-              rounded-full
-              border
-              border-white/20
-              bg-black/30
-              px-4
-              py-2
-              backdrop-blur-md
-            "
-          >
-
-            <Images
-              size={13}
-              className="text-white"
-            />
-
-            <span
-              className="
-                text-[9px]
-                font-black
-                uppercase
-                tracking-[0.25em]
-                text-white
-              "
-            >
-              Experiencia Casa Origen
-            </span>
-
-          </div>
-
-        </div>
-
-
-        {/* =================================================
-            CAROUSEL ARROWS
-            ================================================= */}
-
-        {images.length > 1 && (
-          <>
-            <button
-              type="button"
-              onClick={previousImage}
-              aria-label="Imagen anterior"
-              className="
-                absolute
-                left-5
-                top-1/2
-                z-20
-                flex
-                h-11
-                w-11
-                -translate-y-1/2
-                items-center
-                justify-center
-                rounded-full
-                border
-                border-white/20
-                bg-black/30
-                text-white
-                backdrop-blur-md
-                transition-all
-                duration-300
-                hover:scale-110
-                hover:bg-primary
-              "
-            >
-              <ChevronLeft size={20} />
-            </button>
-
-            <button
-              type="button"
-              onClick={nextImage}
-              aria-label="Siguiente imagen"
-              className="
-                absolute
-                right-5
-                top-1/2
-                z-20
-                flex
-                h-11
-                w-11
-                -translate-y-1/2
-                items-center
-                justify-center
-                rounded-full
-                border
-                border-white/20
-                bg-black/30
-                text-white
-                backdrop-blur-md
-                transition-all
-                duration-300
-                hover:scale-110
-                hover:bg-primary
-              "
-            >
-              <ChevronRight size={20} />
-            </button>
-          </>
-        )}
-
-
-        {/* =================================================
-            IMAGE INDICATORS
-            ================================================= */}
-
-        {images.length > 1 && (
-          <div
-            className="
-              absolute
-              bottom-7
-              left-1/2
-              z-20
-              flex
-              -translate-x-1/2
-              items-center
-              gap-2
-              rounded-full
-              border
-              border-white/20
-              bg-black/30
-              px-4
-              py-2
-              backdrop-blur-md
-            "
-          >
-
-            {images.map((_: string, index: number) => (
-              <button
-                key={index}
-                type="button"
-                onClick={() => setCurrentImage(index)}
-                aria-label={`Ver imagen ${index + 1}`}
-                className={`
-                  h-1.5
-                  rounded-full
-                  transition-all
-                  duration-300
-                  ${
-                    index === currentImage
-                      ? "w-8 bg-primary"
-                      : "w-1.5 bg-white/60 hover:bg-white"
-                  }
-                `}
-              />
-            ))}
-
-          </div>
-        )}
-
-
-        {/* =================================================
-            IMAGE COUNTER
-            ================================================= */}
-
-        <div
-          className="
-            absolute
-            bottom-7
-            right-6
-            z-20
-            rounded-full
-            border
-            border-white/20
-            bg-black/30
-            px-3
-            py-1.5
-            text-[9px]
-            font-black
-            tracking-[0.2em]
-            text-white
-            backdrop-blur-md
-          "
-        >
-          {String(currentImage + 1).padStart(2, "0")} /{" "}
-          {String(images.length).padStart(2, "0")}
-        </div>
-
-      </section>
+      </div>
 
 
       {/* =====================================================
-          COLUMN 2
-          STORY / CULTURAL EXPERIENCE
+          CLOSE BUTTON
           ===================================================== */}
 
-<section
-  className="
-    flex
-    min-h-0
-    h-full
-    flex-col
-    overflow-hidden
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Cerrar"
+        className="
+          absolute
+          right-5
+          top-5
+          z-[80]
 
-    border-b
-    border-primary/10
+          flex
+          h-10
+          w-10
+          items-center
+          justify-center
 
-    bg-card
+          rounded-full
 
-    lg:border-b-0
-    lg:border-r
-    lg:border-primary/10
-  "
->
+          border
+          border-primary/10
 
-       <div
-  className="
-    min-h-0
-    flex-1
-    overflow-y-auto
+          bg-card/80
+          backdrop-blur-md
 
-    px-6
-    py-7
+          text-foreground/50
 
-    sm:px-7
-    sm:py-8
+          shadow-sm
 
-    lg:px-8
-    lg:py-9
+          transition-all
+          duration-300
 
-    xl:px-9
-    xl:py-10
-  "
->
-
-          {/* Tags */}
-
-          <div className="mb-6 flex flex-wrap gap-2">
-
-            {selectedItem.tags.map((tag) => (
-              <Badge
-                key={tag}
-                className="
-                  rounded-full
-                  border
-                  border-primary/10
-                  bg-primary/10
-                  px-4
-                  py-1.5
-                  text-[9px]
-                  font-black
-                  uppercase
-                  tracking-[0.2em]
-                  text-primary
-                  hover:bg-primary/10
-                "
-              >
-                {tag}
-              </Badge>
-            ))}
-
-          </div>
+          hover:scale-105
+          hover:bg-primary
+          hover:text-white
+        "
+      >
+        ×
+      </button>
 
 
-          {/* Small label */}
+      {/* =====================================================
+          BOOK
+          ===================================================== */}
 
-          <div className="mb-4 flex items-center gap-3">
+      <div
+        className="
+          relative
+          z-10
+          flex
+          h-full
+          min-h-0
+          w-full
+          flex-col
+          lg:flex-row
 
-            <span className="h-px w-8 bg-primary/40" />
+          [perspective:1800px]
+        "
+      >
 
-            <span
-              className="
-                text-[9px]
-                font-black
-                uppercase
-                tracking-[0.35em]
-                text-primary
-              "
-            >
-              Sabor de Ciénaga
-            </span>
+        <AnimatePresence mode="wait">
 
-          </div>
-
-
-          {/* Dish name */}
-
-          <DialogHeader>
-
-            <DialogTitle
-className="
-  max-w-xl
-  font-headline
-  text-3xl
-  font-bold
-  leading-[0.95]
-  tracking-[-0.04em]
-  text-foreground
-
-  sm:text-4xl
-  md:text-5xl
-  lg:text-[3.5rem]
-  xl:text-[3.7rem]
-"
-            >
-              {selectedItem.name}
-            </DialogTitle>
-
-          </DialogHeader>
-
-
-          {/* Decorative line */}
-
-          <div
+          <motion.div
+            key={selectedItem.id}
+            initial={{
+              opacity: 0,
+              rotateY: -12,
+              x: 35,
+              scale: 0.985,
+            }}
+            animate={{
+              opacity: 1,
+              rotateY: 0,
+              x: 0,
+              scale: 1,
+            }}
+            exit={{
+              opacity: 0,
+              rotateY: 12,
+              x: -35,
+              scale: 0.985,
+            }}
+            transition={{
+              duration: 0.65,
+              ease: [0.22, 1, 0.36, 1],
+            }}
             className="
-              my-8
-              h-px
+              flex
+              min-h-0
+              h-full
               w-full
-              bg-gradient-to-r
-              from-primary/30
-              via-primary/10
-              to-transparent
-            "
-          />
-
-
-          {/* Cultural story */}
-
-          <div
-            className="
-              rounded-[1.8rem]
-              border
-              border-primary/10
-              bg-secondary/20
-              p-6
-              shadow-inner
+              flex-col
+              lg:flex-row
+              [transform-style:preserve-3d]
             "
           >
 
-            <div className="mb-4 flex items-center gap-3">
+            {/* =================================================
+                PAGE 1 — IMAGE
+                ================================================= */}
+
+            <section
+              className="
+                relative
+                h-[280px]
+                shrink-0
+
+                sm:h-[350px]
+
+                lg:h-full
+                lg:w-[34%]
+
+                overflow-hidden
+
+                bg-[#ded4c7]
+
+                lg:rounded-l-[1.5rem]
+              "
+            >
+
+              <Image
+                src={images[currentImage]}
+                alt={selectedItem.name}
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 34vw"
+                className="
+                  object-cover
+                  transition-transform
+                  ease-out
+                "
+              />
+
+              {/* Image overlay */}
 
               <div
                 className="
-                  flex
-                  h-9
-                  w-9
-                  items-center
-                  justify-center
-                  rounded-xl
-                  bg-primary/10
-                  text-primary
+                  absolute
+                  inset-0
+                  bg-gradient-to-t
+                  from-black/65
+                  via-black/10
+                  to-transparent
                 "
-              >
-                <BookOpen size={17} />
+              />
+
+
+              {/* Experience label */}
+
+              <div className="absolute left-6 top-6 z-20">
+
+                <div
+                  className="
+                    flex
+                    items-center
+                    gap-2
+                    rounded-full
+                    border
+                    border-white/20
+                    bg-black/30
+                    px-4
+                    py-2
+                    backdrop-blur-md
+                  "
+                >
+
+                  <Images
+                    size={13}
+                    className="text-white"
+                  />
+
+                  <span
+                    className="
+                      text-[8px]
+                      font-black
+                      uppercase
+                      tracking-[0.25em]
+                      text-white
+                    "
+                  >
+                    Experiencia Casa Origen
+                  </span>
+
+                </div>
+
               </div>
 
-              <div>
+
+              {/* Image arrows */}
+
+              {images.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={previousImage}
+                    className="
+                      absolute
+                      left-5
+                      top-1/2
+                      z-20
+
+                      flex
+                      h-11
+                      w-11
+                      -translate-y-1/2
+                      items-center
+                      justify-center
+
+                      rounded-full
+                      border
+                      border-white/20
+
+                      bg-black/30
+                      text-white
+
+                      backdrop-blur-md
+
+                      transition-all
+                      duration-300
+
+                      hover:scale-110
+                      hover:bg-primary
+                    "
+                  >
+                    <ChevronLeft size={19} />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={nextImage}
+                    className="
+                      absolute
+                      right-5
+                      top-1/2
+                      z-20
+
+                      flex
+                      h-11
+                      w-11
+                      -translate-y-1/2
+                      items-center
+                      justify-center
+
+                      rounded-full
+                      border
+                      border-white/20
+
+                      bg-black/30
+                      text-white
+
+                      backdrop-blur-md
+
+                      transition-all
+                      duration-300
+
+                      hover:scale-110
+                      hover:bg-primary
+                    "
+                  >
+                    <ChevronRight size={19} />
+                  </button>
+                </>
+              )}
+
+
+              {/* Image indicators */}
+
+              {images.length > 1 && (
+                <div
+                  className="
+                    absolute
+                    bottom-6
+                    left-1/2
+                    z-20
+                    flex
+                    -translate-x-1/2
+                    items-center
+                    gap-2
+                  "
+                >
+
+                  {images.map((_: string, index: number) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentImage(index)}
+                      className={cn(
+                        "h-1.5 rounded-full transition-all duration-300",
+                        index === currentImage
+                          ? "w-8 bg-white"
+                          : "w-1.5 bg-white/50"
+                      )}
+                    />
+                  ))}
+
+                </div>
+              )}
+
+
+              {/* Image counter */}
+
+              <div
+                className="
+                  absolute
+                  bottom-6
+                  right-6
+                  z-20
+
+                  rounded-full
+                  bg-black/30
+
+                  px-3
+                  py-1.5
+
+                  text-[9px]
+                  font-black
+                  tracking-[0.2em]
+                  text-white
+
+                  backdrop-blur-md
+                "
+              >
+                {String(currentImage + 1).padStart(2, "0")} /{" "}
+                {String(images.length).padStart(2, "0")}
+              </div>
+
+            </section>
+
+
+            {/* =================================================
+                BOOK SPINE
+                ================================================= */}
+
+            <div
+              className="
+                hidden
+                lg:block
+                w-[1px]
+                shrink-0
+                bg-primary/15
+                shadow-[1px_0_0_rgba(255,255,255,0.6)]
+              "
+            />
+
+
+            {/* =================================================
+                PAGE 2 — STORY
+                ================================================= */}
+
+            <section
+              className="
+                flex
+                min-h-0
+                flex-1
+                flex-col
+
+                overflow-y-auto
+
+                border-b
+                border-primary/10
+
+                bg-[#f8f4ee]
+
+                px-6
+                py-8
+
+                sm:px-8
+
+                lg:w-[33%]
+                lg:border-b-0
+                lg:border-r
+                lg:px-10
+                lg:py-12
+
+                xl:px-12
+              "
+            >
+
+              {/* Page number */}
+
+              <div
+                className="
+                  mb-8
+                  flex
+                  items-center
+                  justify-between
+                "
+              >
 
                 <span
                   className="
-                    block
+                    font-headline
+                    text-xs
+                    italic
+                    text-foreground/30
+                  "
+                >
+                  Casa Origen
+                </span>
+
+                <span
+                  className="
+                    text-[9px]
+                    font-black
+                    tracking-[0.3em]
+                    text-primary/50
+                  "
+                >
+                  01
+                </span>
+
+              </div>
+
+
+              {/* Tags */}
+
+              <div className="mb-5 flex flex-wrap gap-2">
+
+                {selectedItem.tags.map((tag) => (
+                  <Badge
+                    key={tag}
+                    className="
+                      rounded-full
+                      border
+                      border-primary/10
+                      bg-primary/10
+                      px-4
+                      py-1.5
+
+                      text-[8px]
+                      font-black
+                      uppercase
+                      tracking-[0.2em]
+                      text-primary
+
+                      hover:bg-primary/10
+                    "
+                  >
+                    {tag}
+                  </Badge>
+                ))}
+
+              </div>
+
+
+              {/* Small title */}
+
+              <div className="mb-5 flex items-center gap-3">
+
+                <span className="h-px w-8 bg-primary/40" />
+
+                <span
+                  className="
+                    text-[8px]
+                    font-black
+                    uppercase
+                    tracking-[0.35em]
+                    text-primary
+                  "
+                >
+                  Sabor de Ciénaga
+                </span>
+
+              </div>
+
+
+              {/* Dish name */}
+
+              <DialogHeader>
+
+                <DialogTitle
+                  className="
+                    font-headline
+                    text-4xl
+                    font-bold
+                    leading-[0.94]
+                    tracking-[-0.045em]
+                    text-foreground
+
+                    sm:text-5xl
+                    lg:text-[3.5rem]
+                    xl:text-[3.8rem]
+                  "
+                >
+                  {selectedItem.name}
+                </DialogTitle>
+
+              </DialogHeader>
+
+
+              {/* Decorative line */}
+
+              <div
+                className="
+                  my-8
+                  h-px
+                  w-full
+                  bg-gradient-to-r
+                  from-primary/30
+                  via-primary/10
+                  to-transparent
+                "
+              />
+
+
+              {/* Cultural story */}
+
+              <div
+                className="
+                  rounded-[1.7rem]
+                  border
+                  border-primary/10
+                  bg-white/50
+                  p-6
+                  shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]
+                "
+              >
+
+                <div className="mb-5 flex items-center gap-3">
+
+                  <div
+                    className="
+                      flex
+                      h-10
+                      w-10
+                      items-center
+                      justify-center
+                      rounded-xl
+                      bg-primary/10
+                      text-primary
+                    "
+                  >
+                    <BookOpen size={17} />
+                  </div>
+
+                  <div>
+
+                    <span
+                      className="
+                        block
+                        text-[8px]
+                        font-black
+                        uppercase
+                        tracking-[0.3em]
+                        text-primary
+                      "
+                    >
+                      Relato Cultural
+                    </span>
+
+                    <span
+                      className="
+                        text-xs
+                        text-foreground/40
+                      "
+                    >
+                      Una historia detrás del plato
+                    </span>
+
+                  </div>
+
+                </div>
+
+
+                <p
+                  className="
+                    font-headline
+                    text-base
+                    italic
+                    leading-[1.9]
+                    text-foreground/70
+
+                    sm:text-lg
+                  "
+                >
+                  "{selectedItem.culturalStory}"
+                </p>
+
+              </div>
+
+
+              {/* Footer */}
+
+              <div
+                className="
+                  mt-auto
+                  pt-8
+                "
+              >
+
+                <p
+                  className="
+                    font-headline
+                    text-xl
+                    italic
+                    leading-relaxed
+                    text-foreground
+                  "
+                >
+                 "{selectedItem.description}"
+                </p>
+
+              </div>
+
+            </section>
+
+
+            {/* =================================================
+                PAGE 3 — DETAILS
+                ================================================= */}
+
+            <section
+              className="
+                flex
+                min-h-0
+                flex-1
+                flex-col
+
+                overflow-y-auto
+
+                bg-[#f1e9df]
+
+                px-6
+                py-8
+
+                sm:px-8
+
+                lg:w-[33%]
+                lg:px-9
+                lg:py-12
+
+                xl:px-10
+              "
+            >
+
+              {/* Page number */}
+
+              <div
+                className="
+                  mb-8
+                  flex
+                  items-center
+                  justify-between
+                "
+              >
+
+                <span
+                  className="
                     text-[9px]
                     font-black
                     uppercase
                     tracking-[0.3em]
-                    text-primary
+                    text-primary/50
                   "
                 >
-                  Relato Cultural
+                  El plato
                 </span>
 
                 <span
                   className="
-                    text-xs
-                    text-foreground/40
+                    text-[9px]
+                    font-black
+                    tracking-[0.3em]
+                    text-primary/50
                   "
                 >
-                  Una historia detrás del plato
+                  02
                 </span>
 
               </div>
 
-            </div>
 
+              {/* =================================================
+                  INGREDIENTS
+                  ================================================= */}
 
-            <p
-              className="
-    font-headline
-    text-base
-    italic
-    leading-relaxed
-    text-foreground/75
+              <div className="mb-9">
 
-    sm:text-lg
-              "
-            >
-              "{selectedItem.culturalStory}"
-            </p>
+                <div className="mb-5 flex items-center gap-4">
 
-          </div>
-
-
-          {/* Cultural footer */}
-
-          <div
-            className="
-              mt-8
-              flex
-              items-start
-              gap-3
-              text-sm
-              leading-relaxed
-              text-foreground/45
-            "
-          >
-
-            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary/50" />
-
-            <p>
-              Cada plato cuenta una historia de nuestra costa,
-              nuestra gente y la tradición que vive junto al
-              Caribe.
-            </p>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      {/* =====================================================
-          COLUMN 3
-          INGREDIENTS / DETAILS / PURCHASE
-          ===================================================== */}
-
-<section
-  className="
-    flex
-    h-full
-    min-h-0
-    flex-col
-    overflow-hidden
-    bg-background/40
-  "
->
-
-        <div
-  className="
-    min-h-0
-    flex-1
-    overflow-y-auto
-
-    px-6
-    py-7
-
-    sm:px-7
-    sm:py-8
-
-    lg:px-8
-    lg:py-9
-
-    xl:py-10
-  "
->
-
-
-          {/* =================================================
-              INGREDIENTS
-              ================================================= */}
-
-          <div className="mb-9">
-
-            <div className="mb-5 flex items-center justify-between">
-
-              <h4
-                className="
-                  text-[9px]
-                  font-black
-                  uppercase
-                  tracking-[0.35em]
-                  text-primary
-                "
-              >
-                Ingredientes
-              </h4>
-
-              <span
-                className="
-                  h-px
-                  flex-1
-                  ml-4
-                  bg-primary/10
-                "
-              />
-
-            </div>
-
-
-            <ul className="space-y-3">
-
-              {selectedItem.ingredients.map((ing) => (
-                <li
-                  key={ing}
-                  className="
-                    flex
-                    items-center
-                    gap-3
-                    text-sm
-                    text-foreground/65
-                  "
-                >
-
-                  <span
+                  <h4
                     className="
-                      h-1.5
-                      w-1.5
-                      shrink-0
-                      rounded-full
-                      bg-primary/50
-                    "
-                  />
-
-                  {ing}
-
-                </li>
-              ))}
-
-            </ul>
-
-          </div>
-
-
-          {/* =================================================
-              DETAILS
-              ================================================= */}
-
-          <div className="mb-9">
-
-            <div className="mb-5 flex items-center gap-4">
-
-              <h4
-                className="
-                  text-[9px]
-                  font-black
-                  uppercase
-                  tracking-[0.35em]
-                  text-primary
-                "
-              >
-                Detalles
-              </h4>
-
-              <span className="h-px flex-1 bg-primary/10" />
-
-            </div>
-
-
-            <div className="space-y-3">
-
-              {/* Preparation */}
-
-              <div
-                className="
-                  flex
-                  items-center
-                  gap-4
-                  rounded-2xl
-                  border
-                  border-primary/10
-                  bg-card
-                  px-4
-                  py-3
-                "
-              >
-
-                <div
-                  className="
-                    flex
-                    h-9
-                    w-9
-                    shrink-0
-                    items-center
-                    justify-center
-                    rounded-xl
-                    bg-primary/10
-                    text-primary
-                  "
-                >
-                  <ChefHat size={17} />
-                </div>
-
-                <div>
-
-                  <span
-                    className="
-                      block
-                      text-[8px]
+                      text-[9px]
                       font-black
                       uppercase
-                      tracking-[0.2em]
-                      text-foreground/35
+                      tracking-[0.35em]
+                      text-primary
                     "
                   >
-                    Preparación
-                  </span>
+                    Ingredientes
+                  </h4>
 
-                  <span
+                  <span className="h-px flex-1 bg-primary/10" />
+
+                </div>
+
+
+                <ul className="space-y-3">
+
+                  {selectedItem.ingredients.map((ing) => (
+                    <li
+                      key={ing}
+                      className="
+                        flex
+                        items-center
+                        gap-3
+
+                        text-sm
+                        leading-relaxed
+                        text-foreground/65
+                      "
+                    >
+
+                      <span
+                        className="
+                          h-1.5
+                          w-1.5
+                          shrink-0
+                          rounded-full
+                          bg-primary/50
+                        "
+                      />
+
+                      {ing}
+
+                    </li>
+                  ))}
+
+                </ul>
+
+              </div>
+
+
+              {/* =================================================
+                  DETAILS
+                  ================================================= */}
+
+              <div className="mb-9">
+
+                <div className="mb-5 flex items-center gap-4">
+
+                  <h4
                     className="
-                      text-sm
-                      text-foreground/70
+                      text-[9px]
+                      font-black
+                      uppercase
+                      tracking-[0.35em]
+                      text-primary
                     "
                   >
-                    {selectedItem.preparation}
-                  </span>
+                    Detalles
+                  </h4>
+
+                  <span className="h-px flex-1 bg-primary/10" />
+
+                </div>
+
+
+                <div className="space-y-3">
+
+                  <div
+                    className="
+                      flex
+                      items-center
+                      gap-4
+
+                      rounded-2xl
+                      border
+                      border-primary/10
+                      bg-white/40
+
+                      px-4
+                      py-4
+                    "
+                  >
+
+                    <div
+                      className="
+                        flex
+                        h-10
+                        w-10
+                        shrink-0
+                        items-center
+                        justify-center
+
+                        rounded-xl
+                        bg-primary/10
+                        text-primary
+                      "
+                    >
+                      <ChefHat size={17} />
+                    </div>
+
+                    <div>
+
+                      <span
+                        className="
+                          block
+                          text-[8px]
+                          font-black
+                          uppercase
+                          tracking-[0.2em]
+                          text-foreground/35
+                        "
+                      >
+                        Preparación
+                      </span>
+
+                      <span className="text-sm text-foreground/70">
+                        {selectedItem.preparation}
+                      </span>
+
+                    </div>
+
+                  </div>
+
+
+                  <div
+                    className="
+                      flex
+                      items-center
+                      gap-4
+
+                      rounded-2xl
+                      border
+                      border-primary/10
+                      bg-white/40
+
+                      px-4
+                      py-4
+                    "
+                  >
+
+                    <div
+                      className="
+                        flex
+                        h-10
+                        w-10
+                        shrink-0
+                        items-center
+                        justify-center
+
+                        rounded-xl
+                        bg-primary/10
+                        text-primary
+                      "
+                    >
+                      <Clock size={17} />
+                    </div>
+
+                    <div>
+
+                      <span
+                        className="
+                          block
+                          text-[8px]
+                          font-black
+                          uppercase
+                          tracking-[0.2em]
+                          text-foreground/35
+                        "
+                      >
+                        Tiempo
+                      </span>
+
+                      <span className="text-sm text-foreground/70">
+                        {selectedItem.prepTime}
+                      </span>
+
+                    </div>
+
+                  </div>
 
                 </div>
 
               </div>
 
 
-              {/* Time */}
+              {/* =================================================
+                  PURCHASE
+                  ================================================= */}
 
               <div
                 className="
-                  flex
-                  items-center
-                  gap-4
-                  rounded-2xl
+                  mt-auto
+
+                  rounded-[1.7rem]
                   border
                   border-primary/10
-                  bg-card
-                  px-4
-                  py-3
+
+                  bg-white/60
+
+                  p-5
+
+                  shadow-sm
                 "
               >
-
-                <div
-                  className="
-                    flex
-                    h-9
-                    w-9
-                    shrink-0
-                    items-center
-                    justify-center
-                    rounded-xl
-                    bg-primary/10
-                    text-primary
-                  "
-                >
-                  <Clock size={17} />
-                </div>
-
-                <div>
-
-                  <span
-                    className="
-                      block
-                      text-[8px]
-                      font-black
-                      uppercase
-                      tracking-[0.2em]
-                      text-foreground/35
-                    "
-                  >
-                    Tiempo
-                  </span>
-
-                  <span
-                    className="
-                      text-sm
-                      text-foreground/70
-                    "
-                  >
-                    {selectedItem.prepTime}
-                  </span>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-          {/* =================================================
-              PURCHASE CARD
-              ================================================= */}
-
-<div
-  className="
-    rounded-[1.5rem]
-    sm:rounded-[1.8rem]
-
-    border
-    border-primary/10
-
-    bg-card
-
-    p-4
-    sm:p-5
-
-    shadow-sm
-  "
->
-
-            <div
-              className="
-                mb-5
-                flex
-                items-end
-                justify-between
-              "
-            >
-
-              <div>
 
                 <span
                   className="
@@ -873,7 +1020,455 @@ className="
                     text-foreground/35
                   "
                 >
-                  Precio
+                  Precio por plato
+                </span>
+
+
+                <div className="mt-1 flex items-end justify-between gap-3">
+
+                  <span
+                    className="
+                      font-headline
+                      text-3xl
+                      font-bold
+                      text-primary
+                    "
+                  >
+                    ${selectedItem.price.toLocaleString()}
+                  </span>
+
+                  <span
+                    className="
+                      rounded-full
+                      bg-primary/10
+                      px-3
+                      py-1
+
+                      text-[8px]
+                      font-black
+                      uppercase
+                      tracking-[0.15em]
+                      text-primary
+                    "
+                  >
+                    Por plato
+                  </span>
+
+                </div>
+
+
+                <Button
+                  onClick={() => {
+                    addToCart(selectedItem);
+                    onClose();
+                  }}
+                  className="
+                    group
+                    mt-5
+
+                    h-[60px]
+                    w-full
+
+                    rounded-[1.25rem]
+
+                    bg-primary
+                    text-base
+                    font-black
+                    uppercase
+                    tracking-[0.12em]
+                    text-white
+
+                    shadow-[0_15px_35px_rgba(0,0,0,0.16)]
+
+                    transition-all
+                    duration-300
+
+                    hover:scale-[1.02]
+                    hover:bg-primary/90
+                  "
+                >
+
+                  Añadir al banquete
+
+                  <ChevronRight
+                    size={18}
+                    className="
+                      ml-3
+                      transition-transform
+                      duration-300
+                      group-hover:translate-x-1
+                    "
+                  />
+
+                </Button>
+
+                <p
+                  className="
+                    mt-3
+                    text-center
+                    text-[8px]
+                    font-bold
+                    uppercase
+                    tracking-[0.12em]
+                    text-foreground/30
+                  "
+                >
+                  Se agregará a tu pedido
+                </p>
+
+              </div>
+
+            </section>
+
+          </motion.div>
+
+        </AnimatePresence>
+
+      </div>
+
+    </div>
+  );
+}
+function FishPond({
+  onSelectDish,
+}: {
+  onSelectDish: (item: MenuItem) => void;
+}) {
+  const seafoodItems = MENU_ITEMS.filter(
+    (item) => item.category === "Seafood"
+  ).slice(0, 6);
+
+  if (seafoodItems.length === 0) {
+    return null;
+  }
+
+  const fishPositions = [
+    "left-[8%] top-[25%]",
+    "left-[35%] top-[18%]",
+    "right-[12%] top-[30%]",
+    "left-[20%] bottom-[25%]",
+    "right-[32%] bottom-[18%]",
+    "right-[7%] bottom-[25%]",
+  ];
+
+  return (
+    <section className="mt-16 mb-24">
+
+      {/* =====================================================
+          SECTION HEADER
+          ===================================================== */}
+
+      <div className="mb-12 text-center">
+
+        <span
+          className="
+            inline-flex
+            items-center
+            gap-2
+            rounded-full
+            border
+            border-primary/20
+            bg-primary/5
+            px-5
+            py-2
+
+            text-[9px]
+            font-black
+            uppercase
+            tracking-[0.3em]
+            text-primary
+          "
+        >
+          <Fish size={13} />
+          Experiencia interactiva
+        </span>
+
+        <h2
+          className="
+            mt-5
+            font-headline
+            text-5xl
+            font-bold
+            tracking-tight
+            text-foreground
+
+            md:text-7xl
+          "
+        >
+          Del mar a la mesa
+        </h2>
+
+        <p
+          className="
+            mx-auto
+            mt-4
+            max-w-2xl
+            font-headline
+            text-lg
+            italic
+            text-foreground/50
+          "
+        >
+          Explora nuestro estanque y descubre los platos que nacen
+          de los sabores del Caribe.
+        </p>
+
+      </div>
+
+
+      {/* =====================================================
+          POND
+          ===================================================== */}
+
+      <div
+        className="
+          relative
+          mx-auto
+
+          h-[520px]
+          w-full
+          max-w-6xl
+
+          overflow-hidden
+
+          rounded-[4rem]
+
+          border
+          border-primary/20
+
+          bg-[#164f5a]
+
+          shadow-[0_30px_80px_rgba(0,0,0,0.18)]
+        "
+      >
+
+        {/* Water layers */}
+
+        <div
+          className="
+            absolute
+            inset-0
+
+            bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.18),transparent_20%),radial-gradient(circle_at_80%_70%,rgba(255,255,255,0.10),transparent_25%),linear-gradient(135deg,#164f5a,#0d3945)]
+          "
+        />
+
+        {/* Water waves */}
+
+        <div className="absolute inset-0 opacity-20">
+
+          <div
+            className="
+              absolute
+              left-[-10%]
+              top-[20%]
+              h-[1px]
+              w-[120%]
+              rotate-[-4deg]
+              bg-white
+            "
+          />
+
+          <div
+            className="
+              absolute
+              left-[-10%]
+              top-[55%]
+              h-[1px]
+              w-[120%]
+              rotate-[3deg]
+              bg-white
+            "
+          />
+
+          <div
+            className="
+              absolute
+              left-[-10%]
+              top-[78%]
+              h-[1px]
+              w-[120%]
+              rotate-[-2deg]
+              bg-white
+            "
+          />
+
+        </div>
+
+
+        {/* Decorative bubbles */}
+
+        {[1, 2, 3, 4, 5, 6, 7].map((bubble) => (
+          <motion.span
+            key={bubble}
+            className="
+              absolute
+              h-2
+              w-2
+              rounded-full
+              border
+              border-white/30
+              bg-white/10
+            "
+            style={{
+              left: `${10 + bubble * 11}%`,
+              bottom: `${8 + (bubble % 4) * 10}%`,
+            }}
+            animate={{
+              y: [-10, -60],
+              opacity: [0, 0.5, 0],
+              scale: [0.8, 1.2, 0.8],
+            }}
+            transition={{
+              duration: 3 + bubble * 0.4,
+              repeat: Infinity,
+              delay: bubble * 0.3,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+
+
+        {/* =================================================
+            FISHES
+            ================================================= */}
+
+        {seafoodItems.map((item, index) => {
+
+          const position =
+            fishPositions[index % fishPositions.length];
+
+          return (
+            <motion.button
+              key={item.id}
+              type="button"
+              onClick={() => onSelectDish(item)}
+              className={cn(
+                `
+                  absolute
+                  z-20
+
+                  flex
+                  items-center
+                  justify-center
+
+
+                  cursor-pointer
+
+                  group
+                `,
+                position
+              )}
+              initial={{
+                opacity: 0,
+                scale: 0.5,
+              }}
+              whileInView={{
+                opacity: 1,
+                scale: 1,
+              }}
+              viewport={{
+                once: true,
+              }}
+              whileHover={{
+                scale: 1.15,
+              }}
+              animate={{
+                x: [0, 15, -10, 0],
+                y: [0, -8, 6, 0],
+              }}
+              transition={{
+                duration: 6 + index,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >                        <Image
+                          src={item.capture}
+                          alt={item.name}
+                          fill
+                          className="
+  object-contain
+  transition-transform
+  ease-out
+  group-hover:scale-[1.06]
+"
+                        />
+
+              {/* Fish icon */}
+
+              <div
+                className="
+                  flex
+                  h-20
+                  w-20
+                  items-center
+                  justify-center
+
+                  rounded-full
+
+                  text-white
+
+                  shadow-[0_10px_30px_rgba(0,0,0,0.25)]
+
+                  transition-all
+                  duration-300
+
+                  group-hover:bg-white
+                  group-hover:text-primary
+                "
+              >
+                <Fish
+                  size={34}
+                  strokeWidth={1.5}
+                />
+              </div>
+
+
+              {/* Hover information */}
+
+              <div
+                className="
+                  pointer-events-none
+                  absolute
+                  bottom-full
+                  left-1/2
+                  mb-4
+                  w-48
+                  -translate-x-1/2
+
+                  rounded-2xl
+
+                  border
+                  border-white/20
+
+                  bg-black/50
+                  p-4
+
+                  text-center
+                  text-white
+
+                  opacity-0
+                  backdrop-blur-xl
+
+                  transition-all
+                  duration-300
+
+                  group-hover:opacity-100
+                  group-hover:-translate-y-1
+                "
+              >
+
+                <span
+                  className="
+                    block
+                    text-[8px]
+                    font-black
+                    uppercase
+                    tracking-[0.25em]
+                    text-white/50
+                  "
+                >
+                  Descubrir
                 </span>
 
                 <span
@@ -881,96 +1476,84 @@ className="
                     mt-1
                     block
                     font-headline
-                    text-3xl
+                    text-base
                     font-bold
-                    text-primary
                   "
                 >
-                  ${selectedItem.price.toLocaleString()}
+                  {item.name}
+                </span>
+
+                <span
+                  className="
+                    mt-2
+                    block
+                    text-[10px]
+                    text-white/60
+                  "
+                >
+                  Toca para conocer el plato
                 </span>
 
               </div>
 
-              <span
-                className="
-                  rounded-full
-                  bg-primary/10
-                  px-3
-                  py-1
-                  text-[8px]
-                  font-black
-                  uppercase
-                  tracking-[0.15em]
-                  text-primary
-                "
-              >
-                Por plato
-              </span>
-
-            </div>
+            </motion.button>
+          );
+        })}
 
 
-            {/* Add button */}
+        {/* Center message */}
 
-            <Button
-              onClick={() => {
-                addToCart(selectedItem);
-                onClose();
-              }}
-              className="
-                group
-                h-[60px]
-                w-full
-                rounded-[1.25rem]
-                bg-primary
-                text-base
-                font-black
-                uppercase
-                tracking-[0.12em]
-                text-white
-                shadow-[0_15px_35px_rgba(0,0,0,0.16)]
-                transition-all
-                duration-300
-                hover:scale-[1.02]
-                hover:bg-primary/90
-              "
-            >
-              Añadir al banquete
+        <div
+          className="
+            absolute
+            left-1/2
+            top-1/2
 
-              <ChevronRight
-                size={19}
-                className="
-                  ml-3
-                  transition-transform
-                  duration-300
-                  group-hover:translate-x-1
-                "
-              />
+            -translate-x-1/2
+            -translate-y-1/2
 
-            </Button>
+            pointer-events-none
 
+            text-center
+          "
+        >
 
-            <p
-              className="
-                mt-3
-                text-center
-                text-[8px]
-                font-bold
-                uppercase
-                tracking-[0.12em]
-                text-foreground/30
-              "
-            >
-              Se agregará a tu pedido
-            </p>
+          <Fish
+            size={32}
+            className="mx-auto mb-3 text-white/30"
+          />
 
-          </div>
+          <span
+            className="
+              block
+              text-[9px]
+              font-black
+              uppercase
+              tracking-[0.35em]
+              text-white/40
+            "
+          >
+            Explora
+          </span>
+
+          <p
+            className="
+              mt-2
+              whitespace-nowrap
+              font-headline
+              text-lg
+              italic
+              text-white/30
+            "
+          >
+            El mar guarda nuestros sabores
+          </p>
 
         </div>
 
-      </section>
+      </div>
 
-    </div>
+    </section>
   );
 }
 export default function MenuPage() {
@@ -1091,78 +1674,265 @@ export default function MenuPage() {
           </div>
         </div>
 
-        {/* Modern Carousel Menu */}
-        <div className="mt-10">
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
+{/* Modern Responsive Carousel Menu */}
+<div className="mt-6 sm:mt-10 w-full">
+  <Carousel
+    opts={{
+      align: "start",
+      loop: filteredItems.length > 1,
+    }}
+    className="w-full max-w-7xl mx-auto"
+  >
+    <CarouselContent className="-ml-3 sm:-ml-4 md:-ml-6">
+      {filteredItems.map((item, index) => (
+        <CarouselItem
+          key={item.id}
+          className="
+            pl-3 sm:pl-4 md:pl-6
+            basis-[88%]
+            xs:basis-[85%]
+            sm:basis-[75%]
+            md:basis-1/2
+            lg:basis-1/3
+            xl:basis-1/4
+          "
+        >
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 20,
+              scale: 0.97,
             }}
-            className="w-full max-w-7xl mx-auto"
+            animate={{
+              opacity: 1,
+              y: 0,
+              scale: 1,
+            }}
+            whileHover={{
+              y: -6,
+              scale: 1.01,
+            }}
+            transition={{
+              duration: 0.5,
+              delay: index * 0.07,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            onClick={() => setSelectedItem(item)}
+            className="group cursor-pointer h-full py-3 sm:py-6"
           >
-            <CarouselContent className="-ml-6">
-              {filteredItems.map((item) => (
-                <CarouselItem
-                  key={item.id}
-                  className="pl-6 md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+            <div
+              className="
+                bg-card
+                text-card-foreground
+                rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[3rem]
+                overflow-hidden
+                shadow-sm
+                hover:shadow-2xl
+                transition-all duration-300
+                border border-primary/10
+                h-full
+                flex flex-col
+              "
+            >
+              {/* Product Image */}
+              
+              <div className="relative aspect-[4/3] sm:aspect-[4/3] lg:aspect-[3/2] overflow-hidden">
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  fill
+                  sizes="
+                    (max-width: 640px) 88vw,
+                    (max-width: 1024px) 50vw,
+                    (max-width: 1280px) 33vw,
+                    25vw
+                  "
+                  className="
+                    object-cover
+                    transition-transform
+                    duration-[1200ms]
+                    ease-out
+                    group-hover:scale-[1.06]
+                  "
+                />
+
+                {/* Overlay */}
+                <div
+                  className="
+                    absolute inset-0
+                    bg-gradient-to-t from-black/80 via-transparent
+                    flex items-end justify-center
+                    pb-4 sm:pb-5
+                    opacity-0
+                    group-hover:opacity-100
+                    transition-all duration-500
+                  "
                 >
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    whileHover={{ y: -15 }}
-                    onClick={() => setSelectedItem(item)}
-                    className="group cursor-pointer h-full py-10"
+                  <span
+                    className="
+                      text-white
+                      text-[9px] sm:text-[10px]
+                      font-black
+                      uppercase
+                      tracking-[0.2em] sm:tracking-[0.3em]
+                      bg-primary/60
+                      backdrop-blur-md
+                      px-3 py-2
+                      rounded-full
+                      border border-white/20
+                      shadow-2xl
+                    "
                   >
-                    <div className="bg-card text-card-foreground rounded-[3rem] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border border-primary/10 h-full flex flex-col">
-                      <div className="relative aspect-[2/2] overflow-hidden">
-                        <Image
-                          src={item.image}
-                          alt={item.name}
-                          fill
-                          className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent flex items-end justify-center pb-10 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                          <span className="text-white text-[10px] font-black uppercase tracking-[0.3em] bg-primary/60 backdrop-blur-md px-8 py-3 rounded-full border border-white/20 shadow-2xl">
-                            Descubrir Relato
-                          </span>
-                        </div>
-                        <Badge className="absolute top-8 right-8 bg-card/95 text-primary border-none shadow-2xl px-6 py-3 font-black text-xl rounded-[1.5rem]">
-                          ${item.price.toLocaleString()}
-                        </Badge>
-                      </div>
-                      <div className="p-10 space-y-4 flex-1 flex flex-col justify-between">
-                        <div className="space-y-4">
-                          <h3 className="text-3xl font-bold font-headline leading-tight text-foreground group-hover:text-primary transition-colors">
-                            {item.name}
-                          </h3>
-                          <p className="text-base text-foreground/50 line-clamp-2 italic">
-                            "{item.description}"
-                          </p>
-                        </div>
-                        <div className="pt-8 border-t border-primary/10">
-                          <Button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              addToCart(item);
-                            }}
-                            className="w-full bg-secondary/50 hover:bg-primary hover:text-white text-primary rounded-[2rem] transition-all h-14 font-black text-[10px] uppercase tracking-widest shadow-inner border border-primary/10"
-                          >
-                            <Plus size={18} className="mr-3" /> Añadir a la Mesa
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <div className="hidden md:flex justify-center gap-6 mt-5">
-              <CarouselPrevious className="relative h-16 w-16 bg-card border-primary/20 text-primary hover:bg-primary hover:text-white transition-all shadow-xl rounded-full" />
-              <CarouselNext className="relative h-16 w-16 bg-card border-primary/20 text-primary hover:bg-primary hover:text-white transition-all shadow-xl rounded-full" />
+                    Descubrir Relato
+                  </span>
+                </div>
+
+                {/* Price */}
+                <Badge
+                  className="
+                    absolute
+                    top-3 right-3
+                    sm:top-4 sm:right-4
+                    bg-accent/95
+                    text-primary
+                    border-none
+                    shadow-2xl
+                    px-3 py-1
+                    font-black
+                    text-base sm:text-lg lg:text-xl
+                    rounded-full
+                  "
+                >
+                  ${item.price.toLocaleString()}
+                </Badge>
+              </div>
+
+              {/* Product Information */}
+              <div
+                className="
+                  p-4 sm:p-5
+                  space-y-3 sm:space-y-4
+                  flex-1
+                  flex flex-col
+                  justify-between
+                "
+              >
+                <div className="space-y-2">
+                  <h3
+                    className="
+                      text-xl
+                      sm:text-2xl
+                      lg:text-3xl
+                      font-bold
+                      font-headline
+                      leading-tight
+                      text-foreground
+                      group-hover:text-primary
+                      transition-colors
+                    "
+                  >
+                    {item.name}
+                  </h3>
+
+                  <p
+                    className="
+                      text-sm
+                      sm:text-base
+                      text-foreground/50
+                      line-clamp-3
+                      sm:line-clamp-4
+                      italic
+                    "
+                  >
+                    "{item.description}"
+                  </p>
+                </div>
+
+                <div className="pt-3 sm:pt-4 border-t border-primary/10">
+                  <Button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      addToCart(item);
+                    }}
+                    className="
+                      w-full
+                      sm:w-fit
+                      bg-secondary/50
+                      hover:bg-primary
+                      hover:text-white
+                      text-primary
+                      rounded-2xl sm:rounded-[2rem]
+                      transition-all
+                      h-11 sm:h-10
+                      font-black
+                      text-xs sm:text-[13px]
+                      lg:text-[15px]
+                      uppercase
+                      tracking-wider
+                      sm:tracking-widest
+                      shadow-inner
+                      border border-primary/10
+                    "
+                  >
+                    <Plus size={17} className="mr-2" />
+                    Añadir a la Mesa
+                  </Button>
+                </div>
+              </div>
             </div>
-          </Carousel>
-        </div>
+          </motion.div>
+        </CarouselItem>
+      ))}
+    </CarouselContent>
+    {/* Navigation */}
+    <div className="hidden md:flex">
+      <CarouselPrevious
+        className="
+          absolute
+          z-50
+          left-2
+          lg:-left-5
+          h-10 w-10
+          bg-card
+          border-primary/70
+          text-primary
+          hover:bg-primary
+          hover:text-white
+          transition-all
+          shadow-xl
+          rounded-full
+        "
+      />
+
+      <CarouselNext
+        className="
+        z-50
+          absolute
+          right-2
+          lg:-right-5
+          h-10 w-10
+          bg-card
+          border-primary/70
+          text-primary
+          hover:bg-primary
+          hover:text-white
+          transition-all
+          shadow-xl
+          rounded-full
+        "
+      />
+    </div>
+  </Carousel>
+</div>
       </div>
+      {/* =========================================================
+          INTERACTIVE FISH POND
+          TEMPORARY EXPERIMENT
+          ========================================================= */}
+
+      <FishPond
+        onSelectDish={(item) => setSelectedItem(item)}
+      />
 
 {/* =========================================================
     DISH EXPERIENCE MODAL

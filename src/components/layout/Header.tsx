@@ -36,9 +36,9 @@ export function Header() {
 
   return (
     <header className={cn(
-      "fixed top-0 z-[100] w-full transition-all duration-400 ease-in-out px-5 border-b border-red/900 hover:border-b-ocean",
+      "fixed top-0 z-[100] w-full transition-all duration-400 ease-in-out px-5 border-b border-red/900 hover:border-b-sun",
       isScrolled 
-        ? "bg-background/5 backdrop-blur-3xl border-b border-blue/700 shadow-xl h-25" 
+        ? "bg-background/5 backdrop-blur-3xl border-b border-sun shadow-xl h-25" 
         : "bg-background/90 backdrop-blur-2xl h-20"
     )}>
       <div className="container mx-auto h-full">
